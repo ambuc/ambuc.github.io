@@ -18,102 +18,60 @@
     <script type="text/javascript"src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
     <script type="text/javascript">
       console.log('hi');
-    </script>
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
-        TeX: {
-          Macros: {
-            vaccent: "{\\v}",
-            v: ["{\\mathbf\{#1\}}", 1],
-            abs: ["{\\left| #1 \\right|}",1],
-            d: ["{\\frac\{d #1\}\{d #2\}}",2],
-            dd: ["{\\frac\{d^2 #1\}\{d #2^2\}}",2],
-            pd: ["\{\\frac\{\\partial #1\}\{\\partial #2\}\}",2],
-            pdd: ["\{\\frac\{\\partial^2 #1\}\{\\partial #2^2\}\}",2] ,
-            degrees: ["\{^\\circ\}"],
-            div: ["\{\\text\{div \}\}"],
-            grad: ["\{\\text\{grad \}\}"]
+      </script>
+      <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+          TeX: {
+            Macros: {
+              vaccent: "{\\v}",
+              v: ["{\\mathbf\{#1\}}", 1],
+              abs: ["{\\left| #1 \\right|}",1],
+              d: ["{\\frac\{d #1\}\{d #2\}}",2],
+              dd: ["{\\frac\{d^2 #1\}\{d #2^2\}}",2],
+              pd: ["\{\\frac\{\\partial #1\}\{\\partial #2\}\}",2],
+              pdd: ["\{\\frac\{\\partial^2 #1\}\{\\partial #2^2\}\}",2] ,
+              degrees: ["\{^\\circ\}"],
+              div: ["\{\\text\{div \}\}"],
+              grad: ["\{\\text\{grad \}\}"]
+            }
           }
-        }
-      });
-    </script>
+        });
+      </script>
 
-<!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
-  </head>
+      <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+    </head>
 
-  <body>
+    <body>
 
-    <div class="container">
+      <div class="container">
 
-      <br/>
-      <div class="row">
-        <div class="col col-sm-12 col-md-6 col-lg-6 text-md-left text-sm-center text-xs-center">
-          <h2>James Adam Buckland</h1>
-        </div>
-        <div class="col col-sm-12 col-md-6 col-lg-6 text-md-right text-xs-center">
-          <ul class="nav nav-inline">
-            <li class="nav-item">
-            <a class="nav-link" href="{{ site.baseurl }}/">Home</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="{{ site.baseurl }}/blog">Blog</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="mailto:james.adam.buckland@gmail.com">Email</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="{{ site.baseurl }}/resume.pdf">Resume</a>
-            </li>
-          </ul>
-        </div>
-      </div>
+        <br/>
+        {% include header.html %}
+        <hr/>
 
-      <hr/>
-      <div class="row">
-        <div class="col col-sm-12">
-          {% if page.url == "/index.html" %}
-          <a href="{{ site.baseurl }}/norrbotten-doc">
-            <img src="{{ site.avatar }}" class="img-circle pull-xs-center pull-sm-right " alt="..." id='Avatar' > 
-          </a>
-          {% endif %}
+        <div class="row">
+          <div class="col col-sm-12">
+            {% if page.url == "/index.html" or page.url == "/" %}
+            <a href="{{ site.baseurl }}/norrbotten-doc">
+              <img src="{{ site.avatar }}" class="img-circle pull-xs-center pull-sm-right " alt="..." id='Avatar' > 
+            </a>
+            {% endif %}
 
-          <div id="main" role="main" class="">
             {{ content }}
           </div>
-
-          <footer class="footer">
-          <hr/>
-          <div class="btn-toolbar" role="toolbar" aria-label="">
-            <div class="btn-group" role="group" aria-label="">
-              <a class="btn btn-success-outline btn-sm" href="mailto:james.adam.buckland@gmail.com" role="button">james.adam.buckland@gmail.com</a>
-            </div>
-            <div class="btn-group btn-group-sm" role="group" aria-label="">
-              <a class="btn btn-secondary" href="https://github.com/ambuc" role="button">
-                <i class="mdi mdi-github-box"></i>
-              </a>
-              <a class="btn btn-secondary" href="https://www.linkedin.com/in/jamesadambuckland" role="button">
-                <i class="mdi mdi-linkedin-box"></i>
-              </a>
-              <a class="btn btn-secondary" href="https://instagram.com/jbuckland" role="button">
-                <i class="mdi mdi-instagram"></i>
-              </a>
-              <a class="btn btn-secondary" href="{{ site.baseurl }}/feed.xml" role="button">
-                <i class="mdi mdi-rss-box"></i>
-              </a>
-            </div>
-          </div>
-          <br/>
-          </footer>
-
         </div>
+
+        <hr/>
+        {% include footer.html %}
+        <br/>
+
       </div>
-    </div>
 
-    <!-- <a class="btn btn-success-outline" href="mailto:bucklnd2@illinois.edu" role="button">bucklnd2@illinois.edu</a> -->
-    <!-- {% include svg-icons.html %} --!>
-    <!-- <p class="site-description">{{ site.description }}</p> -->
+      <!-- <a class="btn btn-success-outline" href="mailto:bucklnd2@illinois.edu" role="button">bucklnd2@illinois.edu</a> -->
+      <!-- {% include svg-icons.html %} --!>
+      <!-- <p class="site-description">{{ site.description }}</p> -->
 
-    {% include analytics.html %}
-  </body>
-</html>
+      {% include analytics.html %}
+    </body>
+  </html>
