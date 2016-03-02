@@ -6,7 +6,7 @@ layout: post
 icon: weather-sunny
 
 paper_title: MJ2412 Renewable Energy Technology - Morocco Proposal
-paper_url: /papers/morocco.pdf
+paper_url: /papers/Morocco.pdf
 ---
 
 This is a report Alexandre Oudet, Jean-Fraņcois Olivier, Heinrich Boeing, Akshaya Kumar, and I compiled in March 2015, as part of the _MJ2412 Renewable Energy Technology_ course at _KTH_, in Stockholm. We designed and evaluated the feasibility and necessary physical and mechanical constraints on a number of potential technologies involved in the construction and operation of a solar field. Physical models were developed in conjunction with financial data, to estimate the potential supply and forecasted demand in the region. An iterative method was used to calculate all relevant power plant variables to some optimal efficiency.
@@ -18,4 +18,4 @@ This is a report Alexandre Oudet, Jean-Fraņcois Olivier, Heinrich Boeing, Aksh
 >These devices use reflective surfaces to mirror sunlight, and are differentiable by their variable geometries. There are three types: a) parabolic trough, b) central tower, and c) parabolic-mirror CSP plants.
 We choose the parabolic trough in order to meet our base-load capacity requirement of 100 MWe. In a parabolic trough, sunlight is concentrated towards a receiver carrying a heat transfer fluid. With water as the transfer fluid, steam is directly generated for use in a power plant. However, the stability of a water-based receiver is uncertain, and steam-based heat storage is complex. We thus propose the use of an oil-based fluid for heat transfer. These oils are single-phase fluids with an efficient heat transfer coefficient, and a temperature range fitting our needs, as well as the possibility for direct storage. Synthetic oils are preferred over mineral oils for their lesser flammability. We will employ this working fluid in a thermodynamic Rankine cycle, detailed in Section 4.
 
-Read the paper at **[/papers/morocco.pdf](/papers/morocco.pdf).**
+Read the paper at **[/papers/Morocco.pdf](/papers/Morocco.pdf).**
