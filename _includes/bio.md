@@ -1,6 +1,6 @@
-I'm a senior in [Mechanical Engineering](http://mechanical.illinois.edu/) at the [University of Illinois at Urbana-Champaign](http://illinois.edu/), with a focus in Computational Mechanics and Numerical Methods.
+I'm currently an Infrastructure Engineer at [PEAK6 Investments](http://www.peak6.com/).
 
-This past year, I studied Sustainability Engineering and Technology at [KTH Royal Institute of Technology](https://www.kth.se/) in Stockholm, [Sweden](http://sweden.jbuckland.com).
+In college, I studied [Mechanical Engineering](http://mechanical.illinois.edu/) at the [University of Illinois at Urbana-Champaign](http://illinois.edu/), as well as Sustainability Engineering and Technology at [KTH Royal Institute of Technology](https://www.kth.se/) in Stockholm, [Sweden](http://sweden.jbuckland.com).
 
 In the past, I've seen employment as:
 
