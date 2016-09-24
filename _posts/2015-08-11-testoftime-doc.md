@@ -19,4 +19,4 @@ github: http://github.com/ambuc/test-of-time
 
 The Javascript source can be found [on Github](https://github.com/ambuc/test-of-time).
 
-Play the game at **[http://the-test-of-ti.me](http://the-test-of-ti.me).**
+Play the game at **[http://jbuckland.com/test-of-time/](http://jbuckland.com/test-of-time/).**
