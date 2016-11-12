@@ -12,7 +12,7 @@ paper_url: /papers/greenhouse.pdf
 
 This is a report Michael Clark, Nick Jones, Chase Kauffman, Thomas Mayo-Smith, Cory Nissly, and I compiled in Summer 2011, as part of the _Cornell Summer College_ program at Cornell Univeristy, in Ithaca, NY. As part of the report, we performed a thorough economic analysis on potential locations, a small amount of construction rendering and CAD, a thermodynamic analysis of energy balance and thermal conductivity, and a model circuit.
 
-#####Abstract
+#Abstract
 
 > The recent discoveries involving carbon emissions and global warming have led to worldwide concern for more “green” ways of producing goods and energy; our team has been researching and conceptually designing a “green” greenhouse, to produce crops in an energy efficient and environmentally friendly manner. In a modern world, where capitalist democratic policies reign in most civilized countries, it is important to understand global concerns and to adapt business and production methods to what the world needs, collectively. In this, pursuing this “green” greenhouse was a legitimate business endeavor as well as an attempt to meet the world’s desires.
 

@@ -3,13 +3,15 @@ layout: default
 ---
 
 <article class="post">
-  <h4 class="">
+  <br/>
+  <h1 class="">
     {{ page.title }}
     <small class="text-muted" style='display: inline-block;'>
       {{ page.date | date: "%e %b '%y" }}
     </small>
-  </h4>
+  </h1>
 
+  {% if page.project_title or page.paper_title or page.link_title or page.github %}
   <div class="btn-group btn-group-sm" role="group">
     {% if page.project_title %}
     <a class="btn btn-primary" href="{{page.project_url}}">
@@ -17,21 +19,18 @@ layout: default
       {{ page.project_title }}
     </a>
     {% endif %}
-
     {% if page.paper_title %}
     <a class="btn btn-primary-outline" href="{{page.paper_url}}">
       <i class="mdi mdi-file-pdf"></i>
       {{page.paper_title}}
     </a>
     {% endif %}
-
     {% if page.link_title %}
     <a class="btn btn-primary-outline" href="{{page.link_url}}">
       <i class="mdi mdi-link-variant"></i>
       {{ page.link_title }}
     </a>
     {% endif %}
-
     {% if page.github %}
     <a class="btn btn-primary-outline" href="{{page.github}}">
       <i class="mdi mdi-github-circle"></i>
@@ -41,6 +40,7 @@ layout: default
   </div>
   <br/>
   <br/>
+  {% endif %}
 
   {% if page.image %}
   <a href="{{ page.imagelink }}">
