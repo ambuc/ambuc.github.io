@@ -1,5 +1,5 @@
 ---
-title: TextTwist in Haskell
+title: Writing a TextTwist Implementation
 layout: post
 github: http://github.com/ambuc/text-twist
 ---
