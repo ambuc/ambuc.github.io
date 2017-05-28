@@ -254,54 +254,61 @@ intermediate versions).
 
 Run normally, this script is fairly fast:
 
-    j@mes $ ghc -O2 words.hs
-    [1 of 1] Compiling Main             ( words.hs, words.o )
-    Linking words ...
-    j@mes $ time ./words
-    686739
+{% highlight bash %}
+j@mes $ ghc -O2 words.hs
+[1 of 1] Compiling Main             ( words.hs, words.o )
+Linking words ...
 
-    real	1m1.138s
-    user	1m0.810s
-    sys	0m0.303s
+j@mes $ time ./words
+686739
 
+real	1m1.138s
+user	1m0.810s
+sys	0m0.303s
+{% endhighlight %}
 
 But it was not always so. During development I made extensive use of the
 built-in GHC profiler:
 
-    j@mes $ ghc -prof -fprof-auto -rtsopts -O2 words.hs
-    [1 of 1] Compiling Main             ( words.hs, words.o )
-    Linking words ...
-    j@mes ~/dev/math-problems/crossword $ time ./words +RTS -p
-    686739
+{% highlight bash %}
+j@mes $ ghc -prof -fprof-auto -rtsopts -O2 words.hs
+[1 of 1] Compiling Main             ( words.hs, words.o )
+Linking words ...
 
-    real	2m8.759s
-    user	2m8.277s
-    sys	0m0.470s
+j@mes $ time ./words +RTS -p
+686739
+
+real	2m8.759s
+user	2m8.277s
+sys	0m0.470s
+{% endhighlight %}
 
 This writes out to `words.prof` and looks something like: (see
 [the full words.prof profiler output on Gist.](https://gist.github.com/ambuc/ac4ed787e1b9bb3eba08bb02c9b25c49#file-crossword-prof))
 
-      Sun May 28 00:13 2017 Time and Allocation Profiling Report  (Final)
+{% highlight bash %}
+  Sun May 28 00:13 2017 Time and Allocation Profiling Report  (Final)
 
-         words +RTS -p -RTS
+     words +RTS -p -RTS
 
-      total time  =      107.52 secs   (107523 ticks @ 1000 us, 1 processor)
-      total alloc = 134,700,416,432 bytes  (excludes profiling overheads)
+  total time  =      107.52 secs   (107523 ticks @ 1000 us, 1 processor)
+  total alloc = 134,700,416,432 bytes  (excludes profiling overheads)
 
-    COST CENTRE            MODULE                     %time %alloc
+COST CENTRE            MODULE                     %time %alloc
 
-    children.nextIn        Main                        20.8    0.0
-    children.(...)         Main                        13.1   14.1
-    gridGet                Main                        11.0   16.8
-    children               Main                        10.0    6.1
-    gridSet                Main                         9.4   20.8
-    build                  Data.List.Split.Internals    7.7    9.9
-    chunksOf               Data.List.Split.Internals    7.1   18.8
-    grids                  Main                         5.7    2.6
-    children.poss.setValid Main                         5.5    6.3
-    intersect              Main                         5.3    1.8
-    grids.wordsIn          Main                         1.9    1.2
-    children.poss          Main                         1.4    1.4
+children.nextIn        Main                        20.8    0.0
+children.(...)         Main                        13.1   14.1
+gridGet                Main                        11.0   16.8
+children               Main                        10.0    6.1
+gridSet                Main                         9.4   20.8
+build                  Data.List.Split.Internals    7.7    9.9
+chunksOf               Data.List.Split.Internals    7.1   18.8
+grids                  Main                         5.7    2.6
+children.poss.setValid Main                         5.5    6.3
+intersect              Main                         5.3    1.8
+grids.wordsIn          Main                         1.9    1.2
+children.poss          Main                         1.4    1.4
+{% endhighlight %}
 
 Which gives a bit of a hint where things might be taking up a lot of time. In
 this case, `nextIn` is taking up 20% of our time, and it's an $O(\log n)$
@@ -390,50 +397,54 @@ We can write a list of all grids to a file `grids.txt` and perform some
 rudimentary Bash-level analysis on what sorts of words appear in the rows most
 commonly:
 
-    j@mes $ cat grids.txt | sort | uniq -c | sort -h | tail
-      14642 west
-      15424 oboe
-      15516 oral
-      16678 pest
-      17451 test
-      19541 psst
-      22165 aria
-      26541 oleo
-      28531 area
-      85689 urea
+{% highlight bash %}
+j@mes $ cat grids.txt | sort | uniq -c | sort -h | tail
+  14642 west
+  15424 oboe
+  15516 oral
+  16678 pest
+  17451 test
+  19541 psst
+  22165 aria
+  26541 oleo
+  28531 area
+  85689 urea
+{% endhighlight %}
 
 These don't quite look like the letter distributions we're used to in
 full-fledged English -- let's look at letter frequencies and see how different
 it is for four-letter words, and which letters are more likely to appear in
 crosswords.
 
-    j@mes $ awk -vFS="" '{for(i=1;i<=NF;i++)w[$i]++}END{for(i in w) print w[i],i}' grids.txt | sort -hr
-      1673174 e
-      1428194 a
-      1307329 s
-      781441 t
-      722476 o
-      709668 l
-      693442 r
-      450942 p
-      448701 n
-      424290 i
-      324295 d
-      296590 m
-      246367 w
-      236242 c
-      221680 u
-      204857 h
-      199943 b
-      185596 g
-      114375 k
-      106834 v
-      104330 y
-      80840 f
-      17625 x
-      4530 j
-      4030 z
-      33 q
+{% highlight bash %}
+j@mes $ awk -vFS="" '{for(i=1;i<=NF;i++)w[$i]++}END{for(i in w) print w[i],i}' grids.txt | sort -hr
+  1673174 e
+  1428194 a
+  1307329 s
+  781441 t
+  722476 o
+  709668 l
+  693442 r
+  450942 p
+  448701 n
+  424290 i
+  324295 d
+  296590 m
+  246367 w
+  236242 c
+  221680 u
+  204857 h
+  199943 b
+  185596 g
+  114375 k
+  106834 v
+  104330 y
+  80840 f
+  17625 x
+  4530 j
+  4030 z
+  33 q
+{% endhighlight %}
 
 Looks like `q` only appears 33 times; only ever in the context of `quay`,
 `aqua`, `quip`, `quad`, `quit`, or `quid`.
