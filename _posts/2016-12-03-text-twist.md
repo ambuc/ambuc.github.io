@@ -2,6 +2,7 @@
 title: Writing a TextTwist Implementation
 layout: post
 github: http://github.com/ambuc/text-twist
+thumbnail: /images/text-twist.jpg
 ---
 
 {% highlight javascript %}

@@ -9,9 +9,10 @@ project_title: /juggling-graph
 project_url: http://jbuckland.com/juggling-graph
 
 github: http://github.com/ambuc/juggling-graph
+thumbnail: https://github.com/ambuc/juggling-graph/raw/gh-pages/example.png
 ---
 
-[<img src="https://github.com/ambuc/juggling-graph/raw/gh-pages/example.png">](/juggling-graph)
+[<img src="https://github.com/ambuc/juggling-graph/raw/gh-pages/example.png">](/juggling-graph/)
 
 > Siteswap is a juggling notation used to describe or represent juggling patterns. It encodes the number of beats of each throw, which is related to their height, and the hand to which the throw is to be made: "The idea behind siteswap is to keep track of the order that balls are thrown and caught, and _only_ that."[1] It is an invaluable tool in determining which combinations of throws yield valid juggling patterns for a given number of objects, and has led to previously unknown patterns (such as 441). However, it does not describe body movements such as behind-the-back and under-the-leg.  
 

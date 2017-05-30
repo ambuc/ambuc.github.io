@@ -8,6 +8,7 @@ project_title: /pantograph
 project_url: http://jbuckland.com/pantograph/delta.html
 
 github: http://github.com/ambuc/pantograph
+thumbnail: http://33.media.tumblr.com/658c3725652040e76bcb695886fb89f2/tumblr_inline_n2ka0yYvp41qzj7s0.png
 ---
 <figure class="figure" style='width: 100%; height: 400px;'>
   <iframe class="figure-img img-fluid img-rounded" src="https://player.vimeo.com/video/31933085?color=ffffff&title=0&byline=0&portrait=0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style='width:100%; height:390px;'></iframe>

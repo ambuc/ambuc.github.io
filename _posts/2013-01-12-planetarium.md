@@ -3,6 +3,8 @@ title: Design and Manufacture of an Dodecahedral Planetarium Made of Laser-Cut A
 layout: post
 
 icon: projector
+
+thumbnail: http://40.media.tumblr.com/a2ef0cfdcb55bf53e26e6d6a994d4ec2/tumblr_mxarxjHPBz1t5d2z2o3_1280.jpg
 ---
 
 When I first came to college, I had big plans to cover my room in glow-in-the-dark stars. It occurred to me upon arrival that my roommate might not be as crazy about the idea as I was.
@@ -13,7 +15,7 @@ I began by designing a sky map spread across twelve pentagons, to be folded into
 
 I lasercut the patterns from a large piece of opaque blue acrylic, and cut the joiners from clear acrylic scrap. I discovered too late, as a planetarium, my project failed: I got too large of a lightbulb (I got a little excited at the Home Depot) and the focal length was totally wrong; the light shone out of the holes but would not project outwards onto the walls. With this in mind, I repurposed the planetarium into a hanging lamp.
 
-#Images
+# Images
 
 ![alt](http://36.media.tumblr.com/32c9274abc25ecfe9dfe9034c1c78626/tumblr_mxarxjHPBz1t5d2z2o2_1280.jpg)
 ![alt](http://41.media.tumblr.com/d2442628cba25dccb07709426af0d309/tumblr_mxarxjHPBz1t5d2z2o7_1280.jpg)

@@ -9,6 +9,7 @@ project_title: /lindenmayer
 project_url: http://jbuckland.com/lindenmayer
 
 github: http://github.com/ambuc/lindenmayer
+thumbnail: http://www.allenpike.com/images/461/tree.png
 ---
 
 [<img src="/images/lindenmayer_thumbnail.png">](/lindenmayer)

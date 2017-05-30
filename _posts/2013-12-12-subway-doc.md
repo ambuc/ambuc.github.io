@@ -8,6 +8,7 @@ project_title: /subway
 project_url: http://jbuckland.com/subway
 
 github: http://github.com/ambuc/subway
+thumbnail: /images/subway_thumbnail.png
 ---
 
 [<img src="/images/subway_thumbnail.png">](/subway)

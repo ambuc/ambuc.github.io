@@ -9,6 +9,7 @@ project_title: The Test Of Time
 project_url: http://jbuckland.com/test-of-time
 
 github: http://github.com/ambuc/test-of-time
+thumbnail: https://history.as.uky.edu/sites/default/files/history.png
 ---
 
 <!-- [<img src="/images/lindenmayer_thumbnail.png">](/lindenmayer) -->

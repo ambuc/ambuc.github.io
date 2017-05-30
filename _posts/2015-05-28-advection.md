@@ -4,6 +4,7 @@ description: This is something a little different. I am going to step through so
 layout: post
 
 icon: math-compass
+thumbnail: https://synergetics.com.au/images/articles/pages/CFD/cooling_tower_plume.jpg
 ---
 
 $$ \def\phi{\varphi} $$

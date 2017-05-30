@@ -6,6 +6,7 @@ icon: fingerprint
 
 project_title: Hide and Seek in Gamla Stan
 project_url: http://hideandseek.ninja
+thumbnail: https://raw.githubusercontent.com/ambuc/hideandseek/master/finds.png 
 ---
 
 *Project*: currently down for maintenance.
