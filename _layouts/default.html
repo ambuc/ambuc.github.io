@@ -4,17 +4,15 @@
     {% include meta.html %}
     <title>{% if page.title %}{{ page.title }} « {% endif %}jbuckland.com</title>
     <link rel="shortcut icon" type="image/png" href="https://avatars3.githubusercontent.com/u/6856318">
-    <!--[if lt IE 9]> <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script> <![endif]-->
     <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/style.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="//cdn.materialdesignicons.com/1.4.57/css/materialdesignicons.min.css">
     <link rel="alternate" type="application/rss+xml" title="{{ site.name }} - {{ site.description }}" href="{{ site.baseurl }}/feed.xml" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js" integrity="sha384-vZ2WRJMwsjRMW/8U7i6PWi6AlO1L79snBrmgiDpgIWJ82z8eA5lenwvxbMV1PAh7" crossorigin="anonymous"></script>
     <script type="text/javascript"src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
-    <script type="text/javascript">
-console.log('hi');
-    </script>
+
     <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
           tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
@@ -41,12 +39,7 @@ MathJax.Hub.Config({
       {% include header.html %}
       <hr/>
       <div class="row">
-        <div class="col col-sm-12">
-          {% if page.url == "/index.html" or page.url == "/" %}
-          <a href="{{ site.baseurl }}/norrbotten-doc">
-            <img src="{{ site.avatar }}" class="img-circle pull-xs-center pull-sm-right " alt="..." id='Avatar' >
-          </a>
-          {% endif %}
+        <div class="col col-xs-12">
           {{ content }}
         </div>
       </div>
@@ -54,11 +47,5 @@ MathJax.Hub.Config({
       {% include footer.html %}
       <br/>
     </div>
-
-    <!-- <a class="btn btn-success-outline" href="mailto:bucklnd2@illinois.edu" role="button">bucklnd2@illinois.edu</a> -->
-    <!-- {% include svg-icons.html %} --!>
-    <!-- <p class="site-description">{{ site.description }}</p> -->
-
-    {% include analytics.html %}
   </body>
 </html>

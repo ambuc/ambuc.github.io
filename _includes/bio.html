@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col col-xs-6">
+    <!-- <img src="{{ site.avatar }}" class="img-circle pull-xs-center pull-sm-right " alt="..." id='Avatar' > -->
+    <figure class="figure">
+      <img src="{{ site.avatar }}" class="figure-img img-fluid rounded mx-auto d-block" alt="..." >
+      <figcaption class="figure-caption">At the Peak6 offices in downtown
+        Chicago.</figcaption>
+    </figure>
+  </div>
+  <div class="col col-xs-6">
+    {% capture bio %} {% include bio.md %} {% endcapture %}
+    {{ bio| markdownify }}
+  </div>
+</div>
