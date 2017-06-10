@@ -1,12 +1,10 @@
 ---
 title: Puzzle Pong - Generating All Possible 4x4 Crosswords
 layout: post
-
+icon: grid
 github: https://gist.github.com/ambuc/ac4ed787e1b9bb3eba08bb02c9b25c49
-thumbnail: /images/crossword.png
 ---
 
-# The Problem
 [Josh Mermelstein](http://joshmermelstein.com/) and I have decided to begin
 challenging each other to a series of a math/programming puzzles. He asked me to
 generate all possible valid English-language four-by-four crossword grids; that
@@ -323,67 +321,39 @@ solver? Well, because Haskell is lazy it's not that hard to see _if_ there
 exists a 5x5 or 6x6 grid. By doing `main = putStrLn $ gridPrint $ head grids` we
 end up executing incredibly fast:
 
-## Sizes
- - In 0.062s it finds the following 4x4:
+Here are some grids I found:
 
-    ```
-    ABED 
-    BLUR 
-    EERY 
-    TWOS 
-    ```
+```
+0.062s    0.164s     54.0s
 
- - in 0.164s it finds the following 5x5:
-
-    ```
-    ABACI
-    BOWED
-    AXIAL
-    SENSE
-    EDGED
-    ```
-
- - in 54s it finds the following 6x6:
-
-    ```
-    ABBESS
-    SEESAW
-    CATTLE
-    ERRATA
-    NEATER
-    DRYERS
-    ```
+ABED      ABACI      ABBESS
+BLUR      BOWED      SEESAW
+EERY      AXIAL      CATTLE
+TWOS      SENSE      ERRATA
+          EDGED      NEATER
+                     DRYER
+```
 
 ## Palindromes
 
 Additionally, we can find "palindromic" crosswords, where the words are valid
 even if the grid is rotated 90, 180, or 270 degrees:
 
- - in 6.627s it finds the following palindromic 4x4:
+In 6.627s it finds the following palindromic 4x4:
 
-    ```
-    0 deg ->  90deg -> 180deg -> 270deg
     DRAB      WARD      DRAW      BARD
     RAGA      AJAR      RAJA      AGAR
     AJAR      RAGA      AGAR      RAJA
     WARD      DRAB      BARD      DRAW
-    ```
 
 There are 10 such palindromic 4x4s; eight of them rely on the quartet
 `raga/raja/ajar/agar` at their centers; the other two rely on
 `time/tide/emit/edit`.
 
-    ```
-    DRAB DRAB DRAB DRAB DRAW DRAW TRAM TRAM
-    RAGA RAJA RAGA RAJA RAGA RAJA RAGA RAJA
-    AJAR AGAR AJAR AGAR AJAR AGAR AJAR AGAR
-    WARD WARD YARD YARD YARD YARD PART PART
-
-    STEP STEP
-    TIDE TIME
-    EMIT EDIT
-    WETS WETS
-    ```
+    DRAB  DRAB  DRAB  DRAB  DRAW  DRAW  TRAM  TRAM  STEP  STEP
+    RAGA  RAJA  RAGA  RAJA  RAGA  RAJA  RAGA  RAJA  TIDE  TIME
+    AJAR  AGAR  AJAR  AGAR  AJAR  AGAR  AJAR  AGAR  EMIT  EDIT
+    WARD  WARD  YARD  YARD  YARD  YARD  PART  PART  WETS  WETS
 
 ## Word Frequency
 
@@ -391,7 +361,7 @@ By running
 
 {% highlight haskell %}
 main = Control.Monad.forM grids 
-     $ \g -> appendFile "grids.txt" $ gridPrint g ++ "\n"                     
+     $ \g -> appendFile "grids.txt" $ gridPrint g ++ "\n"
 {% endhighlight %}
 
 We can write a list of all grids to a file `grids.txt` and perform some

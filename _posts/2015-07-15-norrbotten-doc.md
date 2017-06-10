@@ -7,7 +7,6 @@ icon: image-filter-hdr
 
 paper_title: The Norrbotten Technological Megasystem&#58; Impact on Society and Environment
 paper_url: /papers/norrbotten.pdf
-thumbnail: https://pbs.twimg.com/profile_images/554647609508233216/UghgfLpP.jpeg
 ---
 
 This is a report Jessica Malmberg and I compiled during the summer of 2015 under the direction of [Dag Avango](https://www.kth.se/profile/avango/) and [Dr. Mark Safstrom](http://www.germanic.illinois.edu/people/safstrom), as a part of the course [AK1214  Environment and Society in a Changing Arctic](http://www.kth.se/student/kurser/kurs/AK1214?l=en), hosted jointly by _KTH_ in Stockholm and the University of Illinois at Urbana-Champaign.

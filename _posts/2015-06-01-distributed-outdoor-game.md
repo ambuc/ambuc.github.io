@@ -6,20 +6,19 @@ icon: fingerprint
 
 project_title: Hide and Seek in Gamla Stan
 project_url: http://hideandseek.ninja
-thumbnail: https://raw.githubusercontent.com/ambuc/hideandseek/master/finds.png 
 ---
 
 *Project*: currently down for maintenance.
 
 ![alt text](https://raw.githubusercontent.com/ambuc/hideandseek/master/map.png)
 
-# The Pre-Gam
+# The Pre-Game
 
 In May 2015, Aaron Luo, Anna Robbins, Claudio Paganini, and I sat down and designed a model for a new type of event: a free, outdoor, massive game of **hide-and-seek**. We would attract attention through a [Facebook group](https://www.facebook.com/events/1568336823455138/), and have participants read rules and register on a website ([http://hideandseek.ninja/](http://hideandseek.ninja/)) (which I would build and maintain) during the game.
 
 What was the incentive for such an unusual event?
 
-##Legal Considerations
+## Legal Considerations
 
 We were inspired by stories of people playing Hide and Seek in an Ikea. This is both a) *very* Swedish, and b) *very* illegal. Private property and unregistered events don't mix well. So our event had to be outdoors, public, unlisted, and legal.
 
@@ -33,7 +32,7 @@ Imagine twenty or so little games of Hide-and-Seek going on all around the city.
 
 But how would the game work?
 
-##Math and Scoring
+## Math and Scoring
 
 *Hide and Seek in Gamla Stan* operated on a unique scoring system designed by Claudio Paganini. 
 
@@ -45,7 +44,7 @@ The benefit of this system is that suddenly the game requires strategy. In a sho
 
 How would you prove you found someone?
 
-##Proof of Find
+## Proof of Find
 
 From the beginning, we wanted people to be able to play without supervision or oversight. Thus, rather than verify finds by hand (impossible) or rely on an honor system, we chose to verify finds mathematically, with a small bit of information.
 
@@ -55,7 +54,7 @@ As the players logged their finds, we began to generate a graph of finds across 
 
 How were the codes generated?
 
-##Design of the Secret Code
+## Design of the Secret Code
 
 Anna Robbins and I struggled with the concept of a 'secret code' for a few days. A short text string was easier than something more verifiable, like a QR code, but language barriers, spelling errors, and handwriting meant that strings, words, phrases, were untenable. We wanted it to be short and sweet, something easy to write and easy to type in afterwards.
 
@@ -71,7 +70,7 @@ An additional failsafe against cheating was that anybody sharing codes with thei
 
 How did we invite people?
 
-##Social Engineering
+## Social Engineering
 
 Once the game was designed, the rest was simple. We started a Facebook event and invited every student we knew. I personally asked a few social mavens to invite everyone they knew.
 
@@ -89,7 +88,7 @@ The registration system collected the player's first and last name, email, and h
 
 How did we assign zones?
 
-##Zones
+## Zones
 
 Once we reached ~800 registered, we began to divide up Gamla Stan and the surrounding neighborhood into 12 zones, and demarcate a region of fair play.
 
@@ -101,11 +100,11 @@ Players needed to bring a pen and pad, to write down the secret codes they found
 
 Additionally, the players needed another key ingredient...
 
-##Socks
+## Socks
 
 The game was called, colloquially, **Hide and Sock**. Players had to know who was playing and who was just a bystander. We instructed players to wear a sock on their hand, so that they could be found. So they had to bring a sock.
 
-#The Game
+# The Game
 
 On the day of the event, I got my sock, pen, paper, watch, secret code, zone, etc -- everything I needed -- and went to my assigned location, where I found -- a dozen or so people hanging around, waiting to meet their zone. It turned out not all of our players were college students -- plenty of families, tourists, elderly, etc. We synced knowledge about gameplay and schedules, discussed how we found out about the event, and then - suddenly - it was time to hide.
 
@@ -113,19 +112,19 @@ I hid quite badly, because I wanted to see how many people were actually playing
 
 The game went fast - I regret how tight we made the schedule, and how long we made the hiding period. Too many people were too good at hiding, and were never found.
 
-#The Aftergame
+# The Aftergame
 
 As per instructions, we all met in Kungstradgarden for a group photo, where I met many of the players and got feedback on how the event went. We also used Aaron's selfie stick to take a group photo. (I'm in the center, behind the photographer.)
 
 ![alt text](https://raw.githubusercontent.com/ambuc/hideandseek/master/photo.jpg)
 
-##Countries of Origin
+## Countries of Origin
 
 When a player registered, we collected their first and last name, email, and hometown (just for fun data analysis). We ended up with 1141 registered players, hailing from 127 regions (countries, large cities, neighborhoods). It's difficult to graph, but the top three countries were Sweden, Germany, India, Italy, France, Singapore, China, and then over one hundred more with shares under 1%.
 
 ![alt text](https://raw.githubusercontent.com/ambuc/hideandseek/master/origins.png)
 
-##Finds
+## Finds
 
 We expected players from each group to mostly end up finding players from their own group. Instead, most people in most zones had the bright idea of spreading as far from their home base as they could. As a result, there was far more cross-pollination than expected. With 1105 registered finds from 139 participating players, 1026 of those finds (92.8%) were of players from other zones. Some zones contained no same-zone finds. The groups quickly disseminated and play roamed free across the city -- as intended.
 
@@ -135,13 +134,13 @@ We expected players from each group to mostly end up finding players from their 
 
 Altogether, the game was a rousing success, with  [some players](http://hideandseek.ninja/rankings.php) scoring as high as 481 points (found 13 people, was found once).
 
-#What Did We Learn?
+# What Did We Learn?
 
-##People are Reliable
+## People are Reliable
 
 The groups were surprisingly self-organizing, and the players were polite, honest, and fun. I met a ton of people, and I think everyone had a great time. (It helped that the weather was great.)
 
-##People are Unreliable
+## People are Unreliable
 
 On Facebook, anyway. We had 6k invited, 3.5k attending, 1k registered, and just over 150 estimated participants. Under 100 showed up for the final photo.
 

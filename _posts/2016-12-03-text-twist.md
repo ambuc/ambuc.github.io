@@ -1,8 +1,8 @@
 ---
 title: Writing a TextTwist Implementation
 layout: post
+icon: gamepad-variant
 github: http://github.com/ambuc/text-twist
-thumbnail: /images/text-twist.jpg
 ---
 
 {% highlight javascript %}

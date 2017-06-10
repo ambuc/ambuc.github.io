@@ -147,35 +147,12 @@ blockquote {
   padding: 10px;
 }
 
-.entry {
-  max-width: 500px;
-}
-
-#postTable th {
-  width: 100px;
-}
-
-#postTable .btn {
-  white-space: inherit;
-  text-align:left;
-  width: auto !important;
-}
-
-#postTable .btn-group {
-  padding:5px;
-}
-
-#postTable .btn-link {
-  color:grey;
-}
-#postTable .btn-link:hover {
-  color:inherit;
-  cursor:default;
-  text-decoration:none;
-}
-
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
 @import "highlights";
 @import "svg-icons";
+
+.highlight{
+  overflow: hidden !important;
+}

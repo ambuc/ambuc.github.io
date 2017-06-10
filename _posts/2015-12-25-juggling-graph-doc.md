@@ -9,7 +9,6 @@ project_title: /juggling-graph
 project_url: http://jbuckland.com/juggling-graph
 
 github: http://github.com/ambuc/juggling-graph
-thumbnail: https://github.com/ambuc/juggling-graph/raw/gh-pages/example.png
 ---
 
 [<img src="https://github.com/ambuc/juggling-graph/raw/gh-pages/example.png">](/juggling-graph/)

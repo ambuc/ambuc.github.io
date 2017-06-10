@@ -9,7 +9,6 @@ project_title: Seesaw
 project_url: http://jsrmath.github.io/seesaw/
 
 github: http://github.com/jsrmath/seesaw
-thumbnail: http://i1.wp.com/liliankasem.com/wp-content/uploads/2016/07/JSON.png
 ---
 
 <!-- [<img src="/images/lindenmayer_thumbnail.png">](/lindenmayer) -->

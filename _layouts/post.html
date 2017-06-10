@@ -4,54 +4,54 @@ layout: default
 
 <article class="post">
   <br/>
-  <h1 class="">
-    {{ page.title }}
-    <small class="text-muted" style='display: inline-block;'>
-      {{ page.date | date: "%e %b '%y" }}
-    </small>
-  </h1>
 
-  {% if page.project_title or page.paper_title or page.link_title or page.github %}
-  <div class="btn-group btn-group-sm" role="group">
-    {% if page.project_title %}
-    <a class="btn btn-primary" href="{{page.project_url}}">
-      <i class="mdi mdi-{{page.icon}}"></i>
-      {{ page.project_title }}
-    </a>
-    {% endif %}
-    {% if page.paper_title %}
-    <a class="btn btn-primary-outline" href="{{page.paper_url}}">
-      <i class="mdi mdi-file-pdf"></i>
-      {{page.paper_title}}
-    </a>
-    {% endif %}
-    {% if page.link_title %}
-    <a class="btn btn-primary-outline" href="{{page.link_url}}">
-      <i class="mdi mdi-link-variant"></i>
-      {{ page.link_title }}
-    </a>
-    {% endif %}
-    {% if page.github %}
-    <a class="btn btn-primary-outline" href="{{page.github}}">
-      <i class="mdi mdi-github-circle"></i>
-      Source
-    </a>
-    {% endif %}
+
+  <div class="media">
+    <h1 class="d-flex mr-3">
+      <i class="mdi mdi-{{page.icon}} align-middle"></i>
+    </h1>
+    <div class="media-body">
+      <h3 class="mt-0">{{page.title}}</h3>
+      <span class="text-muted">
+        {{ page.date | date: "%B %d %Y" }}
+      </span>
+      <br/>
+      <br/>
+      {% if page.project_title %}
+        <dl class="row">
+          <dt class="col-sm-1 text-right">
+            <h5><i class="mdi mdi-link-variant align-middle"></i></h5>
+          </dt>
+          <dd class="col-sm-11">
+            <h5><a href="{{page.project_url}}"> {{ page.project_title }} </a></h5>
+          </dd>
+        </dl>
+      {% endif %}
+      {% if page.paper_title %}
+        <dl class="row">
+          <dt class="col-sm-1 text-right">
+            <h5><i class="mdi mdi-file-pdf align-middle"></i></h5>
+          </dt>
+          <dd class="col-sm-11">
+            <h5><a href="{{page.paper_url}}"> {{ page.paper_title }} </a></h5>
+          </dd>
+        </dl>
+      {% endif %}
+      {% if page.github %}
+        <dl class="row">
+          <dt class="col-sm-1 text-right">
+            <h5><i class="mdi mdi-code-tags align-middle"></i></h5>
+          </dt>
+          <dd class="col-sm-11">
+            <h5><a href="{{page.github}}"> Code </a></h5>
+          </dd>
+        </dl>
+      {% endif %}
+    </div>
   </div>
-  <br/>
-  <br/>
-  {% endif %}
 
-  {% if page.image %}
-  <a href="{{ page.imagelink }}">
-    <img src="{{ page.image }}" class="img-fluid" alt="...">
-  </a>
-  <br/>
-  <br/>
-  {% endif %}
-
-  <div class="postContent">
+  <section>
     {{ content }}
-  </div>
+  </section>
 
 </article>

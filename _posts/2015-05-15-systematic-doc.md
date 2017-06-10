@@ -8,7 +8,6 @@ icon: flash
 paper_title: Systematic Energy Utilization Optimization in DesignBuilder
 paper_url: /papers/systematic.pdf
 
-thumbnail: /images/systematic.png
 ---
 
 This is a report Akshaya Kumar and I compiled in May 2015, as part of the

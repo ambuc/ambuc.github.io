@@ -4,7 +4,6 @@ layout: post
 
 icon: projector
 
-thumbnail: http://40.media.tumblr.com/a2ef0cfdcb55bf53e26e6d6a994d4ec2/tumblr_mxarxjHPBz1t5d2z2o3_1280.jpg
 ---
 
 When I first came to college, I had big plans to cover my room in glow-in-the-dark stars. It occurred to me upon arrival that my roommate might not be as crazy about the idea as I was.
@@ -17,9 +16,9 @@ I lasercut the patterns from a large piece of opaque blue acrylic, and cut the j
 
 # Images
 
-![alt](http://36.media.tumblr.com/32c9274abc25ecfe9dfe9034c1c78626/tumblr_mxarxjHPBz1t5d2z2o2_1280.jpg)
-![alt](http://41.media.tumblr.com/d2442628cba25dccb07709426af0d309/tumblr_mxarxjHPBz1t5d2z2o7_1280.jpg)
+![alt](http://40.media.tumblr.com/32c9274abc25ecfe9dfe9034c1c78626/tumblr_mxarxjHPBz1t5d2z2o2_1280.jpg)
+![alt](http://40.media.tumblr.com/d2442628cba25dccb07709426af0d309/tumblr_mxarxjHPBz1t5d2z2o7_1280.jpg)
 ![alt](http://40.media.tumblr.com/a2ef0cfdcb55bf53e26e6d6a994d4ec2/tumblr_mxarxjHPBz1t5d2z2o3_1280.jpg)
 ![alt](http://40.media.tumblr.com/1ebc645d6f3a02fd7139bad051ef96ed/tumblr_mxarxjHPBz1t5d2z2o5_1280.jpg)
-![alt](http://41.media.tumblr.com/095ab9acc9ff576e3f111d28b0003f49/tumblr_mxarxjHPBz1t5d2z2o6_1280.jpg)
+![alt](http://40.media.tumblr.com/095ab9acc9ff576e3f111d28b0003f49/tumblr_mxarxjHPBz1t5d2z2o6_1280.jpg)
 ![alt](http://40.media.tumblr.com/8a7b7f4b7336bff54512430d3d7ea7b1/tumblr_mxarxjHPBz1t5d2z2o10_1280.jpg)

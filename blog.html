@@ -3,7 +3,6 @@ layout: default
 title: Blog
 ---
 
-
 <!--
   {% if post.thumbnail %}
   <div class="card hidden-xs-down" style="">
@@ -11,98 +10,55 @@ title: Blog
   </div>
   {% endif %}
 -->
-{% for post in site.posts %}
-<div class="media">
-  <img class="d-flex mr-3" src="{{post.thumbnail}}" alt="Generic placeholder
-  image" width="150px;">
-  <div class="media-body">
-    <h6 class="">{{ post.date | date : "%b %d %y" }}</h6>
-    <h5 class=""> 
-      <a href="{{site.baseurl}}{{post.url}}">
-        {{ post.title }}
-      </a>
-    </h5>
-    <dl class="row">
-      {% if post.project_title %}
-      <dt class="col-sm-1 text-right"> 
-        <i class="mdi mdi-{{post.icon}}"></i> 
-      </dt>
-      <dd class="col-sm-11">
-        <a href="{{post.project_url}}">
-          {{ post.project_title }}
-        </a>
-      </dd>
-      {% endif %}
-      {% if post.paper_title %}
-      <dt class="col-sm-1 text-right"> 
-        <i class="mdi mdi-file-pdf"></i> 
-      </dt>
-      <dd class="col-sm-11">
-        <a href="{{post.paper_url}}">
-          Paper
-        </a>
-      </dd>
-      {% endif %}
-      {% if post.link_title %}
-      <dt class="col-sm-1 text-right"> 
-        <i class="mdi mdi-link-variant"></i> 
-      </dt>
-      <dd class="col-sm-11">
-        <a href="{{post.link_url}}">
-          {{ post.link_title }}
-        </a>
-      </dd>
-      {% endif %}
-      {% if post.github %}
-      <dt class="col-sm-1 text-right"> 
-        <i class="mdi mdi-github-circle"></i> 
-      </dt>
-      <dd class="col-sm-11">
-        <a href="{{post.github}}">
-          Code
-        </a>
-      </dd>
-      {% endif %}
-    </dl>
-  </div>
-</div>
-<br/>
-{% endfor %}
-
-<!--
-  <table id='postTable'>
+<table class="table table-sm">
+  <thead>
+    <th> </th>
+    <th> Title </th>
+    <th class="hidden-sm-down"> Demo </th>
+    <th class="hidden-sm-down"> Paper </th>
+    <th class="hidden-sm-down"> Code </th>
+  </thead>
+  <tbody>
   {% for post in site.posts %}
-  <tr>
-  <th> <div class="btn-group" role="group" aria-label="Second group"> <a class="btn btn-link" href="#"> {{ post.date | date: "%b %y" }} </a> </div> </th>
-  <td>
-  <div class="btn-group btn-group-lg" role="group" aria-label="Second group"> <a class="btn btn-secondary" href="{{ site.baseurl }}{{ post.url }}"> {{post.title}} </a> </div>
-  <br/>
+    <tr>
+      <td class="align-middle">
+        <h2 style="margin-right:15px;"><i class="mdi mdi-{{post.icon}} align-middle"></i></h2>
+      </td>
 
-  {% if post.project_title or post.paper_title or post.link_title or post.github %}
-  <div class="btn-group" role="group" aria-label="Second group">
+      <td class="align-middle">
+        <span class="text-muted hidden-md-up">
+          {{ post.date | date: "%d %b %y" }}
+        </span>
+        <a href="{{site.baseurl}}{{post.url}}"> {{ post.title }} </a>
+      </td>
 
-  {% if post.project_title %}
-  <a class="btn btn-primary" href="{{post.project_url}}"> <i class="mdi mdi-{{post.icon}}"></i> {{ post.project_title }} </a>
-  {% endif %}
 
-  {% if post.paper_title %}
-  <a class="btn btn-primary-outline" href="{{post.paper_url}}"> <i class="mdi mdi-file-pdf"></i> Paper </a>
-  {% endif %}
+      <td class="hidden-sm-down">
+      {% if post.project_title %}
+        <a class="btn btn-secondary btn-lg" href="{{post.project_url}}" role="button">
+          <i class="mdi mdi-link-variant"></i>
+        </a>
+      {% endif %}
+      </td>
 
-  {% if post.link_title %}
-  <a class="btn btn-primary-outline" href="{{post.link_url}}"> <i class="mdi mdi-link-variant"></i> {{ post.link_title }} </a>
-  {% endif %}
+      <td class="hidden-sm-down">
+      {% if post.paper_title %}
+        <a class="btn btn-secondary btn-lg" href="{{post.paper_url}}" role="button">
+          <i class="mdi mdi-file-pdf"></i>
+        </a>
+      {% endif %}
+      </td>
 
-  {% if post.github %}
-  <a class="btn btn-primary-outline" href="{{post.github}}"> <i class="mdi mdi-github-circle"></i> Source </a>
-  {% endif %}
-  </div>
-  <br/>
-  {% endif %}
-  <br/>
-  </td>
-  </tr>
+      <td class="hidden-sm-down">
+      {% if post.github %}
+        <a class="btn btn-secondary btn-lg" href="{{post.github}}" role="button">
+          <i class="mdi mdi-code-tags"></i>
+        </a>
+      {% endif %}
+      </td>
 
+    </tr>
   {% endfor %}
-  </table>
--->
+  </tbody>
+</table>
+
