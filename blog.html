@@ -11,54 +11,53 @@ title: Blog
   {% endif %}
 -->
 <table class="table table-sm">
-  <thead>
+  <tr>
     <th> </th>
     <th> Title </th>
-    <th class="hidden-sm-down"> Demo </th>
-    <th class="hidden-sm-down"> Paper </th>
-    <th class="hidden-sm-down"> Code </th>
-  </thead>
-  <tbody>
+    <td class="hidden-sm-down text-center"> Demo </td>
+    <td class="hidden-sm-down text-center"> Paper </td>
+    <td class="hidden-sm-down text-center"> Code </td>
+  </tr>
   {% for post in site.posts %}
     <tr>
-      <td class="align-middle">
-        <h2 style="margin-right:15px;"><i class="mdi mdi-{{post.icon}} align-middle"></i></h2>
+      <td class="align-middle text-center" style="padding-right:20px;">
+        <h2 style="margin-bottom:0px; ">
+          <i class="mdi mdi-{{post.icon}} align-middle"></i>
+        </h2>
       </td>
 
       <td class="align-middle">
-        <span class="text-muted hidden-md-up">
+        <span class="text-muted">
           {{ post.date | date: "%d %b %y" }}
         </span>
         <a href="{{site.baseurl}}{{post.url}}"> {{ post.title }} </a>
       </td>
 
-
       <td class="hidden-sm-down">
       {% if post.project_title %}
-        <a class="btn btn-secondary btn-lg" href="{{post.project_url}}" role="button">
-          <i class="mdi mdi-link-variant"></i>
+        <a class="btn btn-link btn-lg" href="{{post.project_url}}" role="button">
+          <h4><i class="mdi mdi-link-variant"></i></h4>
         </a>
       {% endif %}
       </td>
 
       <td class="hidden-sm-down">
       {% if post.paper_title %}
-        <a class="btn btn-secondary btn-lg" href="{{post.paper_url}}" role="button">
-          <i class="mdi mdi-file-pdf"></i>
+        <a class="btn btn-link btn-lg" href="{{post.paper_url}}" role="button">
+          <h4><i class="mdi mdi-file-pdf"></i></h4>
         </a>
       {% endif %}
       </td>
 
       <td class="hidden-sm-down">
       {% if post.github %}
-        <a class="btn btn-secondary btn-lg" href="{{post.github}}" role="button">
-          <i class="mdi mdi-code-tags"></i>
+        <a class="btn btn-link btn-lg" href="{{post.github}}" role="button">
+          <h4><i class="mdi mdi-code-tags"></i></h4>
         </a>
       {% endif %}
       </td>
 
     </tr>
   {% endfor %}
-  </tbody>
 </table>
 

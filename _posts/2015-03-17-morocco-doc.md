@@ -2,12 +2,9 @@
 title: Design and Characteristics of a Solar Field
 description: This is a report I helped compile in March 2015, as part of the MJ2412 Renewable Energy Technology course at KTH, in Stockholm.
 layout: post
-
 icon: weather-sunny
-
 paper_title: MJ2412 Renewable Energy Technology - Morocco Proposal
 paper_url: /papers/Morocco.pdf
-
 ---
 
 This is a report Alexandre Oudet, Jean-Fraņcois Olivier, Heinrich Boeing, Akshaya Kumar, and I compiled in March 2015, as part of the _MJ2412 Renewable Energy Technology_ course at _KTH_, in Stockholm. We designed and evaluated the feasibility and necessary physical and mechanical constraints on a number of potential technologies involved in the construction and operation of a solar field. Physical models were developed in conjunction with financial data, to estimate the potential supply and forecasted demand in the region. An iterative method was used to calculate all relevant power plant variables to some optimal efficiency.

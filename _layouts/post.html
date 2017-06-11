@@ -5,48 +5,38 @@ layout: default
 <article class="post">
   <br/>
 
-
   <div class="media">
     <h1 class="d-flex mr-3">
       <i class="mdi mdi-{{page.icon}} align-middle"></i>
     </h1>
     <div class="media-body">
-      <h3 class="mt-0">{{page.title}}</h3>
-      <span class="text-muted">
+      <h2 class="mt-0">{{page.title}}</h2>
+      <h4 class="text-muted">
         {{ page.date | date: "%B %d %Y" }}
-      </span>
+      </h4>
+      <h5>
+        <ul class="list-inline">
+          {% if page.project_title %}
+          <li class="list-inline-item">
+            <i class="mdi mdi-link-variant align-middle"></i>
+            <a href="{{page.project_url}}"> {{ page.project_title }} </a>
+          </li>
+          {% endif %}
+          {% if page.paper_title %}
+          <li class="list-inline-item">
+            <i class="mdi mdi-file-pdf align-middle"></i>
+            <a href="{{page.paper_url}}"> {{ page.paper_title }} </a>
+          </li>
+          {% endif %}
+          {% if page.github %}
+          <li class="list-inline-item">
+            <i class="mdi mdi-code-tags align-middle"></i>
+            <a href="{{page.github}}">Code</a>
+          </li>
+          {% endif %}
+        </ul>
+      </h5>
       <br/>
-      <br/>
-      {% if page.project_title %}
-        <dl class="row">
-          <dt class="col-sm-1 text-right">
-            <h5><i class="mdi mdi-link-variant align-middle"></i></h5>
-          </dt>
-          <dd class="col-sm-11">
-            <h5><a href="{{page.project_url}}"> {{ page.project_title }} </a></h5>
-          </dd>
-        </dl>
-      {% endif %}
-      {% if page.paper_title %}
-        <dl class="row">
-          <dt class="col-sm-1 text-right">
-            <h5><i class="mdi mdi-file-pdf align-middle"></i></h5>
-          </dt>
-          <dd class="col-sm-11">
-            <h5><a href="{{page.paper_url}}"> {{ page.paper_title }} </a></h5>
-          </dd>
-        </dl>
-      {% endif %}
-      {% if page.github %}
-        <dl class="row">
-          <dt class="col-sm-1 text-right">
-            <h5><i class="mdi mdi-code-tags align-middle"></i></h5>
-          </dt>
-          <dd class="col-sm-11">
-            <h5><a href="{{page.github}}"> Code </a></h5>
-          </dd>
-        </dl>
-      {% endif %}
     </div>
   </div>
 

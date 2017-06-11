@@ -1,12 +1,9 @@
 ---
 title: Partial Mechanical Design of a Pantograph
 layout: post
-
 icon: math-compass
-
 project_title: /pantograph
 project_url: http://jbuckland.com/pantograph/delta.html
-
 github: http://github.com/ambuc/pantograph
 ---
 <figure class="figure" style='width: 100%; height: 400px;'>
