@@ -436,16 +436,14 @@ Let's do it.
 
 ## `valuesFrom` in Practice
 
-Here's how it all looks together: `valuesFrom` is a wrapper for `vf'` and
-`vf''`, which do  the heavy lifting of assembling the list comprehension,
-evaluating it, nubbing it, and then creating a `Map` from the union of the two
-previous maps, such that 
+Here's how it all looks together: `valuesFrom range` does a `M.findWithDefault
+(S.empty) range` on a map, which is the union of two smaller maps:
 
 <center>$\text{Map}([1..n]) = \text{Map}(n) \  \bigcup \ \text{Map}([1..(n-1)])$</center><br/>
 
-Note that `vf'` and `vf''` both take `pM`, the previously assembled map: this
-means that we can write `va <- S.toList $ M.findWithDefault S.empty as pM`
-instead of `va <- valuesFrom as` as previous.
+where `prevMap` is the `mkMap` of a smaller subset, and `thisMap` is the set of
+the values of the expressions generated in `exprsFrom`, which uses `valsFrom`
+the partitioned right- and left-available values. Check it out:
 
 {% highlight haskell %}
 valuesFrom :: [Val] -> S.Set Val
