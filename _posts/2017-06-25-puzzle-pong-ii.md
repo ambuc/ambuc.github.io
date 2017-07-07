@@ -54,7 +54,7 @@ Haskell makes it easy to create abstract data types and start playing with them.
 We can represent our values `Val` as unrounded ratios of long ints, or
 `Integer`s. This means we never lose precision to rounding / near-zero numbers.
 {% highlight haskell %}
-type Val   = Ratio Integer
+type Val = Ratio Integer
 {% endhighlight %}
 
 As we discovered before, there are two things we can do to `Val`s:
@@ -200,9 +200,9 @@ I'm not sure that will carry over well to `calc2`:
 
 {% highlight haskell %}
 calc2 :: Fn -> (Maybe Val, Maybe Val) -> Maybe Val
-calc2 _    (Nothing, _)     = Nothing
-calc2 _    (_, Nothing)     = Nothing
-calc2 Plus (Just a, Just b) = Just $ a + b
+calc2 _    (Nothing, _      ) = Nothing
+calc2 _    (_,       Nothing) = Nothing                                      --_
+calc2 Plus (Just a,  Just b ) = Just $ a + b
 calc2 Minus ...
 {% endhighlight %}
 
@@ -250,7 +250,7 @@ eval (E1 f e) = if (isJust $ eval e)
 This is nuts. Luckily this type of implicit `Maybe` checking  is easy, since the
 `Maybe` type [is a
 monad](https://hackage.haskell.org/package/base-4.9.1.0/docs/Prelude.html#t:Maybe),
-which means it implements the Monad, Functor, and Applicative types.
+and implements the Monad, Functor, and Applicative types.
 
 ### Functors, really quick
 
@@ -264,7 +264,6 @@ Note also that `<$>` is an infix synonym for `fmap`. Confused? See the
 following examples:
 
 ```
-input                                  output
 > map (+1) [1,2]                       [2,3]
 > fmap (+1) (Just 1)                   Just 2
 > (+1) <$> Just 1                      Just 2
@@ -312,7 +311,7 @@ There's lots more to the monad, but for now we can use it as a way to take a
 value in context, apply a context-aware function,  and return some output in
 context.
 ```
-> calc1 Fact =<< Just (4%1)            Just (Just (24%1))
+> calc1 Fact =<< Just (4%1)            Just (24%1)
 > calc1 Fact =<< Nothing               Nothing
 ```
 What about `calc2`? It needs to take a tuple of `Expr`s, and neither of them can
@@ -359,14 +358,16 @@ all of them.
 
 ## Generating all expressions
 
-Let's talk about partitioning a strictly ordered list. One interesting aspect of
-this problem is that because our numbers have to be _in order_, the nodes
-containing the values $[1..5]$ will appear in order, from left to right, as the
+Let's talk about partitioning a strictly ordered list. 
+
+One interesting aspect of this problem is that because our numbers have to be
+_in order_, the nodes containing the values $[1..5]$ will appear in order, from
+left to right, as the
 terminal nodes of our _AST_. This means that we can generate all possible ASTs
 by taking our root node and splitting the numbers $[1..5]$ at some point,
 throwing the lesser half on the left, and the greater half on the right.
 
-![](/images/ops/part-one.png) ![](/images/ops/part-two.png) ![](/images/ops/part-three.png) ![](/images/ops/part-four.png)
+[ ![](/images/ops/part-one.png), ![](/images/ops/part-two.png), ![](/images/ops/part-three.png), ![](/images/ops/part-four.png) ]
 
 It's easy to see how we can apply this recursively to generate all tree shapes.
 Then we can insert all possible iterations at each `op` node, and all
@@ -392,8 +393,8 @@ This is excellent. Let's write the function `valuesFrom`, which takes an ordered
 list and returns all possible values which can be generated from combining it
 as described above. Note:
 
- - `valuesFrom 1` will just be `[1, 1!] = [1]`
- - `valuesFrom 2` will just be `[2, 2!] = [2,4]`
+ - `valuesFrom 1` will just be `[1, 1!] = [1,1]`
+ - `valuesFrom 3` will just be `[3, 3!] = [3,6]`
 
 {% highlight haskell %}
 valuesFrom :: [Val] -> [Val]
@@ -419,16 +420,19 @@ Here's why: in calling `valuesFrom [1,2,3,4,5]`, we end up evaluating something
 like `valuesFrom [2,3,4]` at least twice: once as part of `[1,2,3,4]`, and once
 as a part of `[2,3,4,5]`. This can be an expensive cost to pay.
 
-So let's generate a big `Map`. (NB: `Map` is Haskell's version of a key/value
-pairing, what would be a dict in Python.) Here's what it will contain:
+So let's generate a big `Map`. On that note, `Map` is Haskell's version of a
+key/value pairing, what would be a dict in Python. Here's what it will contain:
+
   - the keys in this map should be consecutive sequences like `[1], [1,2],
     [2,3,4], [4,5]`, etc., and
-  - the values should be sets of values (`S.Set Val`) which can be created from
+  - the values should be sets of values `S.Set Val` which can be created from
     combining those numbers in the key.
 
 To generate this recursively from the bottom up, we can first generate a map of
 all keys of length 1, and then use it to quickly generate a map of all keys of
 length 2, and so on and so on and so on. 
+
+Let's do it.
 
 ## `valuesFrom` in Practice
 
@@ -436,7 +440,8 @@ Here's how it all looks together: `valuesFrom` is a wrapper for `vf'` and
 `vf''`, which do  the heavy lifting of assembling the list comprehension,
 evaluating it, nubbing it, and then creating a `Map` from the union of the two
 previous maps, such that 
-$\text{Map}([1..n]) = \text{Map}(n) \  \bigcup \ \text{Map}([1..(n-1)])$.
+
+<center>$\text{Map}([1..n]) = \text{Map}(n) \  \bigcup \ \text{Map}([1..(n-1)])$</center><br/>
 
 Note that `vf'` and `vf''` both take `pM`, the previously assembled map: this
 means that we can write `va <- S.toList $ M.findWithDefault S.empty as pM`
@@ -445,24 +450,26 @@ instead of `va <- valuesFrom as` as previous.
 {% highlight haskell %}
 valuesFrom :: [Val] -> S.Set Val
 valuesFrom range = M.findWithDefault S.empty range 
-                 $ gen (length range)
+                 $ mkMap (length range)
   where 
-    gen :: Int -> M.Map [Val] (S.Set Val)
-    gen 0 = M.empty
-    gen n = M.union prevMap thisMap
-      where thisMap = M.fromList $ map (id &&& vf' prevMap) $ subsequences n
-            prevMap = gen $ pred n
+    mkMap :: Int -> M.Map [Val] (S.Set Val)
+    mkMap 0 = M.empty
+    mkMap n = M.union prevMap thisMap
+      where 
+        prevMap = mkMap $ pred n
+        thisMap = foldr (\sq -> M.insert sq $ mkSet sq) M.empty $ subsequences n
+        mkSet   = S.fromList . mapMaybe eval . exprsFrom prevMap
 
-    vf'  pM xs  = S.fromList $ mapMaybe eval $ vf'' pM xs
-
-    vf'' pM [x] = [ E1 f (V x) | f <- functions ]
-    vf'' pM xs  = [ E1 f $ E2 o (V va, V vb)
-                  |        f <- functions
-                  ,        o <- operations
-                  , (as, bs) <- mkPartitions xs
-                  ,       va <- S.toList $ M.findWithDefault S.empty as pM
-                  ,       vb <- S.toList $ M.findWithDefault S.empty bs pM
-                  ]
+    exprsFrom :: M.Map [Val] (S.Set Val) -> [Val] -> [Expr]
+    exprsFrom prevMap [x] = [ E1 f (V x) | f <- functions ]
+    exprsFrom prevMap xs  = [ E1 f $ E2 o (V va, V vb)
+                            |        f <- functions
+                            ,        o <- operations
+                            , (as, bs) <- mkPartitions xs
+                            ,       va <- valsFrom as
+                            ,       vb <- valsFrom bs
+                            ]
+      where valsFrom xs = S.toList $ M.findWithDefault S.empty xs prevMap
 
     subsequences n = filter ((== n) . length) $ map (take n) $ tails range
 {% endhighlight %}
