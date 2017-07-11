@@ -1,7 +1,7 @@
 ---
-title: Puzzle Pong - Least Nonconstructable Positive Integer (Part One)
+title: Puzzle Pong - Least Nonconstructable Positive Integer
 layout: post
-icon: calculator
+icon: file-tree
 github: https://gist.github.com/ambuc/731f2d9b789a5e4e32bdafbd60bf7ff8
 ---
 
@@ -41,7 +41,7 @@ Let's represent an expression like $(1!+2)-3$ as an [abstract syntax
 tree](https://en.wikipedia.org/wiki/Abstract_syntax_tree); terminal nodes are
 integers, and all the other nodes are operators.
 
-$(1! + 2) - 3$ = ![](/images/ops/ast-one.png)
+<center> $(1! + 2) - 3$ = <img src="/images/ops/ast-one.png"/></center><br/>
 
 It makes sense to have two types of operators; functions of one
 argument, like the factorial, and combining functions of two arguments, like all
@@ -101,7 +101,6 @@ instance Show Expr where
 If we play with this in a `ghci` shell, we see:
 
 ```
-input                                                                 output
 > E2 Sub ( E2 Plus ( E1 Fact ( V 1 ), V 2 ), V 3 )                    ((1!+2)-3)
 ```
 
@@ -148,7 +147,7 @@ Obviously not  all computation  is valid. We refuse to:
 One hurdle of this problem was the discovery that it is possible to quickly
 generate numbers too large for the computer to handle: for example, 
 
-<center> <code>1 + (2^(3^(4^5)))</code> = $1 + 2^{3^{4^5}} \approx 10^{10^{488}}$ </center> <br/>
+<center> <code>1+(2^(3^(4^5)))</code> = $1 + 2^{3^{4^5}} \approx 10^{10^{488}}$ </center> <br/>
 
 So we end up doing a fair bit of bounds checking. We also refuse to:
  - compute  the factorial of any integer greater than a hundred,
@@ -201,7 +200,7 @@ I'm not sure that will carry over well to `calc2`:
 {% highlight haskell %}
 calc2 :: Fn -> (Maybe Val, Maybe Val) -> Maybe Val
 calc2 _    (Nothing, _      ) = Nothing
-calc2 _    (_,       Nothing) = Nothing                                      --_
+calc2 _    (_,       Nothing) = Nothing                                      
 calc2 Plus (Just a,  Just b ) = Just $ a + b
 calc2 Minus ...
 {% endhighlight %}
@@ -274,7 +273,7 @@ One benefit of `fmap`ping over the `Maybe` monad is that if we pass it
 `Nothing`, it doesn't need  to unwrap and apply; it'll just pass `Nothing`
 through unscathed.
 
-### `<$>`, really quick
+### `fmap`, really quick
 
 So remember the above problem:
 ```
@@ -288,9 +287,7 @@ OK, that's expected. Let's try using `<$>`
 ```
 So, good news and bad news. We can unwrap `Just a` and apply the function to the
 interior, but we pass it back re-wrapped, since that's what `<$>` does. Sadly,
-that's also what `calc1` does.
-
-Here's a clue:
+that's also what `calc1` does. Here's a clue:
 ```
 > :type (<$>)                          (<$>) :: Functor f => (a -> b) -> f a -> f b
 ```
@@ -315,31 +312,15 @@ context.
 > calc1 Fact =<< Nothing               Nothing
 ```
 What about `calc2`? It needs to take a tuple of `Expr`s, and neither of them can
-be `Nothing`.
-
-### `<*>`, really quick
-
-Turns out we can use the fmap infix `<$>` and their friend the sequential
-application infix `<*>`. Check it out:
+be `Nothing`. Turns out we can use the fmap infix `<$>` and their friend the
+sequential application infix `<*>`. Here's a set of three trials:
 
 ```
-> (+) <$> Just 1 <*> Just 2            Just 3
-> (+) <$> Just 1 <*> Nothing           Nothing
-> (+) <$> Nothing <*> Just 2           Nothing
+(+) <$> Just 1  <*> Just 2             Just 3
+(+) <$> Just 1  <*> Nothing            Nothing
+(+) <$> Nothing <*> Just 2             Nothing
 ```
-Or, for tupling instead of addition, we find:
-```
-> (,) <$> Just 1 <*> Just 2            Just (1,2)
-> (,) <$> Just 1 <*> Nothing           Nothing
-> (,) <$> Nothing <*> Just 2           Nothing
-```
-So finally we can simply write
-
-{% highlight haskell %}
-calc2 o =<< (,) <$> eval e1 <*> eval e2
-{% endhighlight %}
-
-And that's why
+So finally we can simply write `calc2 o =<< (,) <$> eval e1 <*> eval e2`. Thus, 
 
 {% highlight haskell %}
 eval :: Expr -> Maybe Val
@@ -347,8 +328,6 @@ eval (V a)           = Just a
 eval (E1 f e)        = calc1 f =<< eval e
 eval (E2 o (e1, e2)) = calc2 o =<< (,) <$> eval e1 <*> eval e2
 {% endhighlight %}
-
-Phew! OK, back to the math.
 
 # Solving the Puzzle
 
@@ -361,13 +340,13 @@ all of them.
 Let's talk about partitioning a strictly ordered list. 
 
 One interesting aspect of this problem is that because our numbers have to be
-_in order_, the nodes containing the values $[1..5]$ will appear in order, from
-left to right, as the
-terminal nodes of our _AST_. This means that we can generate all possible ASTs
-by taking our root node and splitting the numbers $[1..5]$ at some point,
-throwing the lesser half on the left, and the greater half on the right.
+_in order_, the nodes containing the values (for  example) $[1..3]$ will appear
+in order, from left to right, as the terminal nodes of our _AST_. This means
+that we can generate all possible ASTs by taking our root node and splitting the
+numbers $[1..3]$ at some point, throwing the lesser half on the left, and the
+greater half on the right.
 
-[ ![](/images/ops/part-one.png), ![](/images/ops/part-two.png), ![](/images/ops/part-three.png), ![](/images/ops/part-four.png) ]
+<center> <img src="/images/ops/part.png"> </center> <br/>
 
 It's easy to see how we can apply this recursively to generate all tree shapes.
 Then we can insert all possible iterations at each `op` node, and all
@@ -377,8 +356,8 @@ possible functions _at_ each function. There are only two functions, and one is
 We implement the partition algorithm as:
 
 {% highlight haskell %}
-mkPartitions :: [a] -> [([a],[a])]
-mkPartitions xs = map (\n -> (take n &&& drop n) xs) [1..(length xs-1)]
+mkPart :: [a] -> [([a],[a])]
+mkPart xs = tail $ init $ zip (inits xs) (tails xs)
 {% endhighlight %}
 
 such that
@@ -416,9 +395,19 @@ anything, but it's a good start.
 
 In practice, we would like to cache `valuesFrom`. 
 
-Here's why: in calling `valuesFrom [1,2,3,4,5]`, we end up evaluating something
-like `valuesFrom [2,3,4]` at least twice: once as part of `[1,2,3,4]`, and once
-as a part of `[2,3,4,5]`. This can be an expensive cost to pay.
+Here's why: in calling `valuesFrom [1,2,3,4,5]`, we end up evaluating
+`valuesFrom [2,3,4]` twice: once as part of `[1,2,3,4]` and once as part of
+`[2,3,4,5]`. See the above tree, which is an expansion of the earlier one for a
+larger ordered list.
+
+<center> <img src="/images/ops/part_big.png"> </center> <br/>
+
+You can see we end up evaluating `f([2,3])` twice, `f([1,2])` twice, `f([3,4])`
+twice, etc. 
+
+You can imagine how this inefficiency bares its teeth for higher-length ordered
+lists; evaluating `f([1,2,3,4,5])` will evaluate `[2,3]` four times; as a part
+of `[1,2,3]`,`[1,2,3,4]`,`[2,3,4]`, and `[2,3,4,5]`.
 
 So let's generate a big `Map`. On that note, `Map` is Haskell's version of a
 key/value pairing, what would be a dict in Python. Here's what it will contain:
@@ -472,6 +461,11 @@ valuesFrom range = M.findWithDefault S.empty range
     subsequences n = filter ((== n) . length) $ map (take n) $ tails range
 {% endhighlight %}
 
+So, with caching, here's what each `valuesFrom` function call ends up looking
+like:
+
+<center> <img src="/images/ops/part_cached.png"> </center> <br/>
+
 # Putting it all together
 
 We're so close to the end here. 
@@ -481,18 +475,14 @@ This returns a set we can filter for just positive integers; then we want to
 turn that into a list and find its first gap; where
 
 {% highlight haskell %}
+-- > firstGap [1,2,3,5,6] = 4
 firstGap :: (Num a, Eq a) => [a] -> a
 firstGap ls  = 1 + ls !! (head . findIndices (/=1) . gaps) ls
-
-gaps :: Num t => [t] -> [t]
-gaps [x] = []
-gaps (x:xs) = (head xs - x) : gaps xs
+  where gaps :: Num t => [t] -> [t]
+        gaps [x] = []
+        gaps (x:xs) = (head xs - x) : gaps xs
 {% endhighlight %}
 
-Such that
-```
-> firstGap [1,2,3,5,6]                 4
-```
 Finally, we can define 
 {% highlight haskell %}
 lnpi :: [Val] -> Integer
@@ -532,11 +522,202 @@ The secret to this low runtime is evaluating the values early for re-use in
 other expressions, and nubbing down lists to sets as early as possible, for
 fewer iterations.
 
-# Next Steps
+# The Puzzles
 
-There's a lot more to this puzzle to be discussed in the future, including a
-potential study of the mathematics of this puzzle and how the answer changes
-across different strictly ordered lists. I'll return the volley to Josh in that
-next post.
+So Josh actually posed me a set of puzzles. Once we discussed how the
+performance was and how easy it was to play around with different ideas in this
+space, we settled on a set of bonus problems; provided here are their questions,
+answers, runtimes, and some comments on performance.
 
+## Puzzle One
 
+**Find the least nonconstructable integer from  the ordered list `[1,2,3,4,5]`**:  
+
+This was the original problem. The solution `01.hs` was trivial:
+
+{% highlight haskell %} main = print $ lnpi [1..5] {% endhighlight %}
+
+```
+$ ghc -O2 operationsLibrary.hs 01.hs && time ./01
+159
+0m0.333s
+```
+
+## Puzzle Two
+**Find the least nonconstructable integer from any length five, strictly
+increasing sublist of `[0..9]`**: 
+
+{% highlight haskell %}
+main = print $ first (map numerator) 
+ $ minimumBy (compare `on` snd) $ map (id &&& lnpi) $ sets [0..9] 5 {% endhighlight %}
+
+```
+$ ghc -O2 operationsLibrary.hs 02.hs && time  ./02
+([0,2,6,8,9],2)
+0m39.127s
+```
+
+So I actually played a lot with trying to parallelize this one. A first
+attempt to compute one large cached map of all sublists of `[0..9]` took
+a very large amount of time, and was too large to fit entirely in memory; the
+process of swapping bits of it in and out was expensive. It turned out to be
+faster to compute `lnpi([])` from scratch each time, at anywhere from `0.03s`
+to `3s` each, depending on how many possible products were exponentially
+large and could be dropped immediately.
+
+I did play with the
+[Control.Parallel](hackage.haskell.org/package/parallel-3.2.1.1/docs/Control-Parallel.html)
+library for a bit, and ended up using `pseq` and `par` to parallelize this
+independent computation of `lnpi([])` across four cores, for a slightly
+better runtime:
+
+{% highlight haskell %}
+main = print 
+ $ first (map numerator) 
+ $ a `par` b `par` c `par` d `pseq` reduceFunc [a,b,c,d]
+where [a,b,c,d]  = map (reduceFunc . map mapFunc) 
+               $ segmentInto (sets [0..9] 5) 4
+    reduceFunc = minimumBy (compare `on` snd)
+    mapFunc    = id &&& lnpi
+    segmentInto xs n = map (\x -> take y $ drop (y*x) xs) [0..pred n]
+      where y = succ $ div (length xs) n {% endhighlight %}
+
+```
+$ ghc -j -O2 -threaded -rtsopts operationsLibrary.hs 02b.hs --make -fforce-recomp && time ./02b +RTS -N4
+([0,2,6,8,9],2)
+0m23.407s
+```
+
+## Puzzle Three (a,b)
+
+**What  lists can't make one?**
+
+Here we end up using `valuesFrom` directly; we don't care about  the `lnpi`
+at all. We can use `map (f &&& g)` which takes an input `x` and returns a
+tuple `(f x, g x)`. We use list function `elem` to see that `1` isn't a
+possible value, and print the (empty) list.
+
+{% highlight haskell %}
+main = print
+ $ filter (not.snd)
+ $ map ( id &&& elem 1 . valuesFrom ) $ sets [0..9] 5 {% endhighlight %}
+
+```
+$ ghc -O2 operationsLibrary.hs 03.hs && time ./03
+[]
+0m36.4s
+```
+
+This performance was a little lacking, but we can reoptimize by fetching the
+list of `expressionsFrom` and evaluating one-by-one to see if they are `Just
+(1%1)`; we skip the process of mapping `id`s and the cost of holding all the
+values in memory instead of printing an empty list lazily.
+
+{% highlight haskell %}
+main = print 
+ $ map (map numerator) 
+ $ filter (isNothing . find1) 
+ $ sets [0..9] 5
+where find1 xs = if null ls then Nothing else Just (head ls)
+      where ls = filter (\e -> eval e == Just (1%1)) $ expressionsFrom xs {% endhighlight %}
+
+```
+$ ghc -O2 operationsLibrary.hs 03b.hs && time ./03b
+[]
+0m7.087s
+```
+### What's `expressionsFrom`?
+
+It's a lot like `valuesFrom`, except we don't evaluate the expressions at every
+possible step. To write both `valuesFrom` and `expressionsFrom` I was able to
+extract a lot of shared abstractions. Here is the code for them both, all in
+one place. This looks different from the form of `valuesFrom` above, but it has
+the same performance and interface.
+
+{% highlight haskell %}
+makeMap :: Ord a => [a] -> ((M.Map [a] b, [a]) ->  b) -> M.Map [a] b
+makeMap range insertFn = mkMap (length range)
+  where mkMap 0   = M.empty
+        mkMap n = M.union prev this
+          where prev = mkMap (n-1)
+                this = foldr f z ls
+                  where f sq = M.insert sq $ insertFn (prev, sq)
+                        z    = M.empty
+                        ls   = filter ((==n).length) $ map (take n) $ tails range
+
+valuesFrom :: [Val] -> [Val]
+valuesFrom range = S.toList $ M.findWithDefault S.empty range $ makeMap range insFn
+  where insFn = S.fromList . mapMaybe eval . exprsFrom
+        exprsFrom :: (M.Map [Val] (S.Set Val), [Val]) -> [Expr]
+        exprsFrom (prevMap, [x]  ) = [ E1 f (V x) | f <- functions ]
+        exprsFrom (prevMap, range) = [ E1 f $ E2 o (V va, V vb)
+                                     |        f <- functions
+                                     ,        o <- operations
+                                     , (as, bs) <- mkPart range
+                                     ,       va <- valsFrom as
+                                     ,       vb <- valsFrom bs
+                                     ]
+          where valsFrom range = S.toList $ M.findWithDefault S.empty range prevMap
+
+expressionsFrom :: [Val] -> [Expr]
+expressionsFrom range = M.findWithDefault [] range $ makeMap range exprsFrom
+  where exprsFrom :: (M.Map [Val] [Expr], [Val]) -> [Expr]
+        exprsFrom (prevMap, [x]  ) = [ E1 f (V x) | f <- functions ]
+        exprsFrom (prevMap, range) = [ E1 f $ E2 o (ea, eb)
+                                     |        f <- functions
+                                     ,        o <- operations
+                                     , (as, bs) <- mkPart range
+                                     ,       ea <- exprsFrom (prevMap, as)
+                                     ,       eb <- exprsFrom (prevMap, bs)
+                                     ]
+{% endhighlight %}
+
+## Puzzle Three (c)
+
+**Print how each list *can* make one.**
+
+By using `expressionsFrom` we can find the first expression that evaluates
+to $1$, and avoid evaluating the entire possible tree.
+
+{% highlight haskell %}
+main = mapM_ print $ map (map numerator &&& find1) $ sets [0..9] 5
+where find1 xs = if null ls then Nothing else Just (head ls)
+      where ls = filter (\e -> eval e == Just (1%1)) $ expressionsFrom xs {% endhighlight %}
+
+```
+$ ghc -O2 operationsLibrary.hs 03c.hs && time ./03c
+([0,1,2,3,4],Just (0+(1+((2-3!)+4))))
+([0,1,2,3,5],Just (0+(1+(2+(3-5)))))
+([0,1,2,4,5],Just (0+((1*2)+(4-5))))
+([0,1,3,4,5],Just (0+(((1+3)!/4)-5)))
+([0,2,3,4,5],Just (0+(2+((3-4)^5))))
+([1,2,3,4,5],Just (1+((2-(3+4))+5)))
+([0,1,2,3,6],Just (0+(1+((2*3)-6))))
+([0,1,2,4,6],Just (0+(1+(2+(4-6)))))
+([0,1,3,4,6],Just (0+((1*3)+(4-6))))
+([0,2,3,4,6],Just (0+(2+(3-(4!/6)))))
+...
+0m7.085s
+```
+
+# Return Volley
+
+Josh, here is my puzzle:
+
+> I saw a [Sol Lewitt
+> exhibition](http://socks-studio.com/2016/06/15/irrational-thoughts-should-be-followed-absolutely-and-logically-sol-lewitts-variations-of-incomplete-open-cubes-1974/)
+> at a museum a few years ago which consisted of a [series of variations of
+> incomplete
+> cubes](http://socks-studio.com/img/blog/le-witt-incomplete-open-cubes-02.jpg).
+> There were 122 of them, and each was a contiguous subset of lines which traced
+> the twelve edges of the skeleton of a cube. The trick was that these subsets
+> were unique across rotation but not reflection.
+
+Create a script / renderer to generate the [table of Varations  of Incomplete
+Open
+Cubes](http://socks-studio.com/img/blog/le-witt-incomplete-open-cubes-01.jpg),
+and then apply it to the skeleton of each platonic solid.
+
+Some light reading: [Analysis of Variations of Incomplete Open Cubes by Sol
+Lewitt](http://krex.k-state.edu/dspace/bitstream/handle/2097/15809/MichaelReb2013.pdf),
+a paper by Michael Allan Reb (2011).
