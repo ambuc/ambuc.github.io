@@ -3,61 +3,24 @@ layout: default
 title: Blog
 ---
 
-<!--
-  {% if post.thumbnail %}
-  <div class="card hidden-xs-down" style="">
-  <img class="card-img-top" src="{{post.thumbnail}}" alt="Card image cap">
-  </div>
-  {% endif %}
--->
-<table class="table table-sm">
-  <tr>
-    <th> </th>
-    <th> Title </th>
-    <td class="hidden-sm-down text-center"> Demo </td>
-    <td class="hidden-sm-down text-center"> Paper </td>
-    <td class="hidden-sm-down text-center"> Code </td>
-  </tr>
-  {% for post in site.posts %}
-    <tr>
+<table class="table table-sm table-hover">
+  <tbody>
+    {% for post in site.posts %}
+    <tr onclick="window.location='{{site.baseurl}}{{post.url}}'">
       <td class="align-middle text-center" style="padding-right:20px;">
-        <h2 style="margin-bottom:0px; ">
+        <h1 style="font-size:4em; margin-bottom:0px; ">
           <i class="mdi mdi-{{post.icon}} align-middle"></i>
-        </h2>
+        </h1>
       </td>
 
       <td class="align-middle">
         <span class="text-muted">
-          {{ post.date | date: "%d %b %y" }}
+          {{ post.date | date: "%d %b %Y" }}
         </span>
+        <br/>
         <a href="{{site.baseurl}}{{post.url}}"> {{ post.title }} </a>
       </td>
-
-      <td class="hidden-sm-down">
-      {% if post.project_title %}
-        <a class="btn btn-link btn-lg" href="{{post.project_url}}" role="button">
-          <h4><i class="mdi mdi-link-variant"></i></h4>
-        </a>
-      {% endif %}
-      </td>
-
-      <td class="hidden-sm-down">
-      {% if post.paper_title %}
-        <a class="btn btn-link btn-lg" href="{{post.paper_url}}" role="button">
-          <h4><i class="mdi mdi-file-pdf"></i></h4>
-        </a>
-      {% endif %}
-      </td>
-
-      <td class="hidden-sm-down">
-      {% if post.github %}
-        <a class="btn btn-link btn-lg" href="{{post.github}}" role="button">
-          <h4><i class="mdi mdi-code-tags"></i></h4>
-        </a>
-      {% endif %}
-      </td>
-
     </tr>
-  {% endfor %}
+    {% endfor %}
+  </tbody>
 </table>
-

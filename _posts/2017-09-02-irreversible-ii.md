@@ -5,11 +5,15 @@ icon: format-rotate-90
 github: https://gist.github.com/ambuc/4b2de70b09e139dc5901bf960f14e166
 ---
 
+* TOC
+{:toc}
+
+
 # The Puzzle
 
 This  is a continuation of [Puzzle Pong -  Irreversible Cube
-I](http://jbuckland.com/irreversible/), wherein [Josh
-Mermelstein](http://joshmermelstein.com/) posed me a series of questions  about
+I](http://jbuckland.com/irreversible/).  In the first part, [Josh
+Mermelstein](http://joshmermelstein.com/) posed me a series of questions about
 the Irreversible Cube: 
 
 > Oskar van Deventer [{1}](https://www.youtube.com/user/OskarPuzzle/) presents 

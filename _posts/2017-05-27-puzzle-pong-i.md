@@ -5,6 +5,11 @@ icon: grid
 github: https://gist.github.com/ambuc/ac4ed787e1b9bb3eba08bb02c9b25c49
 ---
 
+* TOC
+{:toc}
+
+# The Puzzle
+
 [Josh Mermelstein](http://joshmermelstein.com/) and I have decided to begin
 challenging each other to a series of a math/programming puzzles. He asked me to
 generate all possible valid English-language four-by-four crossword grids; that
@@ -18,7 +23,7 @@ An example grid:
     IDEA
     TEEM
 
-## The difficulty
+## The Difficulty
 
 It's easy to think of a two really bad ways to solve this problem:
  - You could try all $26^{16} = 4.36\times10^{22}$ grids and filter by
@@ -27,7 +32,7 @@ It's easy to think of a two really bad ways to solve this problem:
    of them, so $ 2354 \text{ choose } 8 = 2.31\times10^{22}$ possible grids )
    and try and fit them, eight at a time, on a grid.
 
-# The solution
+# The Solution
 
 The best way I found was to:
  - precompute a dictionary (called `paths` here) with 
@@ -52,7 +57,7 @@ The best way I found was to:
 In this way, we guarantee that any placement will always lead to a real word in
 that row and column.
 
-## The code
+## Annotated Code
 
 I'll present the code annotated below, or in its [entirety in the attached
 gist](https://gist.github.com/ambuc/ac4ed787e1b9bb3eba08bb02c9b25c49#file-crossword-hs).
@@ -243,7 +248,8 @@ main = print $ length $ grids
 
 With comments, this is ~160 lines; without, this is ~70. 
 
-## The answer
+## Final Answer
+
 OK, what you came for. There are $686739$ distinct four-by-four crossword grids
 in English with no repeats and no diagonal symmetry. The script runs in just
 over a minute and uses far short of 100% of my memory (unlike several
@@ -314,7 +320,7 @@ this case, `nextIn` is taking up 20% of our time, and it's an $O(\log n)$
 pre-optimized Map lookup function. Might be time to stop optimizing, with a
 near-one-minute runtime.
 
-# Fun
+# More Fun with our Solver
 
 What else can we do with our program now that we have a pretty speedy crossword
 solver? Well, because Haskell is lazy it's not that hard to see _if_ there

@@ -5,6 +5,9 @@ icon: cube
 github: https://gist.github.com/ambuc/84fca250c25f72b46a16dd28eb653708
 ---
 
+* TOC
+{:toc}
+
 # The Puzzle
 
 [Josh Mermelstein](http://joshmermelstein.com/) and I have decided to begin

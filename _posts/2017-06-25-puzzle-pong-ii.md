@@ -5,6 +5,9 @@ icon: file-tree
 github: https://gist.github.com/ambuc/731f2d9b789a5e4e32bdafbd60bf7ff8
 ---
 
+* TOC
+{:toc}
+
 # The Puzzle
 
 [Josh Mermelstein](http://joshmermelstein.com/) and I have decided to begin

@@ -10,33 +10,29 @@ layout: default
       <i class="mdi mdi-{{page.icon}} align-middle"></i>
     </h1>
     <div class="media-body">
-      <h2 class="mt-0">{{page.title}}</h2>
-      <h4 class="text-muted">
-        {{ page.date | date: "%B %d %Y" }}
-      </h4>
-      <h5>
-        <ul class="list-inline">
-          {% if page.project_title %}
-          <li class="list-inline-item">
-            <i class="mdi mdi-link-variant align-middle"></i>
-            <a href="{{page.project_url}}"> {{ page.project_title }} </a>
-          </li>
-          {% endif %}
-          {% if page.paper_title %}
-          <li class="list-inline-item">
-            <i class="mdi mdi-file-pdf align-middle"></i>
-            <a href="{{page.paper_url}}"> {{ page.paper_title }} </a>
-          </li>
-          {% endif %}
-          {% if page.github %}
-          <li class="list-inline-item">
-            <i class="mdi mdi-code-tags align-middle"></i>
-            <a href="{{page.github}}">Code</a>
-          </li>
-          {% endif %}
-        </ul>
-      </h5>
+      <h1 class="mt-0">{{page.title}}</h1>
+      <h6 class="text-muted">
+        {{ page.date | date: "%b %d %Y" }}
+      </h6>
       <br/>
+      <ul>
+        {% if page.github %}
+        <li>
+          See the code on <a href="{{page.github}}" role="button">GitHub</a>.
+        </li>
+        {% endif %}
+        {% if page.project_title %}
+        <li>
+          View the <a href="{{page.project_url}}" role="button">demo</a>.
+        </li>
+        {% endif %}
+        {% if page.paper_title %}
+        <li>
+          Read the <a href="{{page.paper_url}}" role="button">paper</a>,
+          <em>"{{page.paper_title}}"</em>.  
+        </li>
+        {% endif %}
+      </ul>
     </div>
   </div>
 

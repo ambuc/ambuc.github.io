@@ -5,6 +5,9 @@ icon: cube-outline
 github: https://github.com/ambuc/cornea
 ---
 
+* TOC
+{:toc}
+
 While working on the rendering my solution for the [Irreversible Pocket
 Cube](http://jbuckland.com/irreversible/), I ended up writing a faux isometric
 rendering engine which could turn my specific Rubix Cube datastructure into

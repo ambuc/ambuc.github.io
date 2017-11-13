@@ -6,6 +6,9 @@ project_title: Hide and Seek in Gamla Stan
 project_url: http://hideandseek.ninja
 ---
 
+* TOC
+{:toc}
+
 *Project*: currently down for maintenance.
 
 ![alt text](https://raw.githubusercontent.com/ambuc/hideandseek/master/map.png)

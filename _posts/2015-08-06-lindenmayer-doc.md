@@ -8,8 +8,10 @@ project_url: http://jbuckland.com/lindenmayer
 github: http://github.com/ambuc/lindenmayer
 ---
 
-[<img src="/images/lindenmayer_thumbnail.png">](/lindenmayer)
+* TOC
+{:toc}
 
+[<img src="/images/lindenmayer_thumbnail.png">](/lindenmayer)
 
 ## About Lindenmayer Systems
 
