@@ -2,25 +2,26 @@
 layout: default
 title: Blog
 ---
+<div class="container">
+  <table class="table table-sm table-hover">
+    <tbody>
+      {% for post in site.posts %}
+      <tr onclick="window.location='{{site.baseurl}}{{post.url}}'">
+        <td class="align-middle text-center" style="padding-right:20px;">
+          <h1 style="font-size:4em; margin-bottom:0px; ">
+            <i class="mdi mdi-{{post.icon}} align-middle"></i>
+          </h1>
+        </td>
 
-<table class="table table-sm table-hover">
-  <tbody>
-    {% for post in site.posts %}
-    <tr onclick="window.location='{{site.baseurl}}{{post.url}}'">
-      <td class="align-middle text-center" style="padding-right:20px;">
-        <h1 style="font-size:4em; margin-bottom:0px; ">
-          <i class="mdi mdi-{{post.icon}} align-middle"></i>
-        </h1>
-      </td>
-
-      <td class="align-middle">
-        <span class="text-muted">
-          {{ post.date | date: "%d %b %Y" }}
-        </span>
-        <br/>
-        <a href="{{site.baseurl}}{{post.url}}"> {{ post.title }} </a>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+        <td class="align-middle">
+          <span class="text-muted">
+            {{ post.date | date: "%d %b %Y" }}
+          </span>
+          <br/>
+          <a href="{{site.baseurl}}{{post.url}}"> {{ post.title }} </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

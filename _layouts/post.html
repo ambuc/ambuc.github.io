@@ -1,43 +1,40 @@
 ---
 layout: default
 ---
-
-<article class="post">
-  <br/>
-
-  <div class="media">
-    <h1 class="d-flex mr-3">
-      <i class="mdi mdi-{{page.icon}} align-middle"></i>
-    </h1>
-    <div class="media-body">
-      <h1 class="mt-0">{{page.title}}</h1>
-      <h6 class="text-muted">
-        {{ page.date | date: "%b %d %Y" }}
-      </h6>
-      <br/>
-      <ul>
-        {% if page.github %}
-        <li>
-          See the code on <a href="{{page.github}}" role="button">GitHub</a>.
-        </li>
-        {% endif %}
-        {% if page.project_title %}
-        <li>
-          View the <a href="{{page.project_url}}" role="button">demo</a>.
-        </li>
-        {% endif %}
-        {% if page.paper_title %}
-        <li>
-          Read the <a href="{{page.paper_url}}" role="button">paper</a>,
-          <em>"{{page.paper_title}}"</em>.  
-        </li>
-        {% endif %}
-      </ul>
+<div class="container">
+  <article class="post">
+    <div class="media">
+      <h1 class="d-flex mr-3" style="font-size:3em;">
+        <i class="mdi mdi-{{page.icon}} align-middle"></i>
+      </h1>
+      <div class="media-body">
+        <h4 class="mt-0">{{page.title}}</h4>
+        <h6 class="text-muted">
+          {{ page.date | date: "%b %d %Y" }}
+        </h6>
+        <ul class="list-unstyled" style="margin-bottom:0px;">
+          {% if page.github %}
+          <li>
+            - See the code on <a href="{{page.github}}" role="button">GitHub</a>.
+          </li>
+          {% endif %}
+          {% if page.project_title %}
+          <li>
+            - View the <a href="{{page.project_url}}" role="button">demo</a>.
+          </li>
+          {% endif %}
+          {% if page.paper_title %}
+          <li>
+            - Read the <a href="{{page.paper_url}}" role="button">paper</a>,
+            <em>"{{page.paper_title}}"</em>.  
+          </li>
+          {% endif %}
+        </ul>
+      </div>
     </div>
-  </div>
-
-  <section>
-    {{ content }}
-  </section>
-
-</article>
+    <hr/>
+    <section>
+      {{ content }}
+    </section>
+  </article>
+</div>
