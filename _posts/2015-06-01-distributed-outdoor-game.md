@@ -4,6 +4,7 @@ layout: post
 icon: fingerprint
 project_title: Hide and Seek in Gamla Stan
 project_url: http://hideandseek.ninja
+tags: game webdev
 ---
 
 * TOC

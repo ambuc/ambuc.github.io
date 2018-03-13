@@ -160,3 +160,13 @@ blockquote {
 .highlight{
   overflow: hidden !important;
 }
+
+.badge {
+  font-weight: 400 !important;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  background-color: white !important;
+  color: #007bff !important;
+  font-weight: 800 !important;
+}

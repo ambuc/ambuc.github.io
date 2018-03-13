@@ -5,6 +5,7 @@ icon: math-compass
 project_title: /pantograph
 project_url: http://jbuckland.com/pantograph/delta.html
 github: http://github.com/ambuc/pantograph
+tags: javascript d3js graphics
 ---
 <figure class="figure" style='width: 100%; height: 400px;'>
   <iframe class="figure-img img-fluid img-rounded" src="https://player.vimeo.com/video/31933085?color=ffffff&title=0&byline=0&portrait=0" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style='width:100%; height:390px;'></iframe>

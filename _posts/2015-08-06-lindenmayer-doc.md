@@ -6,6 +6,7 @@ icon: pine-tree
 project_title: /lindenmayer
 project_url: http://jbuckland.com/lindenmayer
 github: http://github.com/ambuc/lindenmayer
+tags: javascript graphics
 ---
 
 * TOC

@@ -3,6 +3,7 @@ title: Puzzle Pong - Irreversible Cube I
 layout: post
 icon: cube
 github: https://gist.github.com/ambuc/84fca250c25f72b46a16dd28eb653708
+tags: puzzle haskell
 ---
 
 * TOC

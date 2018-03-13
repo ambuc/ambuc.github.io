@@ -16,13 +16,14 @@
       <div class="row">
         <div class="col">
           {% include header.html %}
-          <hr/>
           {{ content }}
-          <hr/>
           {% include footer.html %}
         </div>
       </div>
     </div>
     {% include analytics.html %}
+    {% if site.tags != "" %}
+      {% include collecttags.html %}
+    {% endif %}
   </body>
 </html>

@@ -2,6 +2,7 @@
 title: Useful Custom Macros for Typesetting Vector Calculus in LaTeX
 layout: post
 icon: math-compass
+tags: latex
 ---
 
 Mostly, these are copied from [Lily Chen's](https://swagergroup.mit.edu/lily-chen) own LaTeX work.

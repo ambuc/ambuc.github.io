@@ -3,6 +3,7 @@ title: OSC-Responsive 3D Graphics in Rust
 layout: post
 icon: vector-square
 github: https://github.com/ambuc/voxel-preview
+tags: rustlang graphics
 ---
 
 * TOC

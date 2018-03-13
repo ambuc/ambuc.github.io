@@ -6,6 +6,7 @@ icon: wikipedia
 project_title: The Test Of Time
 project_url: http://jbuckland.com/test-of-time
 github: http://github.com/ambuc/test-of-time
+tags: javascript game
 ---
 
 <!-- [<img src="/images/lindenmayer_thumbnail.png">](/lindenmayer) -->

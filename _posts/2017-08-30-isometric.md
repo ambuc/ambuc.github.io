@@ -3,6 +3,7 @@ title: Cornea, an Isometric 3D Graphing Module for Haskell
 layout: post
 icon: cube-outline
 github: https://github.com/ambuc/cornea
+tags: haskell graphics
 ---
 
 * TOC

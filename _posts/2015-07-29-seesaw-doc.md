@@ -6,6 +6,7 @@ icon: magnify-plus
 project_title: Seesaw
 project_url: http://jsrmath.github.io/seesaw/
 github: http://github.com/jsrmath/seesaw
+tags: javascript tool graphics
 ---
 
 <!-- [<img src="/images/lindenmayer_thumbnail.png">](/lindenmayer) -->

@@ -2,39 +2,79 @@
 layout: default
 ---
 <div class="container">
-  <article class="post">
-    <div class="media">
-      <h1 class="d-flex mr-3" style="font-size:3em;">
-        <i class="mdi mdi-{{page.icon}} align-middle"></i>
-      </h1>
-      <div class="media-body">
-        <h4 class="mt-0">{{page.title}}</h4>
-        <h6 class="text-muted">
-          {{ page.date | date: "%b %d %Y" }}
-        </h6>
-        <ul class="list-unstyled" style="margin-bottom:0px;">
-          {% if page.github %}
-          <li>
-            - See the code on <a href="{{page.github}}" role="button">GitHub</a>.
-          </li>
-          {% endif %}
-          {% if page.project_title %}
-          <li>
-            - View the <a href="{{page.project_url}}" role="button">demo</a>.
-          </li>
-          {% endif %}
-          {% if page.paper_title %}
-          <li>
-            - Read the <a href="{{page.paper_url}}" role="button">paper</a>,
-            <em>"{{page.paper_title}}"</em>.  
-          </li>
-          {% endif %}
-        </ul>
-      </div>
-    </div>
-    <hr/>
-    <section>
-      {{ content }}
-    </section>
-  </article>
+	<hr/>
+	<div class="media">
+		<h1 class="d-flex mr-3" style="font-size:3em;">
+			<i class="mdi mdi-{{page.icon}} align-middle"></i>
+		</h1>
+		<div class="media-body">
+			<div class="card">
+				<div class="card-body">
+					<h5 class="card-title">
+						<a href="{{site.baseurl}}{{page.url}}">
+							{{page.title}}
+						</a>
+					</h5>
+					<h6 class="card-subtitle mb-2 text-muted">
+						{{ page.date | date: "%d %b %Y" }}
+					</h6>
+					<p class="card-text">
+					<i class="mdi mdi-tag align-middle text-secondary"></i>
+					{% for tag in page.tags %}
+					{% capture tn %}{{ tag }}{% endcapture %}
+					<nobr>	
+					<a href="/tag/{{tn}}" class="badge badge-light">{{tn}}</a>
+					</nobr>
+					{% endfor %}
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<hr/>
+	<article class="post">
+		{{ content }}
+	</article>
+	<hr/>
+
+	<div class="card-deck">
+		{% if page.github %}
+		<div class="card" style="max-width: 200px;">
+			<div class="card-body">
+				<h2 class="card-title">
+					<i class="mdi mdi-github-box align-baseline"></i>
+				</h2>
+				<p class="card-text">
+				View the source code on <a class="alert-link" href="{{page.github}}">GitHub</a>.
+				</p>
+			</div>
+		</div>
+		{% endif %}
+		{% if page.project_title %}
+		<div class="card" style="max-width: 200px;">
+			<div class="card-body">
+				<h2 class="card-title">
+					<i class="mdi mdi-projector align-baseline"></i>
+				</h2>
+				<p class="card-text">
+				See the demo: <a class="alert-link" href="{{page.project_url}}">{{page.project_url}}</a>.
+				</p>
+			</div>
+		</div>
+		{% endif %}
+		{% if page.paper_title %}
+		<div class="card" style="max-width: 200px;">
+			<div class="card-body">
+				<h2 class="card-title">
+					<i class="mdi mdi-file-document align-baseline"></i>
+				</h2>
+				<p class="card-text">
+				Read "<a class="alert-link" href="{{page.paper_url}}">{{page.paper_title}}</a>".
+				</p>
+			</div>
+		</div>
+		{% endif %}
+	</div>
 </div>
+<hr/>

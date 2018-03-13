@@ -3,6 +3,7 @@ title: Puzzle Pong - Generating All Possible 4x4 Crosswords
 layout: post
 icon: grid
 github: https://gist.github.com/ambuc/ac4ed787e1b9bb3eba08bb02c9b25c49
+tags: puzzle haskell
 ---
 
 * TOC

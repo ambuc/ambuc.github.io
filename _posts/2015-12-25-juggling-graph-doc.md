@@ -6,6 +6,7 @@ icon: source-fork
 project_title: /juggling-graph
 project_url: http://jbuckland.com/juggling-graph
 github: http://github.com/ambuc/juggling-graph
+tags: graphics javascript tool
 ---
 
 [<img src="https://github.com/ambuc/juggling-graph/raw/gh-pages/example.png">](/juggling-graph/)

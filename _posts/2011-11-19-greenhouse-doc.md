@@ -6,6 +6,7 @@ layout: post
 icon: flower
 paper_title: T14 Greenhouse Proposal
 paper_url: /papers/greenhouse.pdf
+tags: mechse paper
 ---
 
 This is a report Michael Clark, Nick Jones, Chase Kauffman, Thomas Mayo-Smith, Cory Nissly, and I compiled in Summer 2011, as part of the _Cornell Summer College_ program at Cornell Univeristy, in Ithaca, NY. As part of the report, we performed a thorough economic analysis on potential locations, a small amount of construction rendering and CAD, a thermodynamic analysis of energy balance and thermal conductivity, and a model circuit.

@@ -5,6 +5,7 @@ icon: subway
 project_title: /subway
 project_url: http://jbuckland.com/subway
 github: http://github.com/ambuc/subway
+tags: javascript d3js graphics
 ---
 
 [<img src="/images/subway_thumbnail.png">](/subway)
