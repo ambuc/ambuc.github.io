@@ -23,5 +23,3 @@ power vs costs of renovation, we present risk assessments and payback periods
 for each measure presented.
 
 The model was constructed in a CAD system and the energy simulated using a copy of [DesignBuilder](http://www.designbuilder.co.uk/) furnished by KTH.
-
-Read the paper at **[/papers/systematic.pdf](/papers/systematic.pdf).**

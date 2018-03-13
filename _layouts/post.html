@@ -2,9 +2,8 @@
 layout: default
 ---
 <div class="container">
-	<hr/>
 	<div class="media">
-		<h1 class="d-flex mr-3" style="font-size:3em;">
+    <h1 class="align-self-center d-flex mr-3" style="font-size:3em;">
 			<i class="mdi mdi-{{page.icon}} align-middle"></i>
 		</h1>
 		<div class="media-body">
@@ -15,28 +14,29 @@ layout: default
 							{{page.title}}
 						</a>
 					</h5>
-					<h6 class="card-subtitle mb-2 text-muted">
-						{{ page.date | date: "%d %b %Y" }}
-					</h6>
-					<p class="card-text">
-					<i class="mdi mdi-tag align-middle text-secondary"></i>
-					{% for tag in page.tags %}
-					{% capture tn %}{{ tag }}{% endcapture %}
-					<nobr>	
-					<a href="/tag/{{tn}}" class="badge badge-light">{{tn}}</a>
-					</nobr>
-					{% endfor %}
-					</p>
+          <span class="card-text float-right">
+          <i class="mdi mdi-tag align-middle text-muted"></i>
+          {% for tag in page.tags %}
+          {% capture tn %}{{ tag }}{% endcapture %}
+          <nobr>	
+          <a href="/tag/{{tn}}" class="badge badge-light">{{tn}}</a>
+          </nobr>
+          {% endfor %}
+          </span>
+          <span class="card-subtitle mb-2 text-muted">
+            <nobr>	
+              {{ page.date | date: "%F" }}
+            </nobr>
+          </span>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<hr/>
+	<br/>
 	<article class="post">
 		{{ content }}
 	</article>
-	<hr/>
 
 	<div class="card-deck">
 		{% if page.github %}
@@ -77,4 +77,13 @@ layout: default
 		{% endif %}
 	</div>
 </div>
-<hr/>
+<br/>
+<div class="container d-none d-sm-block">
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="/">Home</a></li>
+			<li class="breadcrumb-item"><a href="/blog">Blog</a></li>
+			<li class="breadcrumb-item active" aria-current="page">{{page.title}}</li>
+		</ol>
+	</nav>
+</div>

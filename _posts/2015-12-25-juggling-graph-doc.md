@@ -19,6 +19,3 @@ This is a visualization engine for Siteswaps, a notation system used in juggling
 
 This project was my first venture into exclusively-compiled web development, utilizing [Coffeescript](http://coffeescript.org) and [Jade](http://jade-lang.com/). Both were a joy to use.
 
-The source can be found [on Github](https://github.com/ambuc/juggling-graph).
-
-See the demo at **[/juggling-graph](/juggling-graph).**

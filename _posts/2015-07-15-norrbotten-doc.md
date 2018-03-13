@@ -14,4 +14,3 @@ The course involved three weeks of lectures in Stockholm on the topic of environ
 
 The paper incorporates first-hand research into the environmental and social impacts of mining, hydropower, industrialization, and the railway - together known as the Norrbotten Technological Megasystem.
 
-Read the paper at **[/papers/norrbotten.pdf](/papers/norrbotten.pdf).**

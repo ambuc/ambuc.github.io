@@ -1,20 +1,20 @@
 ---
 layout: default
 ---
-<hr/>
-<div class="row">
-  <div class="col col-12 col-md-7">
-    {% capture bio %} {% include bio.md %} {% endcapture %}
-    {{ bio | markdownify }}
-  </div>
-  <div class="col col-12 col-md-5">
-    <figure class="figure">
-      <img src="{{ site.avatar }}" class="figure-img img-fluid rounded mx-auto d-block">
-      <figcaption class="figure-caption">
+<div class="container">
+  <div class="row">
+    <div class="col col-12 col-md-7">
+      {% capture bio %} {% include bio.md %} {% endcapture %}
+      {{ bio | markdownify }}
+    </div>
+    <div class="col col-12 col-md-5">
+      <figure class="figure">
+        <img src="{{ site.avatar }}" class="figure-img img-fluid rounded mx-auto d-block">
+        <figcaption class="figure-caption">
         At the Peak6 offices in downtown Chicago.
-      </figcaption>
-    </figure>
-    <img src="https://projecteuler.net/profile/jamesadambuckland.png"/> <br/>
+        </figcaption>
+      </figure>
+      <img src="https://projecteuler.net/profile/jamesadambuckland.png"/> <br/>
+    </div>
   </div>
 </div>
-<hr/>

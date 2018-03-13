@@ -48,7 +48,7 @@ record variables. Although Haskell is an immutable language, sometimes in-place
 modification is simply too convenient to abandon. Lenses are an elegant set of
 combinators for working around this.
 
-## Application Overview
+# Application Overview
 This essay will be a high-level architecture of the game, but the code itself is
 decently commented, and only spans [one
 `Main.hs`](https://github.com/ambuc/solitaire/blob/master/app/Main.hs) and
@@ -57,7 +57,7 @@ decently commented, and only spans [one
 [helper](https://github.com/ambuc/solitaire/blob/master/src/Render.hs)
 [libaries](https://github.com/ambuc/solitaire/blob/master/src/Utils.hs).
 
-### Brick
+## Brick
 As discussed above, `brick` lets us define 
  * an `app :: App State Event ()` application state object, and
  * an `appEvent :: State -> Event e -> EventM () (Next State)` event handler
@@ -87,7 +87,7 @@ either
  - with the state `s` modified by some function (`newGame`, `undoMove`, or
    `doMove`).
 
-### Rules of Solitaire 
+## Rules of Solitaire 
 Before we continue let's just speak briefly about Solitaire.
 
     +-------+----------------------+
@@ -124,7 +124,7 @@ I'm not sure Solitaire is a very interesting game to play, but abstracting the
 core ideas of cards, displaycards, piles, lists of piles, and operations between
 them was a lot of fun.
 
-## Custom Types
+# Custom Types
 
 I think Haskell is fairly readable, so it might be best to just [look at the
 `CardTypes.hs`
@@ -140,7 +140,7 @@ preference for its cards being displayed stacked or splayed out.
 as well as containing the current score, the elapsed move count, a random seed,
 and a history of prior fields and scores.
 
-### `Show` instances
+## `Show` instances
 We can make our own type instance of a few of the above custom typeclasses by defining what it means to `Show` a `Rank` or `Suit`.
 {% highlight haskell %}
 instance Show Rank where
@@ -157,7 +157,7 @@ instance Show Suit where
   show Club    = [toEnum 0x2663] :: String
 {% endhighlight %}
 
-### Lenses 101
+## Lenses 101
 We want to define our record fields with underscores like so:
 
 {% highlight haskell %}
@@ -192,7 +192,7 @@ obj & fieldOuter . fieldInner . fieldVeryInner %~ mutationFn
 which makes it super easy for us to just pass around the `Field` or the `GSt`
 gamestate and modify it at any level. Thanks, Lenses!
 
-## Output
+# Output
 
 Just as we wrote a set of abstract data types above which can be composed into
 flexible `Pile`s, etc., we want to write a set of abstract render functions which
@@ -214,7 +214,7 @@ get a list of clicked extents. We can report a named extent by wrapping it in `r
 
 Brick provides some primitive combinators for stacking widgets (rectangles) next to (`<+>`) or above (`<=>`) each other, as well as some primitive widgets for displaying text (`str :: String -> Widget ()`), wrapping widgets in styled borders, ( `withBorderStyle unicodeRounded $ borderWithLabel (str "title") $ myWidget`), etc. As before, the code is [fairly readable](https://github.com/ambuc/solitaire/blob/master/src/Render.hs), so I'll just cover some interesting mechanics here briefly before moving on.
 
-### Custom Borderstyles
+## Custom Borderstyles
 A typical card looks like this: a string `7♦` wrapped in a `unicodeRounded` border:
 
     ╭──╮
@@ -245,7 +245,7 @@ rrGhost = withBorderStyle ghostRounded $ border $ str "  "
 Where those unicode `0x....` codes are just various box-drawing characters, and
 the `bsVertical` and `bsHorizontal` codes are (intentionally) spaces.
 
-### Piles
+## Piles
 Once we have a `drawCard` function, we can stack the cards by cropping their bottom or right borders as necessary, with more of the card cropped if it is meant to be face-down than if it is meant to be face-up. For example,
 
     stacked face-up  |  stacked face-down
@@ -258,7 +258,7 @@ Once we have a `drawCard` function, we can stack the cards by cropping their bot
 Otherwise, `Render.hs` is mostly composing existing Brick primitives in easy
 ways. 
 
-## Input
+# Input
 
 OK, here's where the complexity of the game begins to shine through.
 
@@ -296,7 +296,7 @@ instead of `[DCard]`s, and _b)_ accept an integer index for which tableau pile
 / foundation pile to return. They are of type `tableLN :: Int -> Lens' Field
 Pile`, where `N` is a convention for indexed generators.
 
-#### `doMove`
+## `doMove`
 Eventually we want to be able to, upon reading a list of `extents` from a
 clicked region, continue with our game by calling
 
@@ -339,7 +339,7 @@ operator chaining for the first time, which is pretty snazzy. Here, `doMove`
 expects a `tryMove` function which will return not just the new field, but a
 score mutator (+5, -10, `id`, etc.).
 
-### Extents
+## Extents
 
 {% highlight haskell %}
 data Ext = StockX | WasteX | TableX | FoundX
@@ -379,7 +379,7 @@ doesn't leave the tableau.
 
 One more thing to do before we can write `tryMove`:
 
-### Movement Lenses
+## Movement Lenses
 
 Eventually, we want to be able to write (pseudocode below):
 
@@ -452,7 +452,7 @@ mkMoveL _ c f = (tableLN $ mkSpot inTableau c f , TableP)
 OK, let's write `tryMove`. If you don't like lenses, the above was the worst of
 it.
 
-### `tryMove`
+## `tryMove`
 
 We expect `tryMove` to have the form:
 
@@ -460,7 +460,7 @@ We expect `tryMove` to have the form:
 tryMove :: [Ext] -> Field -> (Field, Int->Int)
 {% endhighlight %}
 
-#### `tryMove [StockX]` Moving from the Stock (i)
+### `tryMove [StockX]` Moving from the Stock (i)
 
 Let's write the `tryMove [StockX]` function first, since it is the simplest:
 
@@ -477,7 +477,7 @@ the in-place mutation operator (`%~`), while overwriting the waste with an
 empty list (`.~`). We return that new field `f'` and a `scoreFn` `id`, which
 keeps the score as-is.
 
-#### `tryMove [_, StockX]` Moving from the Stock (ii)
+### `tryMove [_, StockX]` Moving from the Stock (ii)
 
 This is pretty similar to the last function, except that we are reading from
 the stock and writing to the waste instead. We drop 3 and take 3 at a time.
@@ -491,7 +491,7 @@ tryMove [_, StockX] f = (f',id)
         load = f ^. stockL & take 3          --get 3 from stock
 {% endhighlight %}
 
-#### `tryMove [DCX dc, IdX 0, WasteX]` Moving from the Waste
+### `tryMove [DCX dc, IdX 0, WasteX]` Moving from the Waste
 
 We've already solved the hardest subproblem, that if determining whether or not
 a card can move anywhere else in the field. So we can just use `canMove
@@ -512,7 +512,7 @@ tryMove [DCX dc, IdX 0, WasteX] f
           | otherwise       = (+5)
 {% endhighlight %}
 
-#### `tryMove [DCX dc, IdX row, FoundX]` Moving from the Foundation
+### `tryMove [DCX dc, IdX row, FoundX]` Moving from the Foundation
 
 {% highlight haskell %}
 tryMove [DCX dc, IdX row, FoundX] f
@@ -529,7 +529,7 @@ only difficulty comes when it's time to move from the tableau; we could be
 moving one card or more at a time.
 
 
-#### `tryMove [DCX dc, IdX row, Idx col, TableX]` Moving from the Tableau
+### `tryMove [DCX dc, IdX row, Idx col, TableX]` Moving from the Tableau
 
 {% highlight haskell %}
 tryMove [DCX dc, IdX row, IdX col, TableX] f
@@ -552,7 +552,7 @@ OK, this was definitely the most difficult one, But we've built ourselves a nice
 This is great! A well-formed `tryMove` mean we can write `doMove`, and the core
 of our game is finished.
 
-## Final Touches
+# Final Touches
 
 Now that we know how to use lenses, a lot of the remaining functions are pretty simple:
 

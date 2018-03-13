@@ -19,6 +19,3 @@ The up and down arrows go up and down a level in the object, and the left and ri
 
 Seesaw uses [Janne Aukia](http://www.simplicitydesign.fi/)'s library [Zoomooz](http://jaukia.github.io/zoomooz/) for a suspiciously smooth zooming experience across browsers. 
 
-The Javascript source can be found [on Github](https://github.com/jsrmath/seesaw).
-
-Use the tool at **[http://jsrmath.github.io/seesaw/](http://jsrmath.github.io/seesaw/).**

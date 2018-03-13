@@ -43,7 +43,6 @@ be made from its letters.
 This is a implementation in Haskell, playable from the shell. I hope the code is
 fairly readable.
 
-## Playing
 You can just play the game:
 {% highlight bash %}
 $ runhaskell text-twist.hs

@@ -1,10 +1,11 @@
 ---
 layout: default
 ---
-<hr/>
+<div class="container">
+  <hr/>
   {% for post in site.tags[page.tag] %}
   <div class="media">
-    <h1 class="d-flex mr-3" style="font-size:3em;">
+    <h1 class="align-self-center d-flex mr-3" style="font-size:3em;">
       <i class="mdi mdi-{{post.icon}} align-middle"></i>
     </h1>
     <div class="media-body" onclick="window.location='{{site.baseurl}}{{post.url}}'">
@@ -15,28 +16,41 @@ layout: default
               {{post.title}}
             </a>
           </h5>
-          <h6 class="card-subtitle mb-2 text-muted">
-            {{ post.date | date: "%d %b %Y" }}
-          </h6>
-          <p class="card-text">
-          <i class="mdi mdi-tag align-middle text-secondary"></i>
+          <span class="card-text float-right">
+          <i class="mdi mdi-tag align-middle text-muted"></i>
           {% for tag in post.tags %}
           {% capture tn %}{{ tag }}{% endcapture %}
           <nobr>	
-          {% if tn ==  page.tag %}
+          {% if tag == page.tag %}
             <a href="/tag/{{tn}}" class="badge badge-primary">{{tn}}</a>
           {% else %}
             <a href="/tag/{{tn}}" class="badge badge-light">{{tn}}</a>
           {% endif %}
           </nobr>
           {% endfor %}
-          </p>
+          </span>
+          <span class="card-subtitle mb-2 text-muted">
+            <nobr>	
+              {{ post.date | date: "%F" }}
+            </nobr>
+          </span>
         </div>
       </div>
     </div>
   </div>
   {% unless forloop.last %}
-    <br/>
+  <br/>
   {% endunless %}
   {% endfor %}
-<hr/>
+</div>
+
+<div class="container d-none d-sm-block">
+	<br/>
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="/">Home</a></li>
+			<li class="breadcrumb-item"><a href="/blog">Blog</a></li>
+			<li class="breadcrumb-item active" aria-current="page"><span class="badge badge-light">{{page.tag}}</span></li>
+		</ol>
+	</nav>
+</div>

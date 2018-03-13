@@ -165,8 +165,60 @@ blockquote {
   font-weight: 400 !important;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-  background-color: white !important;
-  color: #007bff !important;
-  font-weight: 800 !important;
+code {
+	font-size: 1.2em !important;
 }
+
+article > h1 { font-size: 1.8em !important; } 
+article > h2 { font-size: 1.6em !important; } 
+article > h3 { font-size: 1.4em !important; } 
+// in practice, never use more than two indents
+article > h4 { font-size: 1.4em !important; } 
+article > h5 { font-size: 1.3em !important; } 
+article > h6 { font-size: 1.2em !important; } 
+
+article > h2:before { content: ""; }
+article > h2:before { content: "› "; }
+article > h3:before { content: "» "; }
+
+// article      { counter-reset: h1ctr; }
+// article > h1 { counter-reset: h2ctr; }
+// article > h2 { counter-reset: h3ctr; } 
+// article > h3 { counter-reset: h4ctr; } 
+// article > h4 { counter-reset: h5ctr; } 
+// article > h5 { counter-reset: h6ctr; } 
+// 
+// article > h1:before, article > h2:before, article > h3:before, article > h4:before, article > h5:before, article > h6:before {
+// 	font-size: smaller;
+// }
+// 
+// article >  h1:before {
+// 	counter-increment: h1ctr;
+// 	content: "[" counter(h1ctr) "] ";
+// }
+// 
+// article >  h2:before {
+// 	counter-increment: h2ctr;
+// 	content: "[" counter(h1ctr) "." counter(h2ctr) "] ";
+// }
+// 
+// article >  h3:before {
+// 	counter-increment: h3ctr;
+// 	content: "[" counter(h1ctr) "." counter(h2ctr) "." counter(h3ctr) "] ";
+// }
+// 
+// article >  h4:before {
+// 	counter-increment: h4ctr;
+// 	content: "[" counter(h1ctr) "." counter(h2ctr) "." counter(h3ctr) "." counter(h4ctr) "] ";
+// }
+// 
+// article >  h5:before {
+// 	counter-increment: h5ctr;
+// 	content: "[" counter(h1ctr) "." counter(h2ctr) "." counter(h3ctr) "." counter(h4ctr) "." counter(h5ctr) "] ";
+// }
+// 
+// article >  h6:before {
+// 	counter-increment: h6ctr;
+// 	content: "[" counter(h1ctr) "." counter(h2ctr) "." counter(h3ctr) "." counter(h4ctr) "." counter(h5ctr) "." counter(h6ctr) "] ";
+// }
+

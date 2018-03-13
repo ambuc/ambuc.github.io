@@ -15,6 +15,3 @@ tags: javascript game
 
 [Julian](http://julianrosenblum.com) and I decided to build this after thinking about how much excellent data was locked up inside Wikipedia as unformatted plaintext. We found a fantastic corpus created by [Dr. Daniel Heinert](http://www.gesis.org/das-institut/mitarbeiterverzeichnis) for [extracting chronological events](http://vizgr.org/historical-events/), downloaded a bunch of events, and reformatted them into JSON. The interface uses the [Materialize](http://vizgr.org/historical-events/) CSS library and Google's [Material Icons](www.google.com/design/icons/).
 
-The Javascript source can be found [on Github](https://github.com/ambuc/test-of-time).
-
-Play the game at **[http://jbuckland.com/test-of-time/](http://jbuckland.com/test-of-time/).**
