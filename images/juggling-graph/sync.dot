@@ -1,0 +1,42 @@
+digraph G {
+   node [shape="box"];
+
+  "NORMAL" -> "S_FIRST" [ label="(" ];
+  "S_FIRST" -> "S_FIRST_BRACE_EMPTY" [ label="[" ];
+  "S_FIRST_BRACE_EMPTY" -> "S_FIRST_BRACE" [ label="0" ];
+  "S_FIRST_BRACE_EMPTY" -> "S_FIRST_X_OR_BRACE" [ label="1-9a-w" ];
+  "S_FIRST" -> "S_FIRST_X" [ label="1-9a-w" ];
+  "S_FIRST" -> "S_COMMA" [ label="0" ];
+  "S_FIRST_BRACE" -> "S_COMMA" [ label="]" ];
+  "S_FIRST_BRACE" -> "S_FIRST_X_OR_BRACE" [ label="1-9a-w" ]; 
+  "S_FIRST_BRACE" -> "S_FIRST_BRACE" [ label="0" ]; 
+  "S_FIRST_X" -> "S_SECOND" [ label="," ];
+  "S_FIRST_X" -> "S_COMMA" [ label="x" ];
+  "S_FIRST_X_OR_BRACE" -> "S_COMMA" [ label="]" ];
+  "S_FIRST_X_OR_BRACE" -> "S_FIRST_BRACE" [ label="0x" ];
+  "S_FIRST_X_OR_BRACE" -> "S_FIRST_X_OR_BRACE" [ label="1-9a-w" ];
+  "S_COMMA" -> "S_SECOND" [ label="," ];
+  "S_SECOND" -> "S_SECOND_BRACE_EMPTY" [ label="[" ];
+  "S_SECOND_BRACE_EMPTY" -> "S_SECOND_BRACE" [ label="0" ];
+  "S_SECOND_BRACE_EMPTY" -> "S_SECOND_X_OR_BRACE" [ label="1-9a-w" ];
+  "S_SECOND" -> "S_PAREN" [ label="0" ];
+  "S_SECOND" -> "S_SECOND_X" [ label="1-9a-w" ];
+  "S_SECOND_BRACE" -> "S_PAREN" [ label="]" ];
+  "S_SECOND_BRACE" -> "S_SECOND_BRACE" [ label="0" ];
+  "S_SECOND_BRACE" -> "S_SECOND_X_OR_BRACE" [ label="1-9a-w" ];
+  "S_SECOND_X" -> "NORMAL" [ label=")" ];
+  "S_SECOND_X" -> "S_PAREN" [ label="x" ];
+  "S_SECOND_X_OR_BRACE" -> "S_PAREN" [ label="]" ];
+  "S_SECOND_X_OR_BRACE" -> "S_SECOND_BRACE" [ label="   0x" ];
+  "S_SECOND_X_OR_BRACE" -> "S_SECOND_X_OR_BRACE" [ label="1-9a-w" ];
+  "S_PAREN" -> "NORMAL" [ label=")" ];
+
+  "NORMAL" [shape=doublecircle];
+  { rank=same NORMAL }
+  { rank=same S_FIRST S_SECOND }
+  { rank=same S_COMMA S_PAREN }
+  { rank=same S_FIRST_X S_SECOND_X }
+  { rank=same S_FIRST_BRACE_EMPTY S_SECOND_BRACE_EMPTY }
+  { rank=same S_FIRST_BRACE S_SECOND_BRACE }
+  { rank=same S_FIRST_X_OR_BRACE S_SECOND_X_OR_BRACE }
+}

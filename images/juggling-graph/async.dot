@@ -1,0 +1,14 @@
+digraph G {
+  node [shape="box"];
+
+  "NORMAL" -> "NORMAL" [ label="0-9a-z" ];
+  "NORMAL" -> "A_BRACE_EMPTY" [ label="[" ];
+  "A_BRACE_EMPTY" -> "A_BRACE" [ label="0-9a-z" ];
+  "A_BRACE" -> "A_BRACE" [ label="0-9a-z" ];
+  "A_BRACE" -> "NORMAL" [ label="]" ];
+  
+  "NORMAL" [shape=doublecircle];
+
+  { rank=same A_BRACE_EMPTY A_BRACE }
+}
+
