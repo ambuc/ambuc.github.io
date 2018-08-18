@@ -26,16 +26,15 @@ accordingly.
 
 ## Installation
 `voxel-preview` can be downloaded, built, and run with `cargo`. 
-```
-$ git clone https://github.com/ambuc/voxel-preview.git
-$ cd voxel-preview
-$ cargo build 
-```
+
+    $ git clone https://github.com/ambuc/voxel-preview.git
+    $ cd voxel-preview
+    $ cargo build 
 
 ## Usage
-```
-$ cargo run
-```
+
+    $ cargo run
+
 At this point, an OpenGL window will pop up and show a slowly-revolving rainbow
 cube; the default dimensions are 8x8x8.
 
@@ -47,10 +46,10 @@ You can send individual packets with
 
 ## Schema
 The schema is:
-```
-//       port  x y z r   g   b
-send_osc 1234 /0/2/4 0.0 0.5 1.0
-```
+
+    //       port  x y z r   g   b
+    send_osc 1234 /0/2/4 0.0 0.5 1.0
+
 where `x`, `y`, and `z` are the xyz coordinates of the voxel to color, and `r`,
 `g`, and `b` are the rgb coordinates thereof. 
 
