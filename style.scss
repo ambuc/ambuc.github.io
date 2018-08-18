@@ -19,10 +19,6 @@ html {
   margin-left: auto;
   margin-right: auto;
 }
-article {
-  margin-left: auto;
-  margin-right: auto;
-}
 
 body {
   background: $white;
@@ -30,31 +26,15 @@ body {
   color: $darkGray;
 }
 
-ul, ol {
-  margin: 15px 0;
-  padding-left: 30px;
-}
+article { margin-left: auto; margin-right: auto; }
 
-ul {
-  list-style-type: disc;
-}
+ul, ol { margin: 15px 0; padding-left: 30px; }
+ul { list-style-type: disc; }
+ol { list-style-type: decimal; }
+ol ul, ul ol, ul ul, ol ol { margin: 0; }
+ul ul, ol ul { list-style-type: disc; }
 
-ol {
-  list-style-type: decimal;
-}
-
-ol ul, ul ol, ul ul, ol ol {
-  margin: 0;
-}
-
-ul ul, ol ul {
-  list-style-type: circle;
-}
-
-
-img {
-  max-width: 100%;
-}
+img { max-width: 100%; }
 
 blockquote {
   border-left: 1px solid $gray;
@@ -65,160 +45,89 @@ blockquote {
   @inject
 }
 
+// TOC
+#markdown-toc { 
+  padding: 35px;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25em;
+}
+#markdown-toc a { color: black; }
+#markdown-toc, #markdown-toc ul { list-style-type: decimal; }
 
-.mdi::before {
-  font-size: 24px;
-  line-height: 14px;
+// https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Lists_and_Counters/Using_CSS_counters#Example_of_a_nested_counter
+ul#markdown-toc, #markdown-toc ul {
+  counter-reset: section;
+  list-style-type: none;
+}
+#markdown-toc li::before {
+  counter-increment: section;
+  content: counters(section, ".") ". ";
 }
 
-.btn .mdi::before {
-  position: relative;
-  top: 4px;
-}
+.mdi::before { font-size: 24px; line-height: 14px; }
+.btn .mdi::before { position: relative; top: 4px; }
+.btn-xs .mdi::before { font-size: 18px; top: 3px; }
+.btn-sm .mdi::before { font-size: 18px; top: 3px; }
 
-.btn-xs .mdi::before {
-  font-size: 18px;
-  top: 3px;
-}
-
-.btn-sm .mdi::before {
-  font-size: 18px;
-  top: 3px;
-}
-
-.dropdown-menu .mdi {
-  width: 18px;
-}
-
-.dropdown-menu .mdi::before {
-  position: relative;
-  top: 4px;
-  left: -8px;
-}
-
-.nav .mdi::before {
-  position: relative;
-  top: 4px;
-}
-
-.navbar .navbar-toggle .mdi::before {
-  position: relative;
-  top: 4px;
-  color: #FFF;
-}
-
-.breadcrumb .mdi::before {
-  position: relative;
-  top: 4px;
-}
-
-.breadcrumb a:hover {
-  text-decoration: none;
-}
-
-.breadcrumb a:hover span {
-  text-decoration: underline;
-}
-
-.alert .mdi::before {
-  position: relative;
-  top: 4px;
-  margin-right: 2px;
-}
-
-.input-group-addon .mdi::before {
-  position: relative;
-  top: 3px;
-}
-
-.navbar-brand .mdi::before {
-  position: relative;
-  top: 2px;
-  margin-right: 2px;
-}
-
-.list-group-item .mdi::before {
-  position: relative;
-  top: 3px;
-  left: -3px
-}
-
-
-#Avatar {
-  width: 35%;
-  max-width: 500px;
-  min-width: 200px;
-  padding: 10px;
-}
-
+.breadcrumb { background: #f9f9f9 !important; }
+.breadcrumb .mdi::before { position: relative; top: 4px; } 
+.breadcrumb a:hover { text-decoration: none; }
+.breadcrumb a:hover span { text-decoration: underline; }
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start
 @import "highlights";
 @import "svg-icons";
 
-.highlight{
-  overflow: hidden !important;
+.highlight{ 
+  overflow-x: none !important; 
+  border: none !important;
+  padding-left:   1.0em;
+  padding-top:    0.5em;
+  padding-bottom: 0.5em;
+  background: #f9f9f9 !important;
+  border-radius: 10px;
 }
 
-.badge {
-  font-weight: 400 !important;
-}
+.badge { font-weight: 400 !important; } // tags don't need to be bold
 
 code {
-	font-size: 1.2em !important;
+	font-weight: normal !important; 
+  font-size: 120% !important;
+  color: #e83e8c !important;
 }
 
-article > h1 { font-size: 1.8em !important; } 
-article > h2 { font-size: 1.6em !important; } 
-article > h3 { font-size: 1.4em !important; } 
-// in practice, never use more than two indents
-article > h4 { font-size: 1.4em !important; } 
-article > h5 { font-size: 1.3em !important; } 
-article > h6 { font-size: 1.2em !important; } 
+a > code { color: #e83e8c !important; }
 
-article > h2:before { content: ""; }
-article > h2:before { content: "› "; }
-article > h3:before { content: "» "; }
+// ARTICLE
+article > h1, article > h2, article > h3, article > h4, article > h5, article > h6 { font-weight:bold; }
 
-// article      { counter-reset: h1ctr; }
-// article > h1 { counter-reset: h2ctr; }
-// article > h2 { counter-reset: h3ctr; } 
-// article > h3 { counter-reset: h4ctr; } 
-// article > h4 { counter-reset: h5ctr; } 
-// article > h5 { counter-reset: h6ctr; } 
-// 
-// article > h1:before, article > h2:before, article > h3:before, article > h4:before, article > h5:before, article > h6:before {
-// 	font-size: smaller;
-// }
-// 
-// article >  h1:before {
-// 	counter-increment: h1ctr;
-// 	content: "[" counter(h1ctr) "] ";
-// }
-// 
-// article >  h2:before {
-// 	counter-increment: h2ctr;
-// 	content: "[" counter(h1ctr) "." counter(h2ctr) "] ";
-// }
-// 
-// article >  h3:before {
-// 	counter-increment: h3ctr;
-// 	content: "[" counter(h1ctr) "." counter(h2ctr) "." counter(h3ctr) "] ";
-// }
-// 
-// article >  h4:before {
-// 	counter-increment: h4ctr;
-// 	content: "[" counter(h1ctr) "." counter(h2ctr) "." counter(h3ctr) "." counter(h4ctr) "] ";
-// }
-// 
-// article >  h5:before {
-// 	counter-increment: h5ctr;
-// 	content: "[" counter(h1ctr) "." counter(h2ctr) "." counter(h3ctr) "." counter(h4ctr) "." counter(h5ctr) "] ";
-// }
-// 
-// article >  h6:before {
-// 	counter-increment: h6ctr;
-// 	content: "[" counter(h1ctr) "." counter(h2ctr) "." counter(h3ctr) "." counter(h4ctr) "." counter(h5ctr) "." counter(h6ctr) "] ";
-// }
+article > h1 { font-size: 1.50em !important; margin-top:35px;}
+article > h2 { font-size: 1.40em !important; margin-top:20px; }
+article > h3 { font-size: 1.30em !important; margin-top:15px; }
+article > h4 { font-size: 1.20em !important; margin-top:10px; }
+article > h5 { font-size: 1.10em !important; margin-top:10px; }
+article > h6 { font-size: 1.00em !important; margin-top:10px; }
 
+// https://gist.github.com/patik/89ee6092c72a9e39950445c01598517a
+article      { counter-reset: h1counter; }
+article > h1 { counter-reset: h2counter; }
+article > h2 { counter-reset: h3counter; }
+article > h3 { counter-reset: h4counter; }
+article > h4 { counter-reset: h5counter; }
+article > h5 { counter-reset: h6counter; }
+article > h6 {}
+
+article > h1:before { counter-increment: h1counter; } 
+article > h2:before { counter-increment: h2counter; } 
+article > h3:before { counter-increment: h3counter; } 
+article > h4:before { counter-increment: h4counter; } 
+article > h5:before { counter-increment: h5counter; } 
+article > h6:before { counter-increment: h6counter; } 
+
+article > h1:before { content: counter(h1counter) ".\0000a0\0000a0"; } 
+article > h2:before { content: counter(h1counter) "."  counter(h2counter) ".\0000a0\0000a0"; } 
+article > h3:before { content: counter(h1counter) "."  counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0"; } 
+article > h4:before { content: counter(h1counter) "."  counter(h2counter) "." counter(h3counter) "." counter(h4counter) ".\0000a0\0000a0"; } 
+article > h5:before { content: counter(h1counter) "."  counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) ".\0000a0\0000a0"; } 
+article > h6:before { content: counter(h1counter) "."  counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) "." counter(h6counter) ".\0000a0\0000a0"; }

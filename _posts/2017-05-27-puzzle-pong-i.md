@@ -36,24 +36,25 @@ It's easy to think of a two really bad ways to solve this problem:
 # The Solution
 
 The best way I found was to:
- - precompute a dictionary (called `paths` here) with 
-   - keys like `"a"`, `"ab"`, `"abc"`, and
-   - values corresponding to the lists of letters which, if put after their
-     keys, would lead to real four-letter words.  
-   - (For example, `paths["wok"] = ['e','s']`, or (perhaps less obviously),
-     `paths["z"] = [('a','e','i','o']`.)
- - lay out all possible _starting grids_, where 
-   - the top row and leftmost column were filled out
-   - with two real four-letter words 
-   - whose first letters were the same
- - for each grid (node, really),  
-   - find the next blank, 
-     - find the partial word above it, 
-     - find the partial word to the left of it, 
-     - look them both up in `paths`,  
-     - take the intersection of the resultant lists
-     - for each character in this intersection,
-       - create a list of child nodes with the blank square filled in.
+
+  - precompute a dictionary (called `paths` here) with 
+     - keys like `"a"`, `"ab"`, `"abc"`, and
+     - values corresponding to the lists of letters which, if put after their
+       keys, would lead to real four-letter words.  
+     - (For example, `paths["wok"] = ['e','s']`, or (perhaps less obviously),
+      `paths["z"] = [('a','e','i','o']`.)
+  - lay out all possible _starting grids_, where 
+     - the top row and leftmost column were filled out
+     - with two real four-letter words 
+     - whose first letters were the same
+  - for each grid (node, really),  
+     - find the next blank, 
+       - find the partial word above it, 
+       - find the partial word to the left of it, 
+       - look them both up in `paths`,  
+       - take the intersection of the resultant lists
+       - for each character in this intersection,
+         - create a list of child nodes with the blank square filled in.
 
 In this way, we guarantee that any placement will always lead to a real word in
 that row and column.
@@ -330,16 +331,14 @@ end up executing incredibly fast:
 
 Here are some grids I found:
 
-```
-0.062s    0.164s     54.0s
-
-ABED      ABACI      ABBESS
-BLUR      BOWED      SEESAW
-EERY      AXIAL      CATTLE
-TWOS      SENSE      ERRATA
-          EDGED      NEATER
-                     DRYER
-```
+    0.062s    0.164s     54.0s
+    
+    ABED      ABACI      ABBESS
+    BLUR      BOWED      SEESAW
+    EERY      AXIAL      CATTLE
+    TWOS      SENSE      ERRATA
+              EDGED      NEATER
+                         DRYER
 
 ## Palindromes
 

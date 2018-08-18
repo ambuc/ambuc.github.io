@@ -104,9 +104,8 @@ instance Show Expr where
 
 If we play with this in a `ghci` shell, we see:
 
-```
-> E2 Sub ( E2 Plus ( E1 Fact ( V 1 ), V 2 ), V 3 )                    ((1!+2)-3)
-```
+    > E2 Sub ( E2 Plus ( E1 Fact ( V 1 ), V 2 ), V 3 ) 
+    ((1!+2)-3)
 
 This is good. Let's figure out how to evaluate these expressions.
 
@@ -166,12 +165,12 @@ Finally, we avoid some computation by noticing that $a^1 = a$ and $0^b = 0$.
 
 OK, let's try evaluating the above expression!
 
-```
-input                                                            output
-> eval $ E2 Sub (E2 Plus (E1 Fact (V 1), V 2), V 3)              Just (0 % 1)
-> eval $ E2 Sub (E2 Plus (E1 Fact (V 1), V 2), V 4)              Just ((-1) % 1)
-> eval $ E2 Div (V 1, V 0)                                       Nothing
-```
+{% highlight haskell %}
+input                                                 output
+> eval $ E2 Sub (E2 Plus (E1 Fact (V 1), V 2), V 3)   Just (0 % 1)
+> eval $ E2 Sub (E2 Plus (E1 Fact (V 1), V 2), V 4)   Just ((-1) % 1)
+> eval $ E2 Div (V 1, V 0)                            Nothing
+{% endhighlight %}
 
 Perfect: when an expression is valid, we compute the `Val` as a `Just (Ratio
 Integer)`; when an expression is invalid, we return Nothing.
@@ -266,12 +265,12 @@ Quick functor recap:
 Note also that `<$>` is an infix synonym for `fmap`. Confused? See the
 following examples:
 
-```
+{% highlight haskell %}
 > map (+1) [1,2]                       [2,3]
 > fmap (+1) (Just 1)                   Just 2
 > (+1) <$> Just 1                      Just 2
 > (+1) <$> Nothing                     Nothing
-```
+{% endhighlight %}
 
 One benefit of `fmap`ping over the `Maybe` monad is that if we pass it
 `Nothing`, it doesn't need  to unwrap and apply; it'll just pass `Nothing`
@@ -280,21 +279,21 @@ through unscathed.
 ### `fmap`, really quick
 
 So remember the above problem:
-```
+{% highlight haskell %}
 > calc1 Fact (4%1)                     Just (24%1) 
 > calc1 Fact Nothing                   <error>
-```
+{% endhighlight %}
 OK, that's expected. Let's try using `<$>`
-```
+{% highlight haskell %}
 > calc1 Fact <$> Just (4%1)            Just (Just (24%1))
 > calc1 Fact <$> Nothing               Nothing
-```
+{% endhighlight %}
 So, good news and bad news. We can unwrap `Just a` and apply the function to the
 interior, but we pass it back re-wrapped, since that's what `<$>` does. Sadly,
 that's also what `calc1` does. Here's a clue:
-```
+{% highlight haskell %}
 > :type (<$>)                          (<$>) :: Functor f => (a -> b) -> f a -> f b
-```
+{% endhighlight %}
 This makes sense: `<$>` expects a function like `(a -> b)` which doesn't have an
 opinion on how to re-wrap `b` itself. So maybe `<$>` isn't the function we want?
 
@@ -304,26 +303,26 @@ At this point I searched [Hoogle](https://www.haskell.org/hoogle/?hoogle=) for
 `(a -> f b) -> f a -> f b` and [got, of
 course](https://www.haskell.org/hoogle/?hoogle=%28a+-%3E+f+b%29+-%3E+f+a+-%3E+f+b)...
 the Monad.
-```
+{% highlight haskell %}
 > :type (=<<)                          (=<<) :: Monad m => (a -> m b) -> m a -> m b
 > :type (>>=)                          (>>=) :: Monad m => m a -> (a -> m b) -> m b
-```
+{% endhighlight %}
 There's lots more to the monad, but for now we can use it as a way to take a
 value in context, apply a context-aware function,  and return some output in
 context.
-```
+{% highlight haskell %}
 > calc1 Fact =<< Just (4%1)            Just (24%1)
 > calc1 Fact =<< Nothing               Nothing
-```
+{% endhighlight %}
 What about `calc2`? It needs to take a tuple of `Expr`s, and neither of them can
 be `Nothing`. Turns out we can use the fmap infix `<$>` and their friend the
 sequential application infix `<*>`. Here's a set of three trials:
 
-```
+{% highlight haskell %}
 (+) <$> Just 1  <*> Just 2             Just 3
 (+) <$> Just 1  <*> Nothing            Nothing
 (+) <$> Nothing <*> Just 2             Nothing
-```
+{% endhighlight %}
 So finally we can simply write `calc2 o =<< (,) <$> eval e1 <*> eval e2`. Thus, 
 
 {% highlight haskell %}
@@ -366,9 +365,9 @@ mkPart xs = tail $ init $ zip (inits xs) (tails xs)
 
 such that
 
-```
+{% highlight haskell %}
 > mkPartitions [1,2,3]                 [([1],[2,3]),([1,2],[3])]
-```
+{% endhighlight %}
 
 ## `valuesFrom` in Theory
 
@@ -496,9 +495,9 @@ lnpi = numerator . firstGap
 {% endhighlight %}
 
 So, let's try it!
-```
+{% highlight haskell %}
 > lnpi [1..5]                          159
-```
+{% endhighlight %}
 
 and that's our final answer; 159 is the smallest integer we can't construct from
 the numbers $[1..5]$.
@@ -510,7 +509,7 @@ gist](https://gist.github.com/ambuc/731f2d9b789a5e4e32bdafbd60bf7ff8).
 
 Finally, the runtime...
 
-```
+{% highlight haskell %}
 j@mes $ ghc -O2 lnpi.hs && time ./lnpi
 [1 of 1] Compiling Main             ( lnpi.hs, lnpi.o )
 Linking lnpi ...
@@ -519,7 +518,7 @@ Linking lnpi ...
 real  0m0.332s
 user  0m0.327s
 sys   0m0.003s
-```
+{% endhighlight %}
 
 This is phenomenal. Early drafts of this took anywhere from one to ten minutes.  
 The secret to this low runtime is evaluating the values early for re-use in
@@ -541,11 +540,11 @@ This was the original problem. The solution `01.hs` was trivial:
 
 {% highlight haskell %} main = print $ lnpi [1..5] {% endhighlight %}
 
-```
+{% highlight haskell %}
 $ ghc -O2 operationsLibrary.hs 01.hs && time ./01
 159
 0m0.333s
-```
+{% endhighlight %}
 
 ## Puzzle Two
 **Find the least nonconstructable integer from any length five, strictly
@@ -555,11 +554,11 @@ increasing sublist of `[0..9]`**:
 main = print $ first (map numerator) 
  $ minimumBy (compare `on` snd) $ map (id &&& lnpi) $ sets [0..9] 5 {% endhighlight %}
 
-```
+{% highlight haskell %}
 $ ghc -O2 operationsLibrary.hs 02.hs && time  ./02
 ([0,2,6,8,9],2)
 0m39.127s
-```
+{% endhighlight %}
 
 So I actually played a lot with trying to parallelize this one. A first
 attempt to compute one large cached map of all sublists of `[0..9]` took
@@ -586,11 +585,11 @@ where [a,b,c,d]  = map (reduceFunc . map mapFunc)
     segmentInto xs n = map (\x -> take y $ drop (y*x) xs) [0..pred n]
       where y = succ $ div (length xs) n {% endhighlight %}
 
-```
+{% highlight haskell %}
 $ ghc -j -O2 -threaded -rtsopts operationsLibrary.hs 02b.hs --make -fforce-recomp && time ./02b +RTS -N4
 ([0,2,6,8,9],2)
 0m23.407s
-```
+{% endhighlight %}
 
 ## Puzzle Three (a,b)
 
@@ -606,11 +605,11 @@ main = print
  $ filter (not.snd)
  $ map ( id &&& elem 1 . valuesFrom ) $ sets [0..9] 5 {% endhighlight %}
 
-```
+{% highlight haskell %}
 $ ghc -O2 operationsLibrary.hs 03.hs && time ./03
 []
 0m36.4s
-```
+{% endhighlight %}
 
 This performance was a little lacking, but we can reoptimize by fetching the
 list of `expressionsFrom` and evaluating one-by-one to see if they are `Just
@@ -625,11 +624,12 @@ main = print
 where find1 xs = if null ls then Nothing else Just (head ls)
       where ls = filter (\e -> eval e == Just (1%1)) $ expressionsFrom xs {% endhighlight %}
 
-```
+{% highlight haskell %}
 $ ghc -O2 operationsLibrary.hs 03b.hs && time ./03b
 []
 0m7.087s
-```
+{% endhighlight %}
+
 ### What's `expressionsFrom`?
 
 It's a lot like `valuesFrom`, except we don't evaluate the expressions at every
@@ -688,7 +688,7 @@ main = mapM_ print $ map (map numerator &&& find1) $ sets [0..9] 5
 where find1 xs = if null ls then Nothing else Just (head ls)
       where ls = filter (\e -> eval e == Just (1%1)) $ expressionsFrom xs {% endhighlight %}
 
-```
+{% highlight haskell %}
 $ ghc -O2 operationsLibrary.hs 03c.hs && time ./03c
 ([0,1,2,3,4],Just (0+(1+((2-3!)+4))))
 ([0,1,2,3,5],Just (0+(1+(2+(3-5)))))
@@ -702,7 +702,7 @@ $ ghc -O2 operationsLibrary.hs 03c.hs && time ./03c
 ([0,2,3,4,6],Just (0+(2+(3-(4!/6)))))
 ...
 0m7.085s
-```
+{% endhighlight %}
 
 # Return Volley
 
