@@ -47,15 +47,15 @@ x, y, or z-plane, and they can be rotated about some axis while remaining put in
 the list.
 
 A solved cube looks like this:
-```
-[ [ 1, 1, 2], [ 1,-1, 2], [-1, 1, 2], [-1,-1, 2]
-, [ 1, 1,-2], [ 1,-1,-2], [-1, 1,-2], [-1,-1,-2]
-, [ 1, 2, 1], [ 1, 2,-1], [-1, 2, 1], [-1, 2,-1]
-, [ 1,-2, 1], [ 1,-2,-1], [-1,-2, 1], [-1,-2,-1]
-, [ 2, 1, 1], [ 2, 1,-1], [ 2,-1, 1], [ 2,-1,-1]
-, [-2, 1, 1], [-2, 1,-1], [-2,-1, 1], [-2,-1,-1]
-]
-```
+
+    [ [ 1, 1, 2], [ 1,-1, 2], [-1, 1, 2], [-1,-1, 2]
+    , [ 1, 1,-2], [ 1,-1,-2], [-1, 1,-2], [-1,-1,-2]
+    , [ 1, 2, 1], [ 1, 2,-1], [-1, 2, 1], [-1, 2,-1]
+    , [ 1,-2, 1], [ 1,-2,-1], [-1,-2, 1], [-1,-2,-1]
+    , [ 2, 1, 1], [ 2, 1,-1], [ 2,-1, 1], [ 2,-1,-1]
+    , [-2, 1, 1], [-2, 1,-1], [-2,-1, 1], [-2,-1,-1]
+    ]
+
 Our coordinate axis is such that the very center of the cube is $(0,0,0)$, and
 each tile is of dimensions $2\times 2\times 0$, such that the cube is in total
 $4\times 4\times 4$ in dimension. This places the centers of the tiles on the
@@ -136,10 +136,10 @@ takes each element of the `[(coordinate, color)]` list of tuples, calls
 `drawTile crd clr`, and then sweeps thru the list calling `mapM_`, which
 composes the monadic `Drawing PixelRGBA8 ()` I/O type nicely. 
 
-```
-:t renderDrawing                  Int -> Int -> px -> Drawing px () -> Image px
-:t writePng                       FilePath -> Image px -> IO ()
-```
+{% highlight haskell %}
+:t renderDrawing    Int -> Int -> px -> Drawing px () -> Image px
+:t writePng         FilePath -> Image px -> IO ()
+{% endhighlight %}
 
 We get a final `Drawing * ()` which we can `renderDrawing <drawing>` to turn
 into an `Image *`, and finally `writePng <filepath> <image>`. That's just how
@@ -418,16 +418,14 @@ main = do
          $ concat $ iterate (concatMap kids) seed
 {% endhighlight %}
 
-```
-j@mes $ ghc -O2 l.hs && time ./l
-[1 of 1] Compiling Main             ( l.hs, l.o )
-Linking l ...
-[F,R,F,R,F,R,U,F,R,F,R,F,R,U]
-
-real	0m0.551s
-user	0m0.547s
-sys	0m0.003s
-```
+    j@mes $ ghc -O2 l.hs && time ./l
+    [1 of 1] Compiling Main             ( l.hs, l.o )
+    Linking l ...
+    [F,R,F,R,F,R,U,F,R,F,R,F,R,U]
+    
+    real	0m0.551s
+    user	0m0.547s
+    sys	0m0.003s
 
 This is super fast, so I don't really care yet about optimizing. But I do want
 to see what it looks like. 
