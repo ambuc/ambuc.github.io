@@ -100,6 +100,14 @@ code {
 a > code { color: #e83e8c !important; }
 
 // ARTICLE
+
+article img {
+  margin-bottom: 15px;
+}
+
+article img.fullwidth { width: 100%; }
+article img.border { border: 1px solid rgba(0, 0, 0, 0.125); border-radius: .25em; }
+
 article > h1, article > h2, article > h3, article > h4, article > h5, article > h6 { font-weight:bold; }
 
 article > h1 { font-size: 1.50em !important; margin-top:35px;}
