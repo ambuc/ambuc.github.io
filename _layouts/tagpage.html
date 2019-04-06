@@ -2,7 +2,18 @@
 layout: default
 ---
 <div class="container">
-  <hr/>
+  <div class="card bg-dark text-white">
+    <div class="card-body">
+      <div class="card-text">
+        <center>
+          <i class="fas fa-fw fa-tags"></i> {{ page.tag }} 
+        </center>
+      </div>
+    </div>
+  </div>
+
+  <br/>
+
   {% for post in site.tags[page.tag] %}
   <div class="media">
     <h1 class="align-self-center d-flex mr-3" style="font-size:3em;">
@@ -23,7 +34,7 @@ layout: default
           {% capture tn %}{{ tag }}{% endcapture %}
           <nobr>	
           {% if tag == page.tag %}
-            <a href="/tag/{{tn}}" class="badge badge-primary">{{tn}}</a>
+            <a href="/tag/{{tn}}" class="badge badge-dark">{{tn}}</a>
           {% else %}
             <a href="/tag/{{tn}}" class="badge badge-light">{{tn}}</a>
           {% endif %}
