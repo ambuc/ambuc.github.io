@@ -64,13 +64,7 @@ ul#markdown-toc, #markdown-toc ul {
   content: counters(section, ".") ". ";
 }
 
-.mdi::before { font-size: 24px; line-height: 14px; }
-.btn .mdi::before { position: relative; top: 4px; }
-.btn-xs .mdi::before { font-size: 18px; top: 3px; }
-.btn-sm .mdi::before { font-size: 18px; top: 3px; }
-
 .breadcrumb { background: #f9f9f9 !important; }
-.breadcrumb .mdi::before { position: relative; top: 4px; } 
 .breadcrumb a:hover { text-decoration: none; }
 .breadcrumb a:hover span { text-decoration: underline; }
 

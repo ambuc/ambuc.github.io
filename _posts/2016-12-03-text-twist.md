@@ -1,7 +1,7 @@
 ---
 title: Writing a TextTwist Implementation
 layout: post
-icon: gamepad-variant
+icon: gamepad
 github: http://github.com/ambuc/text-twist
 tags: game haskell
 ---

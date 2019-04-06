@@ -1,7 +1,7 @@
 ---
 title: Design and Operation of a Crowd-Run Distributed Outdoor Game
 layout: post
-icon: fingerprint
+icon: running
 project_title: Hide and Seek in Gamla Stan
 project_url: http://hideandseek.ninja
 tags: game webdev

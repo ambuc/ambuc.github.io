@@ -3,7 +3,7 @@ title: Comprehensive Design and Thermodynamic Analysis of a Greenhouse
 description: This is a report Tamas Pal and I compiled in May 2015, as part of the MJ2424 Numerical Methods course at KTH, in Stockholm.
 decsription: This is a report Michael Clark, Nick Jones, Chase Kauffman, Thomas Mayo-Smith, Cory Nissly, and I compiled at Cornell in Summer 2011.
 layout: post
-icon: flower
+icon: seedling
 paper_title: T14 Greenhouse Proposal
 paper_url: /papers/greenhouse.pdf
 tags: mechse paper

@@ -1,7 +1,7 @@
 ---
 title: Useful Custom Macros for Typesetting Vector Calculus in LaTeX
 layout: post
-icon: math-compass
+icon: superscript
 tags: latex
 ---
 

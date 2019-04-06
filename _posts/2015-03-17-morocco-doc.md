@@ -2,7 +2,7 @@
 title: Design and Characteristics of a Solar Field
 description: This is a report I helped compile in March 2015, as part of the MJ2412 Renewable Energy Technology course at KTH, in Stockholm.
 layout: post
-icon: weather-sunny
+icon: solar-panel
 paper_title: MJ2412 Renewable Energy Technology - Morocco Proposal
 paper_url: /papers/Morocco.pdf
 tags: paper mechse

@@ -1,7 +1,7 @@
 ---
 title: Writing a Solitaire TUI with Lenses and Brick
 layout: post
-icon: cards-playing-outline
+icon: crown
 github: https://github.com/ambuc/solitaire
 tags: game haskell
 ---

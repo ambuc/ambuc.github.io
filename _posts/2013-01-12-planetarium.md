@@ -1,7 +1,7 @@
 ---
 title: Design and Manufacture of an Dodecahedral Planetarium Made of Laser-Cut Acrylic
 layout: post
-icon: projector
+icon: dice-d20
 tags: mechse fabrication
 ---
 

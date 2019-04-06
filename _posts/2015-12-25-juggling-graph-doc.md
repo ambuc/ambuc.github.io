@@ -2,7 +2,7 @@
 title: Building a Siteswap Visualizer in d3.js
 description: This is a visualization engine for Siteswaps, a notation system used in juggling to represent patterns in space. 
 layout: post
-icon: source-fork
+icon: sitemap
 project_title: /juggling-graph
 project_url: http://jbuckland.com/juggling-graph
 github: http://github.com/ambuc/juggling-graph

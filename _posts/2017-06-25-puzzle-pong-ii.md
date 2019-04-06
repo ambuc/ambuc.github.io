@@ -1,7 +1,7 @@
 ---
 title: Puzzle Pong - Least Nonconstructable Positive Integer
 layout: post
-icon: file-tree
+icon: sort-numeric-up
 github: https://gist.github.com/ambuc/731f2d9b789a5e4e32bdafbd60bf7ff8
 tags: puzzle haskell
 ---

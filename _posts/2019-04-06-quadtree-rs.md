@@ -1,7 +1,7 @@
 ---
 title: Writing a Quadtree library for Rust
 layout: post
-icon: pine-tree-box
+icon: tree
 github: http://github.com/ambuc/quadtree
 project_title: quadtree_rs
 project_url: https://crates.io/crates/quadtree_rs
