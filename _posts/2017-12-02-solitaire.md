@@ -10,21 +10,21 @@ tags: game haskell
 {:toc}
 
 
-    ╭───────────── Solitaire ──────────────╮                                       
-    │╭──╮│╭──╮╭──╮╭──╮╭──╮╭──╮╭──╮╭──╮│╭  ╮│ Score:   0                            
-    ││λ=││╭──╮╭──╮╭──╮╭──╮╭──╮╭──╮│7♠││    │                                       
-    │╰──╯│╭──╮╭──╮╭──╮╭──╮╭──╮│K♥│╰──╯│╰  ╯│ Moves:   0                            
-    │╭──╮│╭──╮╭──╮╭──╮╭──╮│J♣│╰──╯    │╭  ╮│                                       
-    ││3♠││╭──╮╭──╮╭──╮│6♦│╰──╯        │    │ [New]                                 
-    │╭──╮│╭──╮╭──╮│9♣│╰──╯            │╰  ╯│                                       
-    ││3♥││╭──╮│Q♠│╰──╯                │╭  ╮│ [Undo]                                
-    │╭──╮││4♠│╰──╯                    │    │                                       
-    ││7♦││╰──╯                        │╰  ╯│                                       
-    │╰──╯│                            │╭  ╮│                                       
+    ┌───────────── Solitaire ──────────────┐                                       
+    │┌──┐│┌──┐┌──┐┌──┐┌──┐┌──┐┌──┐┌──┐│┌  ┐│ Score:   0                            
+    ││λ=││┌──┐┌──┐┌──┐┌──┐┌──┐┌──┐│7♠││    │                                       
+    │└──┘│┌──┐┌──┐┌──┐┌──┐┌──┐│K♥│└──┘│└  ┘│ Moves:   0                            
+    │┌──┐│┌──┐┌──┐┌──┐┌──┐│J♣│└──┘    │┌  ┐│                                       
+    ││3♠││┌──┐┌──┐┌──┐│6♦│└──┘        │    │ [New]                                 
+    │┌──┐│┌──┐┌──┐│9♣│└──┘            │└  ┘│                                       
+    ││3♥││┌──┐│Q♠│└──┘                │┌  ┐│ [Undo]                                
+    │┌──┐││4♠│└──┘                    │    │                                       
+    ││7♦││└──┘                        │└  ┘│                                       
+    │└──┘│                            │┌  ┐│                                       
     │    │                            │    │                                       
-    │    │                            │╰  ╯│                                       
+    │    │                            │└  ┘│                                       
     │    │                            │    │                                       
-    ╰──────────────────────────────────────╯                                       
+    └──────────────────────────────────────┘                                       
 
 I'd wanted to write an implementation of
 [Solitaire](https://en.wikipedia.org/wiki/Patience_(game)) a.k.a. Patience,
@@ -217,15 +217,15 @@ Brick provides some primitive combinators for stacking widgets (rectangles) next
 ## Custom Borderstyles
 A typical card looks like this: a string `7♦` wrapped in a `unicodeRounded` border:
 
-    ╭──╮
+    ┌──┐
     │7♦│
-    ╰──╯
+    └──┘
 
 but we want to be able to draw custom border too, in the case of our empty piles:
 
-    ╭  ╮
+    ┌  ┐
 
-    ╰  ╯
+    └  ┘
 
 Brick lets us define custom borderstyles like so:
 
@@ -249,11 +249,11 @@ the `bsVertical` and `bsHorizontal` codes are (intentionally) spaces.
 Once we have a `drawCard` function, we can stack the cards by cropping their bottom or right borders as necessary, with more of the card cropped if it is meant to be face-down than if it is meant to be face-up. For example,
 
     stacked face-up  |  stacked face-down
-    ╭──╮             │╭──╮
-    │3♥│             │╭──╮
-    ╭──╮             ││4♠│
-    │7♦│             │╰──╯
-    ╰──╯             │
+    ┌──┐             │┌──┐
+    │3♥│             │┌──┐
+    ┌──┐             ││4♠│
+    │7♦│             │└──┘
+    └──┘             │
 
 Otherwise, `Render.hs` is mostly composing existing Brick primitives in easy
 ways. 
