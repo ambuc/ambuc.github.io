@@ -27,24 +27,24 @@ layout: default
               {{post.title}}
             </a>
           </h5>
-          <span class="card-text float-right">
-          <i class="fas fa-fw fa-tags align-middle text-muted"></i>
-          {% assign sorted_tags = post.tags | sort %}
-          {% for tag in sorted_tags %}
-          {% capture tn %}{{ tag }}{% endcapture %}
-          <nobr>	
-          {% if tag == page.tag %}
-            <a href="/tag/{{tn}}" class="badge badge-dark">{{tn}}</a>
-          {% else %}
-            <a href="/tag/{{tn}}" class="badge badge-light">{{tn}}</a>
-          {% endif %}
-          </nobr>
-          {% endfor %}
-          </span>
           <span class="card-subtitle mb-2 text-muted">
             <nobr>	
               {{ post.date | date: "%F" }}
             </nobr>
+          </span>
+          <span class="card-text float-right text-right">
+            <i class="fas fa-fw fa-tags align-middle text-muted"></i>
+            {% assign sorted_tags = post.tags | sort %}
+            {% for tag in sorted_tags %}
+              {% capture tn %}{{ tag }}{% endcapture %}
+              <nobr>	
+                {% if tag == page.tag %}
+                  <a href="/tag/{{tn}}" class="badge badge-dark">{{tn}}</a>
+                {% else %}
+                  <a href="/tag/{{tn}}" class="badge badge-light">{{tn}}</a>
+                {% endif %}
+              </nobr>
+            {% endfor %}
           </span>
         </div>
       </div>
