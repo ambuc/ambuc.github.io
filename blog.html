@@ -17,12 +17,12 @@ title: Blog
             <a href="{{site.baseurl}}{{post.url}}">
               {{post.title}}
             </a>
+            <small class="card-subtitle mb-2 text-muted">
+              <nobr>	
+                {{ post.date | date: "%F" }}
+              </nobr>
+            </small>
           </h5>
-          <span class="card-subtitle mb-2 text-muted">
-            <nobr>	
-              {{ post.date | date: "%F" }}
-            </nobr>
-          </span>
           <span class="card-text float-right text-right">
             <i class="fas fa-fw fa-tags align-middle text-muted"></i>
             {% assign sorted_tags = post.tags | sort %}
