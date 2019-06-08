@@ -125,3 +125,6 @@ article > h3:before { content: counter(h1counter) "."  counter(h2counter) "." co
 article > h4:before { content: counter(h1counter) "."  counter(h2counter) "." counter(h3counter) "." counter(h4counter) ".\0000a0\0000a0"; } 
 article > h5:before { content: counter(h1counter) "."  counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) ".\0000a0\0000a0"; } 
 article > h6:before { content: counter(h1counter) "."  counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) "." counter(h6counter) ".\0000a0\0000a0"; }
+
+#hide { font-size: 0em !important; margin: 0px; padding: 0px; }
+#hide + p{ font-size: 0em !important; margin: 0px; padding: 0px; }

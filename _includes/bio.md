@@ -14,3 +14,5 @@ In the past, I have seen employment as:
   - a computer technician at the [Hayden Planetarium](http://www.amnh.org/our-research/hayden-planetarium).
 
 For more, see my [Resume](/resume.pdf).
+
+I sometimes [publish](/psets) math homework.

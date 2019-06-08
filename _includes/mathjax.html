@@ -14,7 +14,13 @@ MathJax.Hub.Config({
       pdd: ["\{\\frac\{\\partial^2 #1\}\{\\partial #2^2\}\}",2] ,
       degrees: ["\{^\\circ\}"],
       div: ["\{\\text\{div \}\}"],
-      grad: ["\{\\text\{grad \}\}"]
+      grad: ["\{\\text\{grad \}\}"],
+
+      // Category theory macros:
+      im: ["{\\text\{im\}\(#1\)}", 1],
+      hom: ["{\\text\{Hom\}}"],
+      bset: ["{\\textbf\{Set\}}"],
+      N: ["{\\mathbb\{N\}}"]
     }
   }
 });
