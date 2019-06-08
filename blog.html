@@ -4,13 +4,13 @@ title: Blog
 ---
 
 <div class="container">
-  {% for post in site.posts %}
-
+  {% for post in site.categories.articles %}
   <div class="media">
     <h1 class="align-self-center d-flex mr-3" style="font-size:3em;">
       <i class="fas fa-fw fa-{{post.icon}} align-middle"></i>
     </h1>
-    <div class="media-body"> <!-- onclick="window.location='{{site.baseurl}}{{post.url}}'"> -->
+    <div class="media-body"> <!--
+    onclick="window.location='{{site.baseurl}}{{post.url}}'"> -->
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">
