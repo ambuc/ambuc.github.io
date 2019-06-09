@@ -1,6 +1,7 @@
 ---
 layout: default
 ---
+
 <div class="container">
 	<div class="media">
     <h1 class="align-self-center d-flex mr-3" style="font-size:3em;">
@@ -19,6 +20,11 @@ layout: default
               </nobr>
             </small>
 					</h5>
+          <span class="card-text float-left text-muted">
+            <a href="/{{page.categories.first | downcase}}" class="badge
+            badge-pill badge-primary"> {{ page.categories.first }} </a>
+          </span>
+
           <span class="card-text float-right text-right">
             <i class="fas fa-fw fa-tags align-middle text-muted"></i>
             {% assign sorted_tags = page.tags | sort %}
@@ -86,7 +92,11 @@ layout: default
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="/">Home</a></li>
-			<li class="breadcrumb-item"><a href="/blog">Blog</a></li>
+      <li class="breadcrumb-item">
+        <a href="/{{page.categories.first | downcase}}">
+          {{page.categories.first}}
+        </a>
+      </li>
 			<li class="breadcrumb-item active" aria-current="page">{{page.title}}</li>
 		</ol>
 	</nav>
