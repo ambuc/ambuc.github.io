@@ -62,8 +62,8 @@ $$
 \require{AMScd}
 \begin{CD}
 \Z @>{x\to(x,0)}>{f}> \Z\times\Z \\
-@| @V{g}V{(a,b)\to a\cdot b}V \\
-\Z @>{\id_\Z}>> \Z
+@. \diagdownarrow{\id_\Z} @V{g}V{(a,b)\to a\cdot b}V \\
+@. \Z
 \end{CD}
 $$
 
@@ -83,8 +83,8 @@ $$
 \require{AMScd}
 \begin{CD}
 \Z @>{x\to(x,1)}>{f}> \Z\times\Z \\
-@| @V{g}V{(a,b)\to a\cdot b}V \\
-\Z @>{\id_\Z}>> \Z
+@. \diagdownarrow{\id_\Z} @V{g}V{(a,b)\to a\cdot b}V \\
+@. \Z
 \end{CD}
 $$
 
@@ -248,8 +248,8 @@ $$
 \require{AMScd}
 \begin{CD}
 \text{Eq}(f,g) @>{p}>> X @>{f}>{g}> Y \\
-@A{\exists!}A{u}A @AA{\forall m}A  \\
-A @= A
+@A{\exists!}A{u}A  \diaguparrow{\forall m} \\
+A 
 \end{CD}
 $$
 

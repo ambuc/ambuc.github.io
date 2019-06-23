@@ -25,7 +25,12 @@ MathJax.Hub.Config({
       P: ["{\\mathbb\{P\}}"],
       hbs: ["{\\text\{Hom\}_\\textbf\{Set\}}"],
       hbm: ["{\\text\{Hom\}_\\textbf\{Mon\}}"],
-      st: ["{\\text\{ s.t.\}}"]
+      st: ["{\\text\{ s.t.\}}"],
+
+      // https://meta.mathoverflow.net/a/4073
+      // THIS IS A HACK until amsCD supports diagonal arrows :( 
+      diaguparrow: ["{\\smash\{\\raise.6em\\rlap\{\\scriptstyle #1\}\\lower.3em\{\\mathord\{\\diagup\}\}\\raise.52em\{\\!\\mathord{\\nearrow\}\}\}}", 1],
+      diagdownarrow: ["{\\smash\{\\lower.6em\\rlap\{\\scriptstyle #1\}\\raise.3em\{\\mathord\{\\diagdown\}\}\\lower.52em\{\\!\\mathord{\\searrow\}\}\}}", 1]
     }
   }
 });
