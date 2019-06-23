@@ -200,7 +200,7 @@ While it would be harder to intuit from piecewise definitions of $f:W\to X$ and
 $g:W\to Y$, the diagram above makes it clear that all the nodes in $X$, $W$, and
 $Y$ are a single connected component, i.e. $x_1 \sim w_1 \sim y_1 \sim w_3 \sim
 x_3 \sim w_4 \sim y_2 \sim w_2 \sim x_2$. Thus the cardinality of any pushout $P
-\stackrel{\cong}{\to} X \sqcup_W Y$ will have $|P| = 1$.
+\stackrel{\cong}{\to} X \sqcup_W Y$ will have $\abs{P} = 1$.
 
 
 <hr/>
@@ -209,9 +209,9 @@ x_3 \sim w_4 \sim y_2 \sim w_2 \sim x_2$. Thus the cardinality of any pushout $P
 
 > Suppose that $W = \emptyset$; what can you say about $X \sqcup_W Y$?
 
-If $W=\emptyset$, then $|X| = |Y| = 1$, since $W$ is an initial object. Since
+If $W=\emptyset$, then $\abs{X}= \abs{Y} = 1$, since $W$ is an initial object. Since
 $W=\emptyset$, the fiber sum $X \sqcup_W Y$ has no overlap. Thus for any $Z
-\stackrel{\cong}{\to} X \sqcup_W Y$, $|Z| = 2$.
+\stackrel{\cong}{\to} X \sqcup_W Y$, $\abs{Z} = 2$.
 
 <hr/>
 
@@ -257,7 +257,7 @@ X\times X @>{i}>> R \subseteq X\times X @>{\pi_1\circ i}>> X \\
 $$
 
 The fiber sum $X \sqcup_R X$ is the set of objects in $X$ which are equivalent
-across $\sim_R$, i.e. $\\{x | (x,x) \in R$, i.e. $\pi_1(R)$. Because the
+across $\sim_R$, i.e. $\\{x \mid (x,x) \in R$, i.e. $\pi_1(R)$. Because the
 equivalence relation $R$ is symmetric, any two objects in $x_1 \sim x_2 \forall
 x_1, x_2 \in X \sqcup_R X$.
 
@@ -311,5 +311,7 @@ commutes such that $q\circ f = q' \circ g$.
 > An initial zet is a set $S$ such that for every set $A$, there exists a unique
 > function $S \to A$. Find an initial set.
 
-Recall that the cardinality $|\hbs(S,A)| = |A|^{|S|}$; if this value is to be no
-greater than one for any set $A$, $|S|$ must be zero. Thus $S = \emptyset$.
+Recall that the cardinality $\abs{\hbs(S,A)} = \abs{A}^\abs{S}$.
+
+If this value is to be no greater than one for any set $A$, $\abs{S}$ must be
+zero. Thus $S = \emptyset$.

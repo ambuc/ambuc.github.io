@@ -21,7 +21,7 @@ All solutions are my own; feel free to [email me](james.adam.buckland@gmail.com)
 > How many elements does the set $\\{a,b,c,d\\} \times \\{1,2,3\\}$ have?
 
 &zwj;
-$|A\times B| = |A| \times |B| = 4\times 3 = 12$.
+$\abs{A\times B} = \abs{A} \times \abs{B} = 4\times 3 = 12$.
 
 <hr/>
 
@@ -192,7 +192,7 @@ in $Y$ such that $g(y) \in Z$.
 > **b)** Suppose now that $Y$ is any set but that $Z$ has exactly one element,
 > what can you say about $X\times_Z Y$?
 
-If $Y$ is any set but $|Z| = 1$, then every z-value in the fiber product will
+If $Y$ is any set but $\abs{Z} = 1$, then every z-value in the fiber product will
 be the same middle value $z$.
 
 <hr/>

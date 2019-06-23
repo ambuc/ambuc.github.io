@@ -21,7 +21,7 @@ All solutions are my own; feel free to [email me](james.adam.buckland@gmail.com)
 > Let $A = {1,2,3}$. What are all the subsets of $A$? Hint: there are 8.  
 
 Any element $a$ either _is_ or _is not_ included in a subset $A' \in A$. With
-two choices per element, there are $2^{|A|} = 2^3 = 8$ possible subsets.
+two choices per element, there are $2^\abs{A} = 2^3 = 8$ possible subsets.
 
 <hr/>
 
@@ -45,14 +45,14 @@ $\\{y_1, y_2, y_3, y_4\\}$.
 
 $\hbs(X, Y)$ is the set of functions $X \to Y$. For any function 
 $X \to Y$, each element $x \in X$ must be mapped to an element in $Y$, of 
-which there are $|Y|$ choices. So the cardinality 
-$|\hbs(X,Y)| = |Y|^{|X|}$. So 
-$|\hbs(A,B)| = |B|^{|A|} = 2^5 = 32$.
+which there are $\abs{Y}$ choices. So the cardinality 
+$\abs{\hbs(X,Y)} = \abs{Y}^\abs{X}$. So 
+$\abs{\hbs(A,B)} = \abs{B}^\abs{A} = 2^5 = 32$.
 
 > **b)** How many elements does $\hbs(B, A)$ have?
 
 &zwj;
-$|\hbs(B,A)| = |A|^{|B|} = 5^2 = 25$.
+$\abs{\hbs(B,A)} = \abs{A}^\abs{B} = 5^2 = 25$.
 
 <hr/>
 
@@ -61,14 +61,14 @@ $|\hbs(B,A)| = |A|^{|B|} = 5^2 = 25$.
 > in $\hbs(X, A)$.
 
 The set $A = \\{1\\}$ satisfies this condition. 
-$|\hbs(X, A)| = |A|^{|X|} = 1^x = 1$.
+$\abs{\hbs(X, A)} = \abs{A}^\abs{X} = 1^x = 1$.
 
 > **b)** Find a set $B$ such that for all sets $X$ there is exactly one element
 > in $\hbs(B, X)$.
 
 The set $B = \emptyset$.
 
-Observe $|\hbs(B,X)| = |X|^{|B|} = |X|^0 = 1$.
+Observe $\abs{\hbs(B,X)} = \abs{X}^\abs{B} = \abs{X}^0 = 1$.
 There is only one way to map the empty set; an empty mapping with no arrows
 at all.
 
@@ -82,8 +82,8 @@ at all.
 > **a)** How many isomorphisms are there from $X$ to itself?
 
 An _isomorphism_ is a function which is invertible, i.e. a one-to-one
-correspondence. For the first element in $X$, there are $|X|$ choices; for the
-second element, $|X|-1$ choices, etc. Let us assign $n := |X|$. So the total
+correspondence. For the first element in $X$, there are $\abs{X}$ choices; for the
+second element, $\abs{X}-1$ choices, etc. Let us assign $n := \abs{X}$. So the total
 number of choices is $n (n-1) (n-2) ... (1)$ $= \frac{n(n+1)}{2} = {n + 1
 \choose 2}$.
 
@@ -101,9 +101,9 @@ arrows.
 
 The set $A = \\{1\\}$ satisfies this condition. In order for an isomorphism to
 exist, there must be an obvious one-to-one mapping between elements. If there
-is only one element in $A$, there are $|X|$ mappings from $A \to X$, i.e. from
+is only one element in $A$, there are $\abs{X}$ mappings from $A \to X$, i.e. from
 the element $1$ to each element $x \in X$. This means 
-$|X| = |\hbs(A, X)|$.
+$\abs{X} = \abs{\hbs(A, X)}$.
 
 <hr/>
 
@@ -126,20 +126,14 @@ $= (1,4,9,16,25,36,49)$.
 # 2.1.2.17
 > Let $A = \\{5,6,7\\}$. 
 >
-> **a)** What is 
-> $|A|$ ?
+> **a)** What is $\abs{A}$?
 
-&nbsp;
-$|A| = 3$.
+$\abs{A} = 3$.
 
-> **b)** What is 
-> $|\N|$?
+> **b)** What is $\abs{\N}$?
 
-&nbsp;
-$|\N| := \aleph_0$.
+$\abs{\N} := \aleph_0$.
 
-> What is 
-> $|\\{n \in \N \mid n \leqslant 5\\}|$ ?
+> What is $\abs{\\{n \in \N \mid n \leqslant 5\\}}$ ?
 
-&nbsp;
-$|\\{1,2,3,4,5\\}| = 5$ .
+$\abs{\\{1,2,3,4,5\\}} = 5$ .
