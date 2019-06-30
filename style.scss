@@ -87,43 +87,41 @@ a > code { color: #e83e8c !important; }
 // ARTICLE
 article > h1, article > h2, article > h3, article > h4, article > h5, article > h6 { font-weight:bold; }
 
-article > h1 { font-size: 1.50em !important; margin-top:35px;}
-article > h2 { font-size: 1.40em !important; margin-top:20px; }
-article > h3 { font-size: 1.30em !important; margin-top:15px; }
-article > h4 { font-size: 1.20em !important; margin-top:10px; }
-article > h5 { font-size: 1.10em !important; margin-top:10px; }
-article > h6 { font-size: 1.00em !important; margin-top:10px; }
+article > h1 { font-size: 1.50em !important; margin-top:45px;}
+article > h2 { font-size: 1.40em !important; margin-top:30px; }
+article > h3 { font-size: 1.30em !important; margin-top:25px; }
+article > h4 { font-size: 1.20em !important; margin-top:20px; }
+article > h5 { font-size: 1.10em !important; margin-top:20px; }
+article > h6 { font-size: 1.00em !important; margin-top:20px; }
 
 // https://gist.github.com/patik/89ee6092c72a9e39950445c01598517a
-article      { counter-reset: h1counter; }
-article > h1 { counter-reset: h2counter; }
-article > h2 { counter-reset: h3counter; }
-article > h3 { counter-reset: h4counter; }
-article > h4 { counter-reset: h5counter; }
-article > h5 { counter-reset: h6counter; }
-article > h6 {}
-
-article > h1:before { counter-increment: h1counter; } 
-article > h2:before { counter-increment: h2counter; } 
-article > h3:before { counter-increment: h3counter; } 
-article > h4:before { counter-increment: h4counter; } 
-article > h5:before { counter-increment: h5counter; } 
-article > h6:before { counter-increment: h6counter; } 
-
-article > h1:before { content: counter(h1counter) ".\0000a0\0000a0"; } 
-article > h2:before { content: counter(h1counter) "."  counter(h2counter) ".\0000a0\0000a0"; } 
-article > h3:before { content: counter(h1counter) "."  counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0"; } 
-article > h4:before { content: counter(h1counter) "."  counter(h2counter) "." counter(h3counter) "." counter(h4counter) ".\0000a0\0000a0"; } 
-article > h5:before { content: counter(h1counter) "."  counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) ".\0000a0\0000a0"; } 
-article > h6:before { content: counter(h1counter) "."  counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) "." counter(h6counter) ".\0000a0\0000a0"; }
-
-#hide { font-size: 0em !important; margin: 0px; padding: 0px; }
-#hide + p{ font-size: 0em !important; margin: 0px; padding: 0px; }
+// article      { counter-reset: h1counter; }
+// article > h1 { counter-reset: h2counter; }
+// article > h2 { counter-reset: h3counter; }
+// article > h3 { counter-reset: h4counter; }
+// article > h4 { counter-reset: h5counter; }
+// article > h5 { counter-reset: h6counter; }
+// article > h6 {}
+// 
+// article > h1:before { counter-increment: h1counter; } 
+// article > h2:before { counter-increment: h2counter; } 
+// article > h3:before { counter-increment: h3counter; } 
+// article > h4:before { counter-increment: h4counter; } 
+// article > h5:before { counter-increment: h5counter; } 
+// article > h6:before { counter-increment: h6counter; } 
+// 
+// article > h1:before { content: counter(h1counter) ".\0000a0\0000a0"; } 
+// article > h2:before { content: counter(h1counter) "."  counter(h2counter) ".\0000a0\0000a0"; } 
+// article > h3:before { content: counter(h1counter) "."  counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0"; } 
+// article > h4:before { content: counter(h1counter) "."  counter(h2counter) "." counter(h3counter) "." counter(h4counter) ".\0000a0\0000a0"; } 
+// article > h5:before { content: counter(h1counter) "."  counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) ".\0000a0\0000a0"; } 
+// article > h6:before { content: counter(h1counter) "."  counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) "." counter(h6counter) ".\0000a0\0000a0"; }
 
 article > hr { border: 1px dashed lightgrey; margin: 50px; }
 
 article > blockquote {
-  border: 1px dashed lightgray;
+  border: 1px solid whitesmoke;
+  background-color: whitesmoke;
   font-style: italic !important;
   padding-top: 20px;
   padding-right: 20px;
