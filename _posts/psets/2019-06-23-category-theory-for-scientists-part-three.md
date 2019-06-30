@@ -1,5 +1,5 @@
 ---
-title: Category Theory for Scientists, Part 03
+title: Category Theory for Scientists, Ch. 2.6
 layout: post
 icon: project-diagram
 categories: Psets
@@ -7,7 +7,7 @@ tags: mathematics category-theory ctfs-2013
 ---
 
 This pset works through [_Category Theory for Scientists_][1], covering
-[Chapters 2.6][2] and all exercises in sections 2.6. 
+[Chapters 2.6][2] and all exercises in section 2.6. 
 
 You can follow along with the [textbook][3] at home. 
 

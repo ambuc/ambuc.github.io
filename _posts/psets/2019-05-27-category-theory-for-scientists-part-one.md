@@ -1,21 +1,22 @@
 ---
-title: Category Theory for Scientists, Part 01
+title: Category Theory for Scientists, Ch. 2.1
 layout: post
 icon: project-diagram
 categories: Psets
 tags: mathematics category-theory ctfs-2013
 ---
 
-This pset works through [_Category Theory for Scientists_][1], covering [Chapter 1][2]–[Chapter 2.2][3] and all exercises in sections 2.1, 2.2. 
+This pset works through [_Category Theory for Scientists_][1], covering 
+[Chapter 2.1][2] and all exercises in section 2.1.
 
-You can follow along with the [textbook][4] at home.
+You can follow along with the [textbook][3] at home.
 
-All solutions are my own; feel free to [email me](james.adam.buckland@gmail.com) with corrections.
+All solutions are my own; feel free to [email me](james.adam.buckland@gmail.com)
+with corrections.
 
 [1]: https://ocw.mit.edu/courses/mathematics/18-s996-category-theory-for-scientists-spring-2013/index.htm
-[2]: https://ocw.mit.edu/courses/mathematics/18-s996-category-theory-for-scientists-spring-2013/textbook/MIT18_S996S13_chapter1.pdf
-[3]: https://ocw.mit.edu/courses/mathematics/18-s996-category-theory-for-scientists-spring-2013/textbook/MIT18_S996S13_chapter2.pdf
-[4]: https://ocw.mit.edu/courses/mathematics/18-s996-category-theory-for-scientists-spring-2013/textbook/
+[2]: https://ocw.mit.edu/courses/mathematics/18-s996-category-theory-for-scientists-spring-2013/textbook/MIT18_S996S13_chapter2.pdf
+[3]: https://ocw.mit.edu/courses/mathematics/18-s996-category-theory-for-scientists-spring-2013/textbook/
 
 # 2.1.1.2
 > Let $A = {1,2,3}$. What are all the subsets of $A$? Hint: there are 8.  
