@@ -1,22 +1,14 @@
 ---
-title: Category Theory for Scientists, Ch. 2.6
+title: Category Theory for Scientists (2.6)
 layout: post
 icon: project-diagram
 categories: Psets
 tags: mathematics category-theory ctfs-2013
 ---
 
-This pset works through [_Category Theory for Scientists_][1], covering
-[Chapters 2.6][2] and all exercises in section 2.6. 
-
-You can follow along with the [textbook][3] at home. 
-
-All solutions are my own; feel free to [email me](james.adam.buckland@gmail.com)
-with corrections.
-
-[1]: https://ocw.mit.edu/courses/mathematics/18-s996-category-theory-for-scientists-spring-2013/index.htm
-[2]: https://ocw.mit.edu/courses/mathematics/18-s996-category-theory-for-scientists-spring-2013/textbook/MIT18_S996S13_chapter2.pdf
-[3]: https://ocw.mit.edu/courses/mathematics/18-s996-category-theory-for-scientists-spring-2013/textbook/
+{% include_relative category-theory-for-scientists-intro.md 
+   covering="Chapter 2.6" 
+   covering_link="https://ocw.mit.edu/courses/mathematics/18-s996-category-theory-for-scientists-spring-2013/textbook/MIT18_S996S13_chapter2.pdf" %}
 
 {% include_relative category-theory-for-scientists/p-2-6-1-3.md %}
 {% include_relative category-theory-for-scientists/p-2-6-1-5.md %}
