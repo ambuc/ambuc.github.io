@@ -1,0 +1,70 @@
+---
+layout: default
+---
+
+{% assign literate_title = page.title | downcase | replace: " ", "." | replace:
+"p.", "Problem "%}
+
+{% capture the_collection%}{{page.collection}}{% endcapture %}
+{% assign document = site[the_collection] %}
+
+<!-- https://gist.github.com/budparr/3e637e575471401d01ec -->
+{% for link in document %}
+  {% if link.title == page.title %}
+    {% unless forloop.first %}
+      {% assign prevurl = prev.url %}
+    {% endunless %}
+    {% unless forloop.last %}
+      {% assign nexturl = document[forloop.index].url %}
+    {% endunless %}
+  {% endif %}
+  {% assign prev = link %}
+{% endfor %}
+
+<script>
+document.body.onkeyup = function(e){
+if (e.keyCode == '37') { window.location = '{{prevurl}}'; }
+if (e.keyCode == '39') { window.location = '{{nexturl}}'; }
+};
+</script>
+
+<div class="container">
+  <h5 class="text-center">
+    <small>
+      from 
+      <i>
+        <a href="{{page.collection | prepend: '/' | prepend: site.url}}">
+          {{page.textbook}}
+        </a>
+      </i>
+    </small>
+  </h5>
+	<br/>
+  <ul class="nav nav-tabs nav-fill">
+    {% if prevurl %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{prevurl}}">
+          <i class="fas fa-fw fa-angle-left align-middle"></i>
+        </a>
+      </li>
+		{% endif %}
+    <li class="nav-item">
+			<b>
+				<a class="nav-link active" href="#">{{literate_title}}</a>
+			</b>
+    </li>
+    {% if nexturl %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{nexturl}}">
+          <i class="fas fa-fw fa-angle-right align-middle"></i>
+        </a>
+      </li>
+    {% endif %}
+	</ul>
+
+  <br/>
+
+	<article class="post"> {{ content }} </article>
+
+	<hr/>
+</div>

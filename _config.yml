@@ -76,3 +76,7 @@ exclude:
     - LICENSE
     - README.md
     - CNAME
+
+collections:
+  ctfs:
+    output: true
