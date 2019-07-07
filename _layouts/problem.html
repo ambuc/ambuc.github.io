@@ -29,17 +29,16 @@ if (e.keyCode == '39') { window.location = '{{nexturl}}'; }
 </script>
 
 <div class="container">
-  <h5 class="text-center">
-    <small>
-      from 
-      <i>
-        <a href="{{page.collection | prepend: '/' | prepend: site.url}}">
-          {{page.textbook}}
-        </a>
-      </i>
-    </small>
-  </h5>
+ {% include candybar.html 
+    icon="calculator"
+    url=page.url 
+    title=literate_title
+    from=page.from
+    date=page.date
+    %}
+
 	<br/>
+
   <ul class="nav nav-tabs nav-fill">
     {% if prevurl %}
       <li class="nav-item">
@@ -49,9 +48,9 @@ if (e.keyCode == '39') { window.location = '{{nexturl}}'; }
       </li>
 		{% endif %}
     <li class="nav-item">
-			<b>
-				<a class="nav-link active" href="#">{{literate_title}}</a>
-			</b>
+			<a class="nav-link active" href="#">
+        <i class="fas fa-fw fa-dot-circle align-middle"></i>
+      </a>
     </li>
     {% if nexturl %}
       <li class="nav-item">

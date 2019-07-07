@@ -15,41 +15,8 @@ layout: default
   <br/>
 
   {% for post in site.tags[page.tag] %}
-  <div class="media">
-    <h1 class="align-self-center d-flex mr-3" style="font-size:3em;">
-      <i class="fas fa-fw fa-{{post.icon}} align-middle"></i>
-    </h1>
-    <div class="media-body" onclick="window.location='{{site.baseurl}}{{post.url}}'">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">
-            <a href="{{site.baseurl}}{{post.url}}">
-              {{post.title}}
-            </a>
-            <small class="card-subtitle mb-2 text-muted">
-              <nobr>	
-                {{ post.date | date: "%F" }}
-              </nobr>
-            </small>
-          </h5>
-          <span class="card-text float-right text-right">
-            <i class="fas fa-fw fa-tags align-middle text-muted"></i>
-            {% assign sorted_tags = post.tags | sort %}
-            {% for tag in sorted_tags %}
-              {% capture tn %}{{ tag }}{% endcapture %}
-              <nobr>	
-                {% if tag == page.tag %}
-                  <a href="/tag/{{tn}}" class="badge badge-dark">{{tn}}</a>
-                {% else %}
-                  <a href="/tag/{{tn}}" class="badge badge-light">{{tn}}</a>
-                {% endif %}
-              </nobr>
-            {% endfor %}
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
+    {% include candybar.html icon=post.icon url=post.url title=post.title 
+       date=post.date categories=post.categories tags=post.tags %}
   {% unless forloop.last %}
   <br/>
   {% endunless %}

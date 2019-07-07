@@ -1,0 +1,45 @@
+<div class="media">
+  <h1 class="align-self-center d-flex mr-3" style="font-size:3em;">
+		<i class="fas fa-fw fa-{{ include.icon }} align-middle"></i>
+	</h1>
+	<div class="media-body">
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title align-middle">
+					<a href="{{site.baseurl}}{{ include.url }}">
+						{{ include.title }}
+					</a>
+          <small class="card-subtitle mb-2 text-muted">
+            {% if include.date %}
+              <nobr>	
+                {{ include.date | date: "%F" }}
+              </nobr>
+            {% elsif include.from %}
+              from <i>{{ include.from }}</i>
+            {% endif %}
+          </small>
+				</h5>
+
+        {% if include.categories %}
+          <span class="card-text float-left text-muted">
+            <a href="/{{ include.categories.first | downcase }}" class="badge
+            badge-pill badge-light"> {{ include.categories.first }} </a>
+          </span>
+        {% endif %}
+
+        {% if include.tags %}
+          <span class="card-text float-right text-right">
+            <i class="fas fa-fw fa-tags align-middle text-muted"></i>
+            {% assign sorted_tags = include.tags | sort %}
+            {% for tag in sorted_tags %}
+              {% capture tn %}{{ tag }}{% endcapture %}
+              <nobr>	
+                <a href="/tag/{{ tn }}" class="badge badge-light">{{ tn }}</a>
+              </nobr>
+            {% endfor %}
+          </span>
+        {% endif %}
+			</div>
+		</div>
+	</div>
+</div>
