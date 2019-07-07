@@ -14,11 +14,17 @@
               <nobr>	
                 {{ include.date | date: "%F" }}
               </nobr>
-            {% elsif include.from %}
-              from <i>{{ include.from }}</i>
             {% endif %}
           </small>
 				</h5>
+
+        {% if include.textbook %}
+          {% assign textbook = site.data.textbooks[include.textbook] %}
+          <h6>
+          from <i><a href="{{ textbook.link }}">{{ textbook.title }}</a></i>,
+          ({{ textbook.year }})
+          </h6>
+        {% endif %}
 
         {% if include.categories %}
           <span class="card-text float-left text-muted">

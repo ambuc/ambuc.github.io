@@ -1,0 +1,13 @@
+ctfs:
+  author: Dr. David I. Spivak
+  title: Category Theory for Scientists
+  hosted_on: MIT OpenCourseWare
+  year: 2013
+  link: https://ocw.mit.edu/courses/mathematics/18-s996-category-theory-for-scientists-spring-2013/
+  book: https://ocw.mit.edu/courses/mathematics/18-s996-category-theory-for-scientists-spring-2013/textbook/MIT18_S996S13_textbook.pdf
+
+foo:
+  title: Foo
+  year: 1234
+  link: foo.com
+  book: foo.com
