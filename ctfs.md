@@ -9,8 +9,8 @@ layout: default
      date="2019-05-27"
      %}
   
-  <br/>
-  
+	<hr/>
+
   <p>
     <ul class="list-inline">
       {% for p in site.ctfs %}
@@ -22,4 +22,6 @@ layout: default
       {% endfor %}
     </ul>
   </p>
+
+	<hr/>
 </div>

@@ -6,15 +6,16 @@ layout: default
 "p.", "Problem "%}
 
 {% assign problems = site[page.collection] %}
+{% assign up_url = site.url | append: "/" | append: page.textbook %}
 
 <!-- https://gist.github.com/budparr/3e637e575471401d01ec -->
 {% for link in problems %}
   {% if link.title == page.title %}
     {% unless forloop.first %}
-      {% assign prevurl = prev.url %}
+      {% assign prev_url = prev.url %}
     {% endunless %}
     {% unless forloop.last %}
-      {% assign nexturl = problems[forloop.index].url %}
+      {% assign next_url = problems[forloop.index].url %}
     {% endunless %}
   {% endif %}
   {% assign prev = link %}
@@ -22,43 +23,30 @@ layout: default
 
 <script>
 document.body.onkeyup = function(e){
-if (e.keyCode == '37') { window.location = '{{prevurl}}'; }
-if (e.keyCode == '39') { window.location = '{{nexturl}}'; }
+if (e.keyCode == '37') { window.location = '{{prev_url}}'; }
+if (e.keyCode == '39') { window.location = '{{next_url}}'; }
 };
 </script>
 
 <div class="container">
- {% include candybar.html 
-    icon="calculator"
-    url=page.url 
-    title=literate_title
-    textbook=page.textbook
-    date=page.date
-    %}
+  {% include candybar.html 
+     icon="calculator"
+     url=page.url 
+     title=literate_title
+     textbook=page.textbook
+     date=page.date
+     %}
 
 	<br/>
 
-  <ul class="nav nav-pills nav-fill">
-    <li class="nav-item">
-      {% if prevurl %}
-        <a class="nav-link" href="{{prevurl}}">
-          <i class="fas fa-fw fa-angle-left align-middle"></i>
-        </a>
-		  {% endif %}
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="{{site.url}}/{{page.textbook}}">
-        <i class="fas fa-fw fa-angle-up align-middle"></i>
-      </a>
-    </li>
-    <li class="nav-item">
-      {% if nexturl %}
-        <a class="nav-link" href="{{nexturl}}">
-          <i class="fas fa-fw fa-angle-right align-middle"></i>
-        </a>
-      {% endif %}
-    </li>
-	</ul>
+  {% include arrowbar.html
+     left_url=prev_url
+     center_url=up_url
+     right_url=next_url
+     left_icon="angle-left"
+     center_icon="angle-up"
+     right_icon="angle-right"
+     %}
 
   <br/>
 
