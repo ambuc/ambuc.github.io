@@ -3,22 +3,7 @@ layout: default
 title: Blog
 ---
 
-<div class="container">
-  {% for post in site.categories.Blog %}
-    {% include candybar.html icon=post.icon url=post.url title=post.title 
-       date=post.date categories=post.categories tags=post.tags %}
-  {% unless forloop.last %}
-  <br/>
-  {% endunless %}
-  {% endfor %}
-</div>
-
-<div class="container d-none d-sm-block">
-	<br/>
-	<nav aria-label="breadcrumb">
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="/">Home</a></li>
-			<li class="breadcrumb-item active" aria-current="page">Blog</li>
-		</ol>
-	</nav>
-</div>
+{% for post in site.categories.Blog %}
+  {% include candybar.html icon=post.icon url=post.url title=post.title 
+     date=post.date tags=post.tags %}
+{% endfor %}

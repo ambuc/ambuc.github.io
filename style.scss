@@ -87,12 +87,12 @@ a > code { color: #e83e8c !important; }
 // ARTICLE
 // article > h1, article > h2, article > h3, article > h4, article > h5, article > h6 { font-weight:bold; }
 
-h1 { font-size: 1.50em !important; margin-top:45px;}
-h2 { font-size: 1.40em !important; margin-top:30px; }
-h3 { font-size: 1.30em !important; margin-top:25px; }
-h4 { font-size: 1.20em !important; margin-top:20px; }
-h5 { font-size: 1.10em !important; margin-top:20px; }
-h6 { font-size: 1.00em !important; margin-top:20px; }
+article > h1 { font-size: 1.50em !important; margin-top:45px;}
+article > h2 { font-size: 1.40em !important; margin-top:30px; }
+article > h3 { font-size: 1.30em !important; margin-top:25px; }
+article > h4 { font-size: 1.20em !important; margin-top:20px; }
+article > h5 { font-size: 1.10em !important; margin-top:20px; }
+article > h6 { font-size: 1.00em !important; margin-top:20px; }
 
 // https://gist.github.com/patik/89ee6092c72a9e39950445c01598517a
 // article      { counter-reset: h1counter; }

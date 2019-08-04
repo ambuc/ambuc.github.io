@@ -2,53 +2,34 @@
 layout: default
 ---
 
-<div class="container">
-  {% include candybar.html icon=page.icon url=page.url title=page.title 
-     date=page.date categories=page.categories tags=page.tags %}
-
-	<br/>
-
-	<article class="post">
-		{{ content }}
-	</article>
-
-  <br/>
-
-  <ul class="list-group">
-		{% if page.github %}
-    <li class="list-group-item">
-			<i class="fas fa-fw fa-code-branch"></i>
-      View the source code on <a href="{{ page.github }}">Github</a>.
-    </li>
-		{% endif %}
-		{% if page.project_title %}
-    <li class="list-group-item">
-			<i class="fas fa-fw fa-external-link-alt"></i>
-      See more at <a href="{{ page.project_url }}">{{ page.project_url }}</a>.
-    </li>
-		{% endif %}
-		{% if page.paper_title %}
-    <li class="list-group-item">
-			<i class="fas fa-fw fa-file-pdf"></i>
-      Read <a href="{{ page.paper_url }}">{{ page.paper_title }}</a>.
-    </li>
-		{% endif %}
-  </ul>
-
-</div>
+{% include candybar.html icon=page.icon url=page.url title=page.title 
+   date=page.date tags=page.tags %}
 
 <br/>
 
-<div class="container d-none d-sm-block">
-	<nav aria-label="breadcrumb">
-		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a href="/">Home</a></li>
-      <li class="breadcrumb-item">
-        <a href="/{{page.categories.first | downcase}}">
-          {{page.categories.first}}
-        </a>
-      </li>
-			<li class="breadcrumb-item active" aria-current="page">{{page.title}}</li>
-		</ol>
-	</nav>
-</div>
+<article class="post">
+	{{ content }}
+</article>
+
+<br/>
+
+<ul class="list-group">
+	{% if page.github %}
+  <li class="list-group-item">
+		<i class="fas fa-fw fa-code-branch"></i>
+    View the source code on <a href="{{ page.github }}">Github</a>.
+  </li>
+	{% endif %}
+	{% if page.project_title %}
+  <li class="list-group-item">
+		<i class="fas fa-fw fa-external-link-alt"></i>
+    See more at <a href="{{ page.project_url }}">{{ page.project_url }}</a>.
+  </li>
+	{% endif %}
+	{% if page.paper_title %}
+  <li class="list-group-item">
+		<i class="fas fa-fw fa-file-pdf"></i>
+    Read <a href="{{ page.paper_url }}">{{ page.paper_title }}</a>.
+  </li>
+	{% endif %}
+</ul>
