@@ -1,27 +1,16 @@
 ---
 layout: default
 ---
+{% assign ctfs = site.data.textbooks.ctfs %}
 
-<div class="container">
-  {% include candybar.html icon="calculator"
-     title="Class Notes and Solutions"
-     textbook="ctfs"
-     date="2019-05-27"
-     %}
-  
-	<hr/>
+<p class="" markdown="1">
+This page includes solutions from {{ctfs.author}}'s
+[{{ctfs.title}}]({{ctfs.link}}) ({{ctfs.year}}), hosted on {{ctfs.hosted_on}}.
+See the [textbook]({{ctfs.textbook}}).
+</p>
 
-  <p>
-    <ul class="list-inline">
-      {% for p in site.ctfs %}
-        <li class="list-inline-item">
-          <a class="btn btn-link" href="{{ p.url }}" role="button">
-            {{ p.problem }}
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
-  </p>
-
-	<hr/>
+<div>
+{% for p in site.ctfs %}
+<a class="btn btn-link" href="{{p.url}}">{{p.problem}}</a>
+{% endfor %}
 </div>

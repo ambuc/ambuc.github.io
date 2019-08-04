@@ -2,20 +2,21 @@
 layout: default
 ---
 
-{% assign literate_title = page.title | downcase | replace: " ", "." | replace:
-"p.", "Problem "%}
 
-{% assign problems = site[page.collection] %}
+{% assign textbook_obj = site.data.textbooks[page.textbook] %}
 {% assign up_url = site.url | append: "/" | append: page.textbook %}
 
 <!-- https://gist.github.com/budparr/3e637e575471401d01ec -->
+{% assign problems = site[page.collection] %}
 {% for link in problems %}
   {% if link.title == page.title %}
     {% unless forloop.first %}
       {% assign prev_url = prev.url %}
+      {% assign prev_title = prev.problem %}
     {% endunless %}
     {% unless forloop.last %}
       {% assign next_url = problems[forloop.index].url %}
+      {% assign next_title = problems[forloop.index].problem %}
     {% endunless %}
   {% endif %}
   {% assign prev = link %}
@@ -28,29 +29,27 @@ if (e.keyCode == '39') { window.location = '{{next_url}}'; }
 };
 </script>
 
-<div class="container">
-  {% include candybar.html 
-     icon="calculator"
-     url=page.url 
-     title=literate_title
-     textbook=page.textbook
-     date=page.date
-     %}
+{% include arrowbar.html
+   left_url=prev_url
+   left_icon="angle-left"
+   left_title=prev_title
 
-	<br/>
+   center_url=up_url
+   center_icon="angle-up"
 
-  {% include arrowbar.html
-     left_url=prev_url
-     center_url=up_url
-     right_url=next_url
-     left_icon="angle-left"
-     center_icon="angle-up"
-     right_icon="angle-right"
-     %}
+   right_url=next_url
+   right_icon="angle-right"
+   right_title=next_title
+   %}
 
-  <br/>
+<br/>
 
-	<article class="post"> {{ content }} </article>
+<h4>
+  Problem {{ page.problem }}
+  <small class="text-muted">
+    from <i><a href="{{ textbook_obj.link }}">{{ textbook_obj.title }}</a></i>, 
+    ({{ textbook_obj.year }})
+  </small>
+</h4>
 
-	<hr/>
-</div>
+<article class="post"> {{ content }} </article>

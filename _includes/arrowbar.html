@@ -3,6 +3,7 @@
     {% if include.left_url %}
       <a class="nav-link" href="{{ include.left_url }}">
         <i class="fas fa-fw fa-{{ include.left_icon }} align-middle"></i>
+        {{ include.left_title }}
       </a>
 	  {% endif %}
   </li>
@@ -17,6 +18,7 @@
     {% if include.right_url %}
       <a class="nav-link" href="{{ include.right_url }}">
         <i class="fas fa-fw fa-{{ include.right_icon }} align-middle"></i>
+        {{ include.right_title }}
       </a>
     {% endif %}
   </li>
