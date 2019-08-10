@@ -2,16 +2,34 @@
 layout: default
 ---
 
+{% assign problems = site[page.collection] %}
+{% for link in problems %}
+  {% if link.title == page.title %}
+    {% unless forloop.first %}
+      {% assign prev_url = prev.url %}
+      {% assign prev_title = prev.problem %}
+    {% endunless %}
+    {% unless forloop.last %}
+      {% assign next_url = problems[forloop.index].url %}
+      {% assign next_title = problems[forloop.index].problem %}
+    {% endunless %}
+  {% endif %}
+  {% assign prev = link %}
+{% endfor %}
+
+<script>
+document.body.onkeyup = function(e){
+if (e.keyCode == '37') { window.location = '{{prev_url}}'; }
+if (e.keyCode == '39') { window.location = '{{next_url}}'; }
+};
+</script>
+
 {% include candybar.html icon=page.icon url=page.url title=page.title 
    date=page.date tags=page.tags %}
 
-<br/>
-
 <article class="post">
-	{{ content }}
+  	{{ content }}
 </article>
-
-<br/>
 
 <ul class="list-group">
 	{% if page.github %}

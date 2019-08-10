@@ -9,8 +9,6 @@ categories: Blog
 tags: rustlang graphics
 ---
 
-![quadtree](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Point_quadtree.svg/240px-Point_quadtree.svg.png)
-
 * TOC
 {:toc}
 
@@ -27,6 +25,8 @@ and has docs on [docs.rs](https://docs.rs/quadtree_rs/0.1.2/quadtree_rs/).
  > subdividing it into four quadrants or regions. The data associated with a
  > leaf cell varies by application, but the leaf cell represents a "unit of
  > interesting spatial information". - [Wikipedia](https://en.wikipedia.org/wiki/Quadtree)
+
+![quadtree](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Point_quadtree.svg/240px-Point_quadtree.svg.png)
 
 ## What is a quadtree good for?
 
