@@ -52,4 +52,11 @@ if (e.keyCode == '39') { window.location = '{{next_url}}'; }
   </small>
 </h4>
 
-<article class="post"> {{ content }} </article>
+<article class="post"> 
+  {{ content }} 
+  <p class="text-right">
+  {% if page.qed %}
+    $\blacksquare$
+  {% endif %}
+  </p>
+</article>

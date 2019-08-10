@@ -50,13 +50,15 @@ layout: default
                                        | append: forloop.index %}
                       <ul class="list-inline">
                       {% for ps in site.ctfs %}
-                        {% assign item = "p" | append: ps.problem %}
-                        {% if item contains prefix %}
-                            <li class="list-inline-item py-1">
-                              <a href="{{ ps.url }}">
-                                {{ ps.problem }}
-                              </a>
-                            </li>
+                        {% if ps.qed %}
+                          {% assign item = "p" | append: ps.problem %}
+                          {% if item contains prefix %}
+                              <li class="list-inline-item py-1">
+                                <a href="{{ ps.url }}">
+                                  {{ ps.problem }}
+                                </a>
+                              </li>
+                          {% endif %}
                         {% endif %}
                       {% endfor %}
                       </ul>
