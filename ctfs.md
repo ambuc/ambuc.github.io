@@ -45,22 +45,21 @@ layout: default
                         </span>
                         {{ ccc.title }}
                       </span>
-                      {% assign prefix = cindex | append: "." 
+                      {% assign prefix = "p" | append: cindex | append: "." 
                                        | append: ccindex | append: "." 
                                        | append: forloop.index %}
-                      {% assign pss = site.ctfs 
-                                    | where_exp: "item" , "item.problem contains prefix" %}
-                      {% if pss %}
-                        <ul class="list-inline">
-                          {% for p_obj in pss %}
+                      <ul class="list-inline">
+                      {% for ps in site.ctfs %}
+                        {% assign item = "p" | append: ps.problem %}
+                        {% if item contains prefix %}
                             <li class="list-inline-item py-1">
-                              <a href="{{p_obj.url}}">
-                                {{ p_obj.problem }}
+                              <a href="{{ ps.url }}">
+                                {{ ps.problem }}
                               </a>
                             </li>
-                          {% endfor %}
-                        </ul>
-                      {% endif %}
+                        {% endif %}
+                      {% endfor %}
+                      </ul>
                     </li>
                   {% endfor %}
                 </ul>
