@@ -4,6 +4,7 @@
 MathJax.Hub.Config({
   tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
   TeX: {
+    extensions: ["http://sonoisa.github.io/xyjax_ext/xypic.js"],
     Macros: {
       vaccent: "{\\v}",
       v: ["{\\mathbf\{#1\}}", 1],
@@ -27,6 +28,9 @@ MathJax.Hub.Config({
       hbm: ["{\\text\{Hom\}_\\textbf\{Mon\}}"],
       st: ["{\\text\{ s.t.\}}"],
       list: ["{\\text\{List\}}"],
+      grp: ["{\\textbf\{Grp\}}"],
+      mon: ["{\\textbf\{Mon\}}"],
+      pro: ["{\\textbf\{PrO\}}"],
       pp: ["{\\ \\text\{++\}\\ }"],
 
       // https://meta.mathoverflow.net/a/4073
