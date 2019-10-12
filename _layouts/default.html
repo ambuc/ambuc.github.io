@@ -1,69 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html class="bg-light">
   <head>
     {% include meta.html %}
-    <title>{% if page.title %}{{ page.title }} « {% endif %}jbuckland.com</title>
-    <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/style.css">
+    <title> jbuckland.com </title>
     {% include bootstrap.html %}
     {% include mdi.html %}
+    {% include fonts.html %}
     {% include mathjax.html %}
-    <link rel="shortcut icon" type="image/png" 
-          href="https://avatars3.githubusercontent.com/u/6856318">
+    <link rel="stylesheet" type="text/css" 
+      href="/assets/css/styles.css">
     <link rel="alternate" type="application/rss+xml" 
           title="{{ site.name }}"
           href="{{ site.baseurl }}/feed.xml" />
   </head>
-  <body>
-
-    <div class="container py-4">
-
-      <div class="row align-items-end py-1">
-        <div class="col-auto mr-auto">
-          <h4> James Adam Buckland </h4>
-        </div>
-
-        <div class="col-auto">
-          <ul class="nav nav-pills">
-            {% for nv in site.data.nav %}
-              <li class="nav-item">
-                {% if page.url == nv.url %}
-                  <a class="nav-link active" href="#">{{ nv.title }}</a>
-                {% else %}
-                  <a class="nav-link" href={{ nv.url }}>{{ nv.title }}</a>
-                {% endif %}
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-      </div>
-
-      <hr/>
-
+  <body class="bg-light">
+    <div class="container">
       <div class="row">
+        <div class="col my-2">
+          {% include linkseries.html data=site.data.nav %}
+        </div>
+        <div class="w-100"></div>
         <div class="col">
-          {{ content }}
+          {{content}}
+        </div>
+        <div class="w-100"></div>
+        <div class="col my-2">
+          {% include linkseries.html data=site.data.bottom-links %}
         </div>
       </div>
-
-      <div class="row">
-        <div class="col">
-          <hr/>
-          <nav class="nav nav-pills small justify-content-center">
-            {% for item in site.data.footer_links %}
-              <a class="flex-sm-fill text-sm-center nav-link" href={{ item.url }}>
-                {{ item.title }}
-              </a>
-            {% endfor %}
-          </nav>
-        </div>
-      </div>
-
     </div>
-
-    {% include analytics.html %}
-    {% if site.tags != "" %}
-      {% include collecttags.html %}
-    {% endif %}
-
   </body>
 </html>

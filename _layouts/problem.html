@@ -2,61 +2,51 @@
 layout: default
 ---
 
+<div class="card border-0 text-body bg-light no-gutters" 
+     style="max-width: 40em;">
 
-{% assign textbook_obj = site.data.textbooks[page.textbook] %}
-{% assign up_url = site.url | append: "/" | append: page.textbook %}
+  <div class="card-body">
+    <i>Class notes from:</i>
 
-<!-- https://gist.github.com/budparr/3e637e575471401d01ec -->
-{% assign problems = site[page.collection] %}
-{% for link in problems %}
-  {% if link.title == page.title %}
-    {% unless forloop.first %}
-      {% assign prev_url = prev.url %}
-      {% assign prev_title = prev.problem %}
-    {% endunless %}
-    {% unless forloop.last %}
-      {% assign next_url = problems[forloop.index].url %}
-      {% assign next_title = problems[forloop.index].problem %}
-    {% endunless %}
-  {% endif %}
-  {% assign prev = link %}
-{% endfor %}
+    {% assign book = site.data.psets[page.textbook] %}
+    <h5>{{book.title}}</h5>
+    <h6>{{book.author}}</h6>
+    <i class="fa fa-fw fa-link"></i>
+    <a href="{{book.link}}" class="text-reset">{{book.hosted_on}}</a>
+    <br/>
+    <br/>
 
-<script>
-document.body.onkeyup = function(e){
-if (e.keyCode == '37') { window.location = '{{prev_url}}'; }
-if (e.keyCode == '39') { window.location = '{{next_url}}'; }
-};
-</script>
+    <nobr>
+    {% if page.qed %}
+    <i class="fa-fw fas fa-check-circle text-success"></i>
+    {% else %}
+    <i class="fa-fw fas fa-circle-notch text-muted"></i>
+    {% endif %}
+    {{ page.title | slugify }}
+    </nobr>
 
-{% include arrowbar.html
-   left_url=prev_url
-   left_icon="angle-left"
-   left_title=prev_title
+    {% if page.previous.url %}
+    <nobr>
+    <a href="{{page.previous.url}}" class="mx-3">
+      <i class="fa-fw fas fa-angle-double-left"></i>
+    </a>
+    </nobr>
+    {% endif %}
 
-   center_url=up_url
-   center_icon="angle-up"
+    {% if page.next.url %}
+    <nobr>
+    <a href="{{page.next.url}}" class="mx-3">
+      <i class="fa-fw fas fa-angle-double-right"></i>
+    </a>
+    </nobr>
+    {% endif %}
 
-   right_url=next_url
-   right_icon="angle-right"
-   right_title=next_title
-   %}
 
-<br/>
+    <article>
+      {{ content }}
+    </article>
 
-<h4>
-  Problem {{ page.problem }}
-  <small class="text-muted">
-    from <i><a href="{{ textbook_obj.link }}">{{ textbook_obj.title }}</a></i>, 
-    ({{ textbook_obj.year }})
-  </small>
-</h4>
+  </div>
+</div>
 
-<article class="post"> 
-  {{ content }} 
-  <p class="text-right">
-  {% if page.qed %}
-    $\blacksquare$
-  {% endif %}
-  </p>
-</article>
+

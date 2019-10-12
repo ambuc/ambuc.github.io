@@ -1,3 +1,5 @@
+**James Adam Buckland**
+
 I'm currently a software engineer at [Google][1] in Cambridge, MA. 
 
 [1]: https://careers.google.com/locations/cambridge/
@@ -30,4 +32,4 @@ In the past, I have seen employment as:
 [9]: http://ccc.illinois.edu
 [10]: http://www.amnh.org/our-research/hayden-planetarium)
 
-For more, see my [Resume](/resume.pdf).
+For more, see my [Resume](/assets/pdf/resume.pdf).

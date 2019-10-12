@@ -1,19 +1,13 @@
 ---
+
 layout: default
 ---
-  <div class="row">
-    <div class="col col-12 col-md-7">
-      {% capture bio %} {% include bio.md %} {% endcapture %}
-      {{ bio | markdownify }}
-    </div>
-    <div class="col col-12 col-md-5">
-      <figure class="figure">
-        <img src="{{ site.avatar }}" class="figure-img img-fluid rounded mx-auto d-block">
-        <figcaption class="figure-caption">
-        At the Peak6 offices in downtown Chicago.
-        </figcaption>
-      </figure>
-      <img src="https://projecteuler.net/profile/jamesadambuckland.png"/> <br/>
-      <br/>
-    </div>
+
+<div class="card border-0 text-body bg-light no-gutters" style="max-width: 40em;">
+  <div class="card-body">
+    <p id="bio">
+    {%capture bio%}{%include bio.md%}{%endcapture%}
+    {{ bio | markdownify }}
+    </p>
   </div>
+</div>

@@ -1,0 +1,23 @@
+<blockquote>
+{% if include.url %}
+<i class="fa fa-fw fas fa-link"></i>
+<a href="{{include.url}}">
+  {{include.url}}
+</a>
+<br/>
+{% endif %}
+{% if include.github %}
+<i class="fa fa-fw fab fa-github"></i>
+<a href="{{include.github}}">
+  {{include.github}}
+</a>
+<br/>
+{% endif %}
+{% if include.paper_url and include.paper_title %}
+<i class="fa fa-fw fas fa-file-alt"></i>
+<a href="{{include.paper_url}}">
+  {{include.paper_title}}
+</a>
+<br/>
+{% endif %}
+</blockquote>

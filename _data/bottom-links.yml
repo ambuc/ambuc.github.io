@@ -1,0 +1,15 @@
+- url: mailto:james.adam.buckland@gmail.com
+  displayname: Email
+  icon: fas fa-paper-plane
+- url: http://github.com/ambuc
+  displayname: GitHub
+  icon: fab fa-github
+- url: https://www.linkedin.com/in/jamesadambuckland
+  displayname: LinkedIn
+  icon: fab fa-linkedin
+- url: https://instagram.com/jbuckland
+  displayname: Instagram
+  icon: fab fa-instagram
+- url: http://jbuckland.com/feed.xml
+  displayname: RSS
+  icon: fas fa-rss-square

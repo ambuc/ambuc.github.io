@@ -1,9 +1,19 @@
 ---
-layout: default
 title: Blog
+layout: default
 ---
 
-{% for post in site.categories.Blog %}
-  {% include candybar.html icon=post.icon url=post.url title=post.title 
-     date=post.date tags=post.tags %}
-{% endfor %}
+<div class="card border-0 text-body bg-light">
+  <div class="card-body">
+    {% for post in site.posts %}
+    <a href="{{post.url}}" class="text-reset">
+      <h5>
+        <span class="text-muted">{{post.date | date: "%F"}}</span>
+        <i class="fa fa-fw fa-{{post.icon}} mx-2"></i>{{ post.title }}
+      </h5>
+    </a>
+    <br/>
+    {% endfor %}
+  </div>
+</div>
+

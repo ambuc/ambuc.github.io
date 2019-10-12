@@ -1,53 +1,24 @@
 ---
+
 layout: default
 ---
 
-{% assign problems = site[page.collection] %}
-{% for link in problems %}
-  {% if link.title == page.title %}
-    {% unless forloop.first %}
-      {% assign prev_url = prev.url %}
-      {% assign prev_title = prev.problem %}
-    {% endunless %}
-    {% unless forloop.last %}
-      {% assign next_url = problems[forloop.index].url %}
-      {% assign next_title = problems[forloop.index].problem %}
-    {% endunless %}
-  {% endif %}
-  {% assign prev = link %}
-{% endfor %}
+<div class="card border-0 text-body bg-light no-gutters" 
+     style="max-width: 40em;">
 
-<script>
-document.body.onkeyup = function(e){
-if (e.keyCode == '37') { window.location = '{{prev_url}}'; }
-if (e.keyCode == '39') { window.location = '{{next_url}}'; }
-};
-</script>
+  <div class="card-body">
+    <a href="{{page.url}}" class="text-reset">
+      <h5>
+        <span class="text-muted">{{page.date | date: "%F"}}</span>
+        <i class="fa fa-fw fa-{{page.icon}} mx-2"></i>{{ page.title }}
+      </h5>
+    </a>
 
-{% include candybar.html icon=page.icon url=page.url title=page.title 
-   date=page.date tags=page.tags %}
+    <article>
+      {{ content }}
+    </article>
 
-<article class="post">
-  	{{ content }}
-</article>
+  </div>
+</div>
 
-<ul class="list-group">
-	{% if page.github %}
-  <li class="list-group-item">
-		<i class="fas fa-fw fa-code-branch"></i>
-    View the source code on <a href="{{ page.github }}">Github</a>.
-  </li>
-	{% endif %}
-	{% if page.project_title %}
-  <li class="list-group-item">
-		<i class="fas fa-fw fa-external-link-alt"></i>
-    See more at <a href="{{ page.project_url }}">{{ page.project_url }}</a>.
-  </li>
-	{% endif %}
-	{% if page.paper_title %}
-  <li class="list-group-item">
-		<i class="fas fa-fw fa-file-pdf"></i>
-    Read <a href="{{ page.paper_url }}">{{ page.paper_title }}</a>.
-  </li>
-	{% endif %}
-</ul>
+

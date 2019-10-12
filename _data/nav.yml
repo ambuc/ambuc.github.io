@@ -1,6 +1,12 @@
-- title: "Home"
-  url: "/"
-- title: "Blog"
-  url: "/blog/"
-- title: "Resume"
-  url: "/resume.pdf"
+- url: /
+  displayname: Home
+  icon: fas fa-home
+- url: /blog.html
+  displayname: Blog
+  icon: fas fa-shapes
+# - url: /psets.html
+#   displayname: PSets
+#   icon: fas fa-feather-alt
+- url: /assets/pdfs/resume.pdf
+  displayname: Resume
+  icon: fas fa-file-contract

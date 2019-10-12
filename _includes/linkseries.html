@@ -1,0 +1,11 @@
+<div class="card border-0 text-body bg-light no-gutters">
+  <div class="card-body no-gutters">
+    {% for i in include.data %}
+    <button type="button" class="btn p-0 mr-3 btn-sm text-muted">
+      <a href="{{i.url}}" class="text-reset">
+        <i class="fa-fw {{i.icon}} mr-2"></i>{{ i.displayname }}
+      </a>
+    </button>
+    {% endfor %}
+  </div>
+</div>
