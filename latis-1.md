@@ -1,0 +1,409 @@
+---
+title: Latis, a command-line spreadsheet toy
+icon: table
+
+layout: post
+---
+
+{% include project.html 
+   github="https://github.com/ambuc/latis" %}
+
+* TOC
+{:toc}
+
+# Background
+
+I wrote a command-line spreadsheet toy in C++. It renders as a
+[TUI](https://en.wikipedia.org/wiki/Text-based_user_interface) and implements an
+Excel-like grammar for defining formulae. The full source is
+[here](https://github.com/ambuc/latis).
+
+# Design
+
+In-scope for this project:
+
+*  Designing an [ABNF grammar](https://en.wikipedia.org/wiki/Augmented_Backus%E2%80%93Naur_form)
+*  Writing a system for lexing, parsing, and evaluating user input.
+*  Writing a TUI for rendering spreadsheets interactively.
+*  Using C++. (Mostly to learn about OSS [Bazel](https://bazel.build/),
+   [absl](https://abseil.io/docs/cpp/), and
+   [protobuffers](https://developers.google.com/protocol-buffers).
+
+Out-of-scope:
+
+*  A fully-featured spreadsheet app which is easy to use or interoperates with
+   other spreadsheet formats.
+
+## Design Overview
+
+A spreadsheet program needs to have individual cells, each of which either has:
+
+*  a typed value (a string value, a numeric value, or a monetary value, to name
+   a few) or
+*  a formula which is dependent on zero or more cells and which returns a typed
+   value.
+
+User input must be [lexed](https://en.wikipedia.org/wiki/Lexical_analysis)
+(broken up into a series of meaningful tokens),
+[parsed](https://en.wikipedia.org/wiki/Parsing#Parser), (turned from a series of
+tokens into a data structure via a formal grammar), and evaluated (rendered to a
+typed value). The degenerate case of this lex-parse-evaluate pipeline is a
+single typed value.
+
+The program must also maintain a graph of cells and their dependencies on each
+other. If cell `A` depends on cell `B`, and cell `B` is updated, the rendering
+of cell `A` (but not its underlying formula) must also be updated. Furthermore,
+cells depending on `A` must be updated, and so on and so forth.
+
+Finally, there should be some decoupling between the spreadsheet data structure
+and the onscreen contents. This design problem is often solved using the
+[MVC](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller)
+pattern, and was far and away the most complex part of this project, since I
+foolishly insisted on using C++ and writing myself not only the spreadsheet but
+the underlying MVC tools and frameworks.
+
+## ABNF Grammar
+
+As mentioned above, a spreadsheet which can lex, parse, and evaluate user input
+must attempt to understand that input according to a
+[grammar](https://en.wikipedia.org/wiki/Formal_grammar). I chose to design a
+grammar using
+[ABNF](https://en.wikipedia.org/wiki/Augmented_Backus%E2%80%93Naur_form), which
+is a manner of specifying grammar using some rules. ABNF already defines some
+bottom-level terminal values (numerics, literals, etc.) which make defining a
+grammar easier. Here is the grammar I ended up with:
+
+### Notes on ABNF:
+
+*  Anything in double quotes is a literal, i.e. `-` might mean a range of
+   values, but `"-"` means the literal `-` character.
+*  Anything on a line after `;` is a comment.
+*  `%c` means a single text character.
+*  `%d` means a decimal digit.
+*  `0-9` means a range of values.
+*  `<a>*<b>e` means between `a` and `b` instances of `e`. If `a` is not 
+   specified, the default lower bound is 0. If `b` is not specified, the
+   default upper bound is infinity. So `1*e` means one or more instances of `e`.
+*  `<a>e` means `e` exactly `a` times.
+*  `X / Y` means either `X` or `Y`.
+*  `[e]` means that `e` is optional, i.e. shorthand for `0*1e`.
+
+```
+DIGIT            = %d0-9
+
+DATE_FULLYEAR    = 4DIGIT
+DATE_MONTH       = 2DIGIT  ; 01-12
+DATE_MDAY        = 2DIGIT  ; 01-28, 01-29, 01-30, 01-31 based on month/year
+TIME_HOUR        = 2DIGIT  ; 00-23
+TIME_MINUTE      = 2DIGIT  ; 00-59
+TIME_SECOND      = 2DIGIT  ; 00-58, 00-59, 00-60 based on leap second rules
+TIME_SECFRAC     = "." 1*DIGIT
+TIME_NUMOFFSET   = ("+" / "-") TIME_HOUR ":" TIME_MINUTE
+TIME_OFFSET      = "Z" / time_numoffset
+DATE_TIME        = DATE_FULLYEAR "-" DATE_MONTH "-" DATE_MDAY "T"
+                   TIME_HOUR ":" TIME_MINUTE ":" TIME_SECOND [TIME_SECFRAC] 
+                   TIME_OFFSET
+
+UPPERCASE        = %c"A"-"Z"
+ALPHANUMERIC     = 1*(UPPERCASE / DIGIT)
+
+INT_NUMERIC      = 1*DIGIT
+DOUBLE_NUMERIC   = *DIGIT "." *DIGIT
+NUM_VAL          = INT_NUMERIC |
+DOUBLE_NUMERIC
+
+CURRENCY_ENUM    = "USD" / "SEK" / ...
+CURRENCY_VAL     = NUM_VAL CURRENCY_ENUM
+
+STR_VAL          = "\"" *e "\""
+
+ROW_INDICATOR    = 1*DIGIT
+COL_INDICATOR    = 1*UPPERCASE
+
+LOCATION_VAL     = COL_INDICATOR ROW_INDICATOR     ; A1
+RANGE_VAL        = COL_INDICATOR ":" COL_INDICATOR ; A:B
+                 / LOCATION_VAL ":" ROW_INDICATOR  ; A1:3
+                 / LOCATION_VAL ":" LOCATION_VAL   ; A1:B3
+
+BOOL_VAL         = "True" / "False"
+
+VAL              = CURRENCY_VAL / DATE_TIME / NUM_VAL / STR_VAL 
+                 / LOCATION_VAL / RANGE_VAL / BOOL_VAL 
+
+FN               = 1*(ALPHANUMERIC / "_") 
+
+EXPR             = VAL ; 4
+                 / "(" EXPR ")" ; (5)
+                 / "(" EXPR FN EXPR ")" ; (1+1)
+                 / FN "(" EXPR *( "," EXPR) ")" ; POW(2,4,6)
+                 / EXPR "?" EXPR ":" EXPR ; cond ?  val1 : val2
+
+GRAMMAR          = "=" EXPR
+```
+
+## Lexing
+
+When lexing, we convert a string of user input into a linear sequence of
+meaningful tokens. Things get very verbose at this stage. We define an enum `T`
+of possible lex types, and store tokens as:
+
+```c++
+struct Token {
+  enum T {
+    equals, //  =
+    period, //  .
+    ...
+  };
+  T type
+  std::string_view value;
+```
+
+where each `Token` holds a reference to the substring of user input it
+represents.
+
+For example, lexing might turn a string like:
+
+```
+=POW(4.605, 2)
+00000000001111
+01234567890123
+```
+
+into a sequence of tokens like:
+
+| substring | type         | start | length |
+|-----------|--------------|-------|--------|
+| `=`       | `T::equals`  |     0 |      1 |
+| `POW`     | `T::alpha`   |     1 |      3 |
+| `(`       | `T::lparen`  |     4 |      1 |
+| `4.605`   | `T::numeric` |     5 |      5 |
+| `,`       | `T::comma`   |    10 |      1 |
+| `2`       | `T::numeric` |    12 |      1 |
+| `)`       | `T::rparen`  |    13 |      1 |
+
+By passing around types _and_ underlying substrings, we can parse the contents
+of alphanumeric tokens lazily, i.e. only when necessary.
+
+### Note on std::string_view
+
+[`std::string_view`](https://en.cppreference.com/w/cpp/header/string_view)
+represents a read-only view into an existing character buffer. So long as the
+underlying string doesn't vanish, the constructed string_view is a small data
+structure suitable for passing by-value (or mutating in-place) without the
+overhead of copying an arbitrary-length string.
+
+## Parsing
+
+Parsing is the process of taking a series of lexical tokens (as described above)
+and generating a useful data structure (read: tree) which can be stored, 
+traversed, evaluated, manipulated, and displayed. This process happens
+hand-in-hand with the grammar defined above, and some tools can read ABNF
+grammars or other regular grammars and spit out parsers. I chose to hand-roll my
+own. This was the most challenging and educational aspect of this project by
+far.
+
+### Parser combinators
+
+I used the [parser-combinator](https://en.wikipedia.org/wiki/Parser_combinator)
+style; that is, I wrote a set of low-level parsers (one which parses into a
+character, one which parses into a number, etc.) and then a set of higher-order
+parsers, which combine two or more parsers and return a new parser.
+
+Before we get into how this works, we need some background on `absl::Status`,
+`StatusOr<T>`, `absl::Span`, `absl::variant`, and `absl::bind_front`.
+
+#### absl::Status
+
+[`absl::Status`](https://github.com/abseil/abseil-cpp/blob/master/absl/status/status.h) 
+is a C++ error handling class which encapsulates a typed error
+(`kInvalidArgument`, `kPermissionDenied`, etc.) and a human-readable string
+payload.
+
+#### `???::StatusOr<T>`
+
+`::StatusOr<T>` is the [sum type](https://en.wikipedia.org/wiki/Tagged_union) 
+of a value of type `T` and an `absl::Status`. It doesn't exist (yet!) in `absl`,
+but other OSS libraries
+[hint](https://googleapis.dev/cpp/google-cloud-common/0.4.0/classgoogle_1_1cloud_1_1v0_1_1StatusOr.html)
+[at](http://www.furidamu.org/blog/2017/01/28/error-handling-with-statusor/) 
+[its](https://github.com/protocolbuffers/protobuf/blob/master/src/google/protobuf/stubs/statusor.h) 
+[existence](https://asylo.dev/doxygen/classasylo_1_1StatusOr.html). Since my
+project already imported `"google/protobuf"`, I decided to use
+`"google/protobuf/stubs/statusor.h"`, which exposes
+`::google::protobuf::util::StatusOr<T>`. One day this may be a part of `absl`.
+
+#### `absl::Span`
+
+[`absl::Span`](https://github.com/abseil/abseil-cpp/blob/master/absl/types/span.h)
+is the same idea as `std::string_view`, only it applies to other containers
+beyond strings. Think of it as a read-only view into a container. Notably, it
+can be passed by-reference or mutated in-place.
+
+#### `absl::variant`
+
+[`absl::variant`](https://github.com/abseil/abseil-cpp/blob/master/absl/types/variant.h)
+is a union type of one or more typed values. It holds exactly one value of one
+of its types. So a value of type `absl::Variant<int, double> numeric` could hold
+either an integer or a double. 
+
+One could use `std::get<int>(numeric)` to access the underlying integer type, 
+but `std::get` excepts (`std::bad_variant_access`) if the underlying variant
+holds a type other than the one specified. Instead it is idiomatic to use the
+visitor pattern:
+
+```c++
+struct Visitor {
+  void operator()(const int& i) const {
+    std::cout << "Int: " << i;
+  }
+  void operator()(const double& i) const {
+    std::cout << "Double: " << i;
+  }
+};
+
+absl::variant<int, double> numeric = 123.456;
+Visitor visitor;
+absl::visit(visitor, numeric); // Prints "double: 123.456";
+```
+
+This is a little complicated, but the benefits outweigh the costs.
+
+#### `absl::bind_front`
+
+Finally, `absl::bind_front` and `std::bind_front` both implement partial
+function application. Here is an example:
+
+```c++
+// |minus| is a function with two arguments.
+int minus(int a, int b) {
+  return a - b;
+}
+
+// But |fifty_minus| is a function with only one argument; 
+auto fifty_minus = std::bind_front(minus, 50);
+
+int fifty_minus_three = fifty_minus(3); // outputs 47.
+```
+
+We can use this to stage partially-evaluated methods which already have their
+first `n` arguments and are waiting on their last `m` arguments, and can be
+thunked later.
+
+### Back to Parser Combinators
+
+### What is a Parser? 
+
+If a lexer spits out a vector of tokens, define a `using TSpan =
+absl::Span<const Token>`, where a `TSpan` is a _mutable_ span of _immutable_
+tokens. That is, it is a sliding window which can be slid to any starting node
+and length, but there is no risk of mutating the underlying tokens.
+
+In Latis, a parser has this type:
+
+```c++
+template <typename T>
+using Prsr = std::function<StatusOr<T>(TSpan *)>;
+```
+
+that is, a parser takes a pointer to a `TSpan`, _may_ mutate that `TSpan`
+in-place, and returns either a value of type `T` or an `absl::Status` explaining
+why it was unable to parse the input. 
+
+NB: This parser definition attempts to parse the _head_ of some input, not the
+entire body. A successful parse will truncate the token span, leaving a shorter
+span suitable for running through anothe parser.
+
+### What is a Parser combinator?
+
+A parser combinator is a higher-order function; it accepts as arguments one or
+more function(s) and returns another function. 
+
+Here are some existing parsers:
+
+```c++
+StatusOr<int> ConsumeInt(TSpan *tspan);
+StatusOr<double> ConsumeDouble(TSpan *tspan);
+```
+
+And here is a parser combinator:
+
+```c++
+template <typename... O>
+static std::function<StatusOr<absl::variant<O...>>(TSpan *)> 
+AnyVariant(StatusOr<O>(TSpan *)>... ls);
+```
+
+This parser combinator (named `AnyVariant`) uses [variadic
+templates](https://docs.microsoft.com/en-us/cpp/cpp/ellipses-and-variadic-templates?view=vs-2019)
+to accept a series of any number of parsers (i.e. any number of inputs of type
+`StatusOr<O>(TSpan *)`, and returns a parser whose return type is 
+`absl::variant<O...>`.
+
+We can use a parser combinator like `AnyVariant` to write a parser which
+attempts to parse the input as _either_ an int _or_ a double:
+
+```c++
+StatusOr<absl::Variant<double, int>> ConsumeNumeric(TSpan *tspan) {
+  return AnyVariant<double, int>(
+    absl::bind_front(&ConsumeDouble, this),
+    absl::bind_front(&ConsumeInt, this))(tspan);
+}
+```
+
+NB: Recall that `AnyVariant<O...>(...)` itself returns a parser. So we need to
+call it like so: `AnyVariant<O...>(...)(...)`.
+
+### Other useful parser combinators:
+
+In addition to `AnyVariant`, I also wrote:
+
+*  `Any<T>`, which takes one or more parsers of type `T` and returns one parser
+   returning type `T`, which atempts to match the parsers in priority order.
+*  `Maybe<T>`, which takes exactly one parser and returns another lenient
+   parser, which reads from `TSpan` but does not fail if it fails to match. This
+   is useful for implementing optional aspects of the grammar, such as
+   `TIME_SECFRAC` in the timespec.
+*  `WithRestriction<T>`, which takes exactly one parser and an filtering
+   function, and returns a parser which only returns a value of type `T` if it
+   passes that filtering function. This is useful for introducing logic into our
+   parser, such as recognizing a numeric value as representing a number of hours
+   if and only if it is in the range `[0-24]`.
+*  `InSequence<std::tuple<O...>>(Prsr<O>...)`, which takes a sequence of parsers
+   and attempts to match them all, in-sequence, returning a `std::tuple<>` of
+   their outputs. This is useful for matching all-or-nothing of a subgrammar,
+   such as datetime specifications, which are only valid if they match the
+   entire `DATE_FULLYEAR-DATE_MONTH-DATE_MDAY...` grammar. Otherwise this
+   returns `Status`, and we do not truncate the `TSpan`.
+*  `WithTransformation`, which is like `WithRestriction`, except it takes
+   exactly one parser and exactly one transformation function which can convert
+   the parsed value to some other value of some other type.
+*  `WithLookup`, which accepts exactly one parser and exactly one lookup
+   function. It is useful for looking up the returned value as the key in some
+   map and returning its value instead. It can be thought of as a synonym for
+   `WithRestriction` where the restriction is being-in-the-map, and
+   `WithTransformation` where the transformation is
+   to-the-matching-value-in-the-map.
+
+The full list of combinators (and their implementations) lives here:
+https://github.com/ambuc/latis/blob/master/src/formula/parser_combinators.h.
+
+### Parsing, altogether.
+
+In the end we compose many parser combinators and parsers into one big function,
+which accepts user input and outputs a data structure (actually a
+[protobuffer](https://github.com/ambuc/latis/blob/master/proto/latis_msg.proto))
+which contains nested formulae, expressions, values, string literals, and table
+lookup locations.
+
+### Evaluation
+
+Evaluation is comparatively simple: we walk the data structure described above
+and "crunch" the component parts. If a node is a table lookup, we perform that
+lookup (or fail). If a node is a mathematical expression, we evaluate that
+expression. 
+
+In practice this means translating `MINUS(A4, A3)` -> `3.4 - 1.2` -> `2.2`. This
+is relatively
+[simple](https://github.com/ambuc/latis/blob/master/src/formula/evaluator.h).
+
+# TODO(ambuc): Write about the MVC part.
