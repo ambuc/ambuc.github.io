@@ -35,9 +35,9 @@ and a **card** is a view into that note via a **card type**:
 
 ```
 # type: Card Type
-Q: \{\{French\}\}
-A: \{\{English\}\}<br>
-   Page #\{\{Page\}\}
+Q: French
+A: English<br>
+   Page #Page
 ```
 
 ```
@@ -67,23 +67,23 @@ HTML. Anki will render these fields correctly on web and mobile.
 I have four card types:
 
 ```
-Q: \{\{characters\}\} + \{\{meaning\}\}
-A: \{\{pinyin\}\}
+Q: characters + meaning
+A: pinyin
 
-Q: \{\{characters\}\} + \{\{pinyin\}\}
-A: \{\{meaning\}\}
+Q: characters + pinyin
+A: meaning
 
-Q: \{\{pinyin\}\} + \{\{meaning\}\}
-A: \{\{characters\}\}
+Q: pinyin + meaning
+A: characters
 
-Q: \{\{characters\}\}
-A: \{\{pinyin\}\} + \{\{meaning\}\}
+Q: characters
+A: pinyin + meaning
 ```
 
-It doesn't make sense to have a card where `Q: \{\{pinyin\}\}`, since the
+It doesn't make sense to have a card where `Q: pinyin`, since the
 question is ambiguous -- there are many words and characters with the same
 pronunciation.  I think it also doesn't make sense to have a card where `Q:
-\{\{meaning\}\}`, since there are many ways to say the same idea in each
+meaning`, since there are many ways to say the same idea in each
 language.
 
 ## Problem statement
