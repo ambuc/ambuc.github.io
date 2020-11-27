@@ -34,10 +34,17 @@ Page: 12
 and a **card** is a view into that note via a **card type**:
 
 ```
-# type: Card Type                    |   # type Card
-Q: {{French}}                        |   Q: Bonjour
-A: {{English}}<br>                  ==>  A: Hello
-   Page #{{Page}}                    |      Page #12
+# type: Card Type
+Q: \{\{French\}\}
+A: \{\{English\}\}<br>
+   Page #\{\{Page\}\}
+```
+
+```
+# type Card
+Q: Bonjour
+A: Hello
+   Page #12
 ```
 
 It is normal to have a few card types, which represent a few views into that
@@ -60,19 +67,24 @@ HTML. Anki will render these fields correctly on web and mobile.
 I have four card types:
 
 ```
-# type: Card Type                    | # type: Card Type
-Q: {{characters}} + {{meaning}}      | Q: {{characters}} + {{pinyin}}
-A: {{pinyin}}                        | A: {{meaning}}
--------------------------------------+------------------------------------------
-# type: Card Type                    | # type: Card Type
-Q: {{pinyin}} + {{meaning}}          | Q: {{characters}}
-A: {{characters}}                    | A: {{pinyin}} + {{meaning}}
+Q: \{\{characters\}\} + \{\{meaning\}\}
+A: \{\{pinyin\}\}
+
+Q: \{\{characters\}\} + \{\{pinyin\}\}
+A: \{\{meaning\}\}
+
+Q: \{\{pinyin\}\} + \{\{meaning\}\}
+A: \{\{characters\}\}
+
+Q: \{\{characters\}\}
+A: \{\{pinyin\}\} + \{\{meaning\}\}
 ```
 
-It doesn't make sense to have a card where `Q: {{pinyin}}`, since the question
-is ambiguous -- there are many words and characters with the same pronunciation.
-I think it also doesn't make sense to have a card where `Q: {{meaning}}`, since
-there are many ways to say the same idea in each language.
+It doesn't make sense to have a card where `Q: \{\{pinyin\}\}`, since the
+question is ambiguous -- there are many words and characters with the same
+pronunciation.  I think it also doesn't make sense to have a card where `Q:
+\{\{meaning\}\}`, since there are many ways to say the same idea in each
+language.
 
 ## Problem statement
 
@@ -81,6 +93,7 @@ In Pleco, a flash card looks like this:
 <center>
 <img src="/assets/images/pleco-to-anki/pleco.png" height="400px"/>
 </center>
+<br/>
 
 Pleco can export your set of saved flash cards, but it does so as XML:
 
@@ -94,8 +107,7 @@ Pleco can export your set of saved flash cards, but it does so as XML:
         <headword charset="sc">感冒</headword>
         <headword charset="tc">感冒</headword>
         <pron type="hypy" tones="numbers">gan3mao4</pron>
-        <defn>noun common cold
-verb 1 catch cold 2 dialect be interested in; like (usu. used in the negative)</defn>
+        <defn>noun common cold verb 1 catch cold 2 dialect be interested in; like (usu. used in the negative)</defn>
       </entry>
       <dictref dictid="PACE" entryid="21428224"/>
     </card>
@@ -121,6 +133,7 @@ This might render in Anki like so:
 <center>
 <img src="/assets/images/pleco-to-anki/anki.png" height="400px"/>
 </center>
+<br/>
 
 ## Solution
 
@@ -141,7 +154,8 @@ import.
 
 ### Gotchas
 
-*  `u` and [`ü`](https://resources.allsetlearning.com/chinese/pronunciation/The_%22%C3%BC%22_vowel)
+*  [`u`](https://resources.allsetlearning.com/chinese/pronunciation/The_%22o%22_and_%22u%22_vowels)
+   and [`ü`](https://resources.allsetlearning.com/chinese/pronunciation/The_%22%C3%BC%22_vowel)
    are two different vowels in pinyin and the difference must be
    preserved. For example, 旅游 can be written as "lǚyóu": note the
    diaeresis (¨) _and_ háček (ˇ) over the letter 'u'.
