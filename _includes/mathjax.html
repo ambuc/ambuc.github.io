@@ -1,13 +1,13 @@
 <script type="text/javascript" 
         async 
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        src="https://cdn.jsdelivr.net/npm/mathjax@2.7.8/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
   TeX: {
-    extensions: ["http://sonoisa.github.io/xyjax_ext/xypic.js"],
+    // extensions: ["http://sonoisa.github.io/xyjax_ext/xypic.js"],
     Macros: {
       vaccent: "{\\v}",
       v: ["{\\mathbf\{#1\}}", 1],
@@ -21,25 +21,25 @@ MathJax.Hub.Config({
       grad: ["\{\\text\{grad \}\}"],
 
       // Category theory macros:
-      im: ["{\\text\{im\}\(#1\)}", 1],
-      id: ["{\\text\{id\}}"],
-      N: ["{\\mathbb\{N\}}"],
-      R: ["{\\mathbb\{R\}}"],
-      Z: ["{\\mathbb\{Z\}}"],
-      P: ["{\\mathbb\{P\}}"],
-      hbs: ["{\\text\{Hom\}_\\textbf\{Set\}}"],
-      hbm: ["{\\text\{Hom\}_\\textbf\{Mon\}}"],
-      st: ["{\\text\{ s.t.\}}"],
-      list: ["{\\text\{List\}}"],
-      grp: ["{\\textbf\{Grp\}}"],
-      mon: ["{\\textbf\{Mon\}}"],
-      pro: ["{\\textbf\{PrO\}}"],
-      pp: ["{\\ \\text\{++\}\\ }"],
+      // im: ["{\\text\{im\}\(#1\)}", 1],
+      // id: ["{\\text\{id\}}"],
+      // N: ["{\\mathbb\{N\}}"],
+      // R: ["{\\mathbb\{R\}}"],
+      // Z: ["{\\mathbb\{Z\}}"],
+      // P: ["{\\mathbb\{P\}}"],
+      // hbs: ["{\\text\{Hom\}_\\textbf\{Set\}}"],
+      // hbm: ["{\\text\{Hom\}_\\textbf\{Mon\}}"],
+      // st: ["{\\text\{ s.t.\}}"],
+      // list: ["{\\text\{List\}}"],
+      // grp: ["{\\textbf\{Grp\}}"],
+      // mon: ["{\\textbf\{Mon\}}"],
+      // pro: ["{\\textbf\{PrO\}}"],
+      // pp: ["{\\ \\text\{++\}\\ }"],
 
       // https://meta.mathoverflow.net/a/4073
       // THIS IS A HACK until amsCD supports diagonal arrows :( 
-      diaguparrow: ["{\\smash\{\\raise.6em\\rlap\{\\scriptstyle #1\}\\lower.3em\{\\mathord\{\\diagup\}\}\\raise.52em\{\\!\\mathord{\\nearrow\}\}\}}", 1],
-      diagdownarrow: ["{\\smash\{\\lower.6em\\rlap\{\\scriptstyle #1\}\\raise.3em\{\\mathord\{\\diagdown\}\}\\lower.52em\{\\!\\mathord{\\searrow\}\}\}}", 1]
+      // diaguparrow: ["{\\smash\{\\raise.6em\\rlap\{\\scriptstyle #1\}\\lower.3em\{\\mathord\{\\diagup\}\}\\raise.52em\{\\!\\mathord{\\nearrow\}\}\}}", 1],
+      // diagdownarrow: ["{\\smash\{\\lower.6em\\rlap\{\\scriptstyle #1\}\\raise.3em\{\\mathord\{\\diagdown\}\}\\lower.52em\{\\!\\mathord{\\searrow\}\}\}}", 1]
     }
   }
 });
