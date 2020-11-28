@@ -4,9 +4,6 @@
 - url: /blog.html
   displayname: Blog
   icon: fas fa-shapes
-# - url: /psets.html
-#   displayname: PSets
-#   icon: fas fa-feather-alt
 - url: /assets/pdfs/resume.pdf
   displayname: Resume
   icon: fas fa-file-contract
