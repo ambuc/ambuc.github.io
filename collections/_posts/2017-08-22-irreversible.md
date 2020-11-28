@@ -66,7 +66,7 @@ faces of the subcubes at points like $(1,1,2)$; all four tiles on a the top
 face would have centers $(\pm 1, \pm 1, 2)$, and the four tiles on the bottom
 face would have centers $(\pm 1, \pm 1, -2)$.
 
-```
+```haskell
 type Coord = [Int]
 type Tile  = Coord -- convenient synonym
 type Cube  = [Tile]
@@ -85,7 +85,7 @@ I'm using the excellent
 package, which I've used
 [before](https://gist.github.com/ambuc/a901bf18fb034a5078a46f7cfe0738b5).
 
-```
+```haskell
 import Codec.Picture                       
   ( PixelRGBA8( .. ), writePng, Image)
 import Graphics.Rasterific
@@ -97,7 +97,7 @@ import Graphics.Rasterific.Transformations
 
 I define some `kolors` which are cute little palettes of similar hues.
 
-```
+```haskell
 kolors :: [PixelRGBA8]
 kolors =  [ PixelRGBA8 255 x 0 255 | x <- [000,050,100,150] ] -- reds
        ++ [ PixelRGBA8 x 0 128 255 | x <- [000,050,100,128] ] -- purples
@@ -109,7 +109,7 @@ kolors =  [ PixelRGBA8 255 x 0 255 | x <- [000,050,100,150] ] -- reds
 
 And of course the `solvedCube` itself:
 
-```
+```haskell
 solvedCube :: Cube
 solvedCube =  [ [ a, b, 2] | a <- [1,-1], b <- [1,-1] ] -- F
            ++ [ [ a, b,-2] | a <- [1,-1], b <- [1,-1] ] -- B
@@ -139,7 +139,7 @@ takes each element of the `[(coordinate, color)]` list of tuples, calls
 `drawTile crd clr`, and then sweeps thru the list calling `mapM_`, which
 composes the monadic `Drawing PixelRGBA8 ()` I/O type nicely. 
 
-```
+```haskell
 :t renderDrawing    Int -> Int -> px -> Drawing px () -> Image px
 :t writePng         FilePath -> Image px -> IO ()
 ```
@@ -148,7 +148,7 @@ We get a final `Drawing * ()` which we can `renderDrawing <drawing>` to turn
 into an `Image *`, and finally `writePng <filepath> <image>`. That's just how
 `Rasterific` handles things.
 
-```
+```haskell
 drawCube :: Cube -> Image PixelRGBA8
 drawCube c = renderDrawing 600 600 (PixelRGBA8 255 255 255 255) 
            $ mapM_ (uncurry drawTile) 
@@ -173,7 +173,7 @@ It would be cool to in the future write a simple projection library which can
 take a 3d tuple and an assumed camera position and generate this transformation
 automatically. I did a bit of hand-tuning.
 
-```
+```haskell
 drawTile :: Tile -> PixelRGBA8 -> Drawing PixelRGBA8 ()
 drawTile crd clr = withTransformation (center<>resize<>move0<>turn<>skew<>move1)
                  $ withTexture        (uniformTexture clr)
@@ -204,7 +204,7 @@ drawTile crd clr = withTransformation (center<>resize<>move0<>turn<>skew<>move1)
 
 To print an image we can simply write:
 
-```
+```haskell
 main = do
    writePng "solved.png" $ drawCube solvedCube
 ```
@@ -221,7 +221,7 @@ about an axis.
 
 Let's define some new data types to make thinking about this easier.
 
-```
+```haskell
 data Side        = F | B | U | D | L | R deriving (Eq, Bounded, Show, Enum, Ord)
 data Axis        = X | Y | Z
 data Cardinality = Pos | Neg
@@ -277,7 +277,7 @@ If we apply these simplified transformation matrices to
 $$\begin{bmatrix}x&y&z\end{bmatrix}^\intercal$$, we get extremely efficient, simple
 vector transformation anonymous functions:
 
-```
+```haskell
 mkRot :: Cardinality -> Axis -> Rotation
 mkRot Pos X = \[x,y,z] -> [x,-z,y]; mkRot Neg X = \[x,y,z] -> [x,z,-y];
 mkRot Pos Y = \[x,y,z] -> [z,y,-x]; mkRot Neg Y = \[x,y,z] -> [-z,y,x];
@@ -288,7 +288,7 @@ Writing the `pivot` function, which looks like
 `newCube = pivot <cardinality> <axis> oldCube`, for example, is really just a
 map:
 
-```
+```haskell
 pivot :: Cardinality -> Axis -> Cube -> Cube
 pivot r a = map (mkRot r a)
 ```
@@ -317,7 +317,7 @@ $(?,?,-2)$, we flip it and try again. (Etc, etc.)
 This iterative algorithm is on average quite a bit faster than checking all 24
 possible pivots of a cube.
 
-```
+```haskell
 resolve :: Cube -> Cube
 resolve c = resolve' $ head c
   where resolve' [ 1, 1, 2] = c
@@ -331,7 +331,7 @@ resolve c = resolve' $ head c
 
 OK, now we can write our `twist` function.
 
-```
+```haskell
 twist :: Side -> Cube -> Cube
 twist side = resolve . map (\x -> if isOn side x then s2Rot side x else x)
   where
@@ -358,7 +358,7 @@ already know what a solved cube looks like -- because tiles are indexed and we
 expect to always pass them around in their resolved position, we can simply
 write:
 
-```
+```haskell
 solved :: Cube -> Bool
 solved = (== solvedCube)
 ```
@@ -390,7 +390,7 @@ Let's make our `seed` cube, which is a tuple; the first item is a twisted cube
 (doesn't matter what side is twisted), and the second item is a list of
 performed moves so far.
 
-```
+```haskell
 seed :: [(Cube, [Side])]
 seed =  [ (twist U solvedCube, [U]) ]
 ```
@@ -402,7 +402,7 @@ Even though a cube has six sides, we can only turn any given side clockwise, and
 turning the top face clockwise is actually the same as turning the bottom face
 clockwise. So we can really only operate on `[R,F,U]`, not `[R,F,U,L,B,D]`.
 
-```
+```haskell
 kids :: (Cube, [Side]) -> [(Cube, [Side])]
 kids (c, h:hs) = [ (twist dir c, dir:h:hs) | dir <- delete h [R,F,U] ]
 ```
@@ -415,12 +415,13 @@ function to its own output over and over and returns a list of outputs; `concat`
 flattens the stream, and we can `filter` by which cubes are solved and print
 just the `head` (the `snd` of which is the winning sequence itself). 
 
-```
+```haskell
 main = do
    print $ snd $ head $ filter (solved.fst) 
          $ concat $ iterate (concatMap kids) seed
 ```
 
+```bash
     j@mes $ ghc -O2 l.hs && time ./l
     [1 of 1] Compiling Main             ( l.hs, l.o )
     Linking l ...
@@ -429,11 +430,12 @@ main = do
     real	0m0.551s
     user	0m0.547s
     sys	0m0.003s
+```
 
 This is super fast, so I don't really care yet about optimizing. But I do want
 to see what it looks like. 
 
-```
+```haskell
 main = do
    let seq = snd $ head $ filter (solved.fst) 
            $ concat $ iterate (concatMap kids) seed

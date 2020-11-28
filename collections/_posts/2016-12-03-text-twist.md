@@ -9,7 +9,7 @@ layout: post
    github="http://github.com/ambuc/text-twist"
    %}
 
-```
+```bash
 $ runhaskell text-twist.hs
  ┌ T E X T   T W I S T
  ├ Please enter a seed word:
@@ -47,11 +47,11 @@ This is a implementation in Haskell, playable from the shell. I hope the code is
 fairly readable.
 
 You can just play the game:
-```
+```bash
 $ runhaskell text-twist.hs
 ```
 or, compile it first if you like:
-```
+```bash
 $ ghc text-twist.hs
 [1 of 1] Compiling Main             ( text-twist.hs, text-twist.o )
 Linking text-twist ...

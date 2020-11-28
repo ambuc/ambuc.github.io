@@ -68,7 +68,7 @@ and that's almost entirely it. There's a bit more business for styling and
 click region detection, but the core of the game takex place in the event loop
 within `appEvent`.
 
-```
+```haskell
 appEvent :: GSt -> BrickEvent Ext e -> EventM Ext (Next GSt)
 appEvent s (VtyEvent e) = case e of
   Vty.EvKey Vty.KEsc        [] -> halt s
@@ -145,7 +145,7 @@ and a history of prior fields and scores.
 
 ## `Show` instances
 We can make our own type instance of a few of the above custom typeclasses by defining what it means to `Show` a `Rank` or `Suit`.
-```
+```haskell
 instance Show Rank where
   show RA  = "A";
   show R2  = "2"; show R3  = "3"; show R4  = "4"; show R5  = "5";
@@ -163,7 +163,7 @@ instance Show Suit where
 ## Lenses 101
 We want to define our record fields with underscores like so:
 
-```
+```haskell
 data DCard = DCard { _card    :: Card
                    , _facedir :: FaceDir }     
   deriving (Eq, Show, Ord)
@@ -172,7 +172,7 @@ data DCard = DCard { _card    :: Card
 So that the `Lens` library can,  at compile time, create functions like `card`
 or `facedir` which can be called on `DCard` objects, like so:
 
-```
+```haskell
 > let dc = DCard { _card    = Card RA Club
                  , _facedir = FaceDown
                  }
@@ -188,7 +188,7 @@ where `(^.)` is a getter and `.~` is a setter (sorta). For more read the [lens
 tutorial](https://hackage.haskell.org/package/lens-tutorial-1.0.3/docs/Control-Lens-Tutorial.html).
 
 By the same convention, a deeply-nested object could be accessed with
-```
+```haskell
 obj & fieldOuter . fieldInner . fieldVeryInner %~ mutationFn
 ```
 
@@ -201,7 +201,7 @@ Just as we wrote a set of abstract data types above which can be composed into
 flexible `Pile`s, etc., we want to write a set of abstract render functions which
 can be composed to draw a `Pile`, or a `DCard`, or whatever. Brick wants us to define our `app` like so:
 
-```
+```haskell
 app = App { appDraw = drawUI
           , ...
           }
@@ -232,7 +232,7 @@ but we want to be able to draw custom border too, in the case of our empty piles
 
 Brick lets us define custom borderstyles like so:
 
-```
+```haskell
 rrGhost :: Widget Ext -- renders a 'ghost' card with no content
 rrGhost = withBorderStyle ghostRounded $ border $ str "  "
   where ghostRounded = BorderStyle 
@@ -272,11 +272,11 @@ We can do so with lenses -- and we can define our own lenses with independent ge
 
 For example, here's a `lens` which writes to or reads from the stock. Its type is `stockL :: Lens' Field [DCard]`, and it either reads and returns a list of `DCard`s or accepts a list of `DCard`s and writes them to the stock. The syntax is
 
-```
+```haskell
 fooLens = Lens (anonymous getter) (anonymous setter)
 ```
               
-```
+```haskell
 -- creates a lens from the field to the stock
 -- operates on lists of displaycards
 stockL :: Lens' Field [DCard] --all
@@ -286,7 +286,7 @@ stockL = lens (\f -> f ^. stock.cards)
 
 Actually, let's use this opportunity to flip the cards at read/write-time. We can use `each` to iterate over each of the returned or processed objects and apply some transformation with `(.~)`.
 
-```
+```haskell
 stockL = lens (\f -> f ^. stock.cards & each.facedir .~ FaceUp)               
               (\f dcs -> f & stock.cards .~ (dcs & each.facedir .~ FaceDown)) 
 ```
@@ -303,7 +303,7 @@ Pile`, where `N` is a convention for indexed generators.
 Eventually we want to be able to, upon reading a list of `extents` from a
 clicked region, continue with our game by calling
 
-```
+```haskell
 appEvent :: GSt -> BrickEvent Ext e -> EventM Ext (Next GSt)
 appEvent s (VtyEvent e) = case e of
   Vty.EvMouseDown col row _ _  -> do
@@ -316,7 +316,7 @@ appEvent s (VtyEvent e) = case e of
 
 We'll write `hasWon :: GSt -> Bool` later, but for now let's write `doMove :: GSt -> [Ext] -> GSt`, which tries to move the clicked card and, if successful, returns a changed `GSt` with incremented `moves` ticker, mutated `score`, and augmented `history`.
 
-```
+```haskell
 doMove :: GSt -> [Ext] -> GSt
 doMove s exs = if wasChange
                  then s & field .~ newField
@@ -333,7 +333,7 @@ doMove s exs = if wasChange
 
 Here we can see chained 
 
-```
+```haskell
 foo & fieldA .~ newFieldA 
     & fieldB .~ newFieldb
 ```
@@ -344,7 +344,7 @@ score mutator (+5, -10, `id`, etc.).
 
 ## Extents
 
-```
+```haskell
 data Ext = StockX | WasteX | TableX | FoundX
          | IdX Int | DCX DCard | ActionX Action
   deriving (Eq, Show, Ord)
@@ -386,7 +386,7 @@ One more thing to do before we can write `tryMove`:
 
 Eventually, we want to be able to write (pseudocode below):
 
-```
+```haskell
 process state =
   if (canMove?)
     then state & newLocation %~ (card:)  -- add one or more cards
@@ -399,7 +399,7 @@ context.
 
 Let's get a list of our tableau and foundation lenses:
 
-```
+```haskell
 inTableau :: Functor f0 => [(Pile -> f0 Pile) -> Field -> f0 Field]
 inTableau = map tableLN [0..6] 
 
@@ -418,7 +418,7 @@ Each location can provide its own set of candidate lenses (usually either
 through `findSpot`, which takes a list of lenses and a card and a field and
 returns the index of the first matching lens, if possible.
 
-```
+```haskell
 findSpot :: [Getting Pile s Pile] -> Card -> s -> Maybe Int
 findSpot pLenses c f = findIndex (\pL -> canPlace c (f ^. pL)) pLenses
 ```
@@ -427,7 +427,7 @@ findSpot pLenses c f = findIndex (\pL -> canPlace c (f ^. pL)) pLenses
 
 In practice it is convenient to provide two helpers to `findSpot`:
 
-```
+```haskell
 isSpot pLs c f = isJust $ findSpot pLs c f
 mkSpot pLs c f = fromJust $ findSpot pLs c f
 ```
@@ -437,7 +437,7 @@ us whether there is a spot for a card to go elsewhere in the field, and
 `mkMoveL` will, assuming there is a spot, return both a lens to that spot and
 the piletype of the spot the card can go to.
 
-```
+```haskell
 canMove :: Int -> DCard -> Field -> Bool
 canMove _ DCard{_facedir=FaceDown} _ = False
 canMove 0 DCard{_card=c}           f = isSpot (inFoundation ++ inTableau) c f 
@@ -459,7 +459,7 @@ it.
 
 We expect `tryMove` to have the form:
 
-```
+```haskell
 tryMove :: [Ext] -> Field -> (Field, Int->Int)
 ```
 
@@ -467,7 +467,7 @@ tryMove :: [Ext] -> Field -> (Field, Int->Int)
 
 Let's write the `tryMove [StockX]` function first, since it is the simplest:
 
-```
+```haskell
 tryMove [StockX] f = (f',id)
   where f' = f & stockL %~ (reverse load ++)
                & wasteL .~ []
@@ -487,7 +487,7 @@ the stock and writing to the waste instead. We drop 3 and take 3 at a time.
 Remember that the need to flip our cards over is handled innately in the
 `stockL` and `wasteL` lenses!
 
-```
+```haskell
 tryMove [_, StockX] f = (f',id)
   where f' = f & stockL %~ drop 3            --drop 3 from stock
                & wasteL %~ (reverse load ++) --add 3 to waste
@@ -503,7 +503,7 @@ rowIndex displaycard field` to decide whether or not to try to evaluate
 which we can use to write one card to the location in question. We also use the
 computed `PileType` to inform our scoring mutator.
 
-```
+```haskell
 tryMove [DCX dc, IdX 0, WasteX] f
   | canMove 0 dc f = (f', scoreFn)
   | otherwise      = (f , id)
@@ -517,7 +517,7 @@ tryMove [DCX dc, IdX 0, WasteX] f
 
 ### `tryMove [DCX dc, IdX row, FoundX]` Moving from the Foundation
 
-```
+```haskell
 tryMove [DCX dc, IdX row, FoundX] f
   | canMove row dc f = (f', scoreFn)
   | otherwise        = (f , id)
@@ -534,7 +534,7 @@ moving one card or more at a time.
 
 ### `tryMove [DCX dc, IdX row, Idx col, TableX]` Moving from the Tableau
 
-```
+```haskell
 tryMove [DCX dc, IdX row, IdX col, TableX] f
   | canMove row dc f = (f', scoreFn)
   | otherwise        = (f , id)
@@ -559,13 +559,13 @@ of our game is finished.
 
 Now that we know how to use lenses, a lot of the remaining functions are pretty simple:
 
-```
+```haskell
 -- if a game is won, all 52 cards are in the foundation
 hasWon :: GSt -> Bool
 hasWon s = length (s ^. field . found . traverse . cards) == 52
 ```
 
-```
+```haskell
 -- undoing a move means rolling back the field, the history, the score, and
 -- the moves counter 
 undoMove :: GSt -> GSt
@@ -580,7 +580,7 @@ undoMove s = if hasHistory
         hasHistory = not $ null $ s ^. history
 ```
 
-```
+```haskell
 -- given a game with a seed, get a new seed and use it to spawn a new game
 newGame :: GSt -> GSt  
 newGame s = let seed' = snd $ R.next $ s ^. seed 
@@ -589,7 +589,7 @@ newGame s = let seed' = snd $ R.next $ s ^. seed
 
 Now we can finally finish `appEvent` and our app is done!
 
-```
+```haskell
 appEvent :: GSt -> BrickEvent Ext e -> EventM Ext (Next GSt)
 appEvent s (VtyEvent e) = case e of
   Vty.EvKey Vty.KEsc        [] -> halt s

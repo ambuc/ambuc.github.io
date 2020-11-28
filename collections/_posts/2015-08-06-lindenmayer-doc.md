@@ -75,7 +75,7 @@ pattern on-screen. The webapp is simply a javascript port of the same code, with
 the ability to modify the constants and redraw the fractal in real time.
 
 # Pseudo-psuedocode
-```
+```python
 from turtle import *
 
 //recursively rewrites $str to a given $depth using an $alphabet

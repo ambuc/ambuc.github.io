@@ -48,7 +48,7 @@ solved.
 
 Recall our custom type definitions:
 
-```
+```haskell
 data Side        = F | B | U | D | L | R deriving (Eq, Bounded, Show, Enum, Ord)
 data Axis        = X | Y | Z deriving (Eq, Show)
 data Cardinality = Pos | Neg deriving (Eq, Show)
@@ -76,7 +76,7 @@ rotation animation, we can do things like
 
 Here's the code that  makes that happen.
 
-```
+```haskell
 mkRot :: Cardinality -> Axis -> Rotation
 mkRot c a = map (\x -> round x :: Int) . rotate (toAngle c) a . map fromIntegral
 
@@ -102,7 +102,7 @@ toAngle Pos =  pi/2; toAngle Neg = -pi/2
 
 Now we can just write `twist` as 
 
-```
+```haskell
 twist :: Side -> Cube -> Cube
 twist side = map (\x -> if side `sees` x then s2Rot side x else x)
 
@@ -116,7 +116,7 @@ sees :: Side -> (Coord -> Bool)
 As for the algorithm, `seed` and `kids` stay the same; we end up producing the
 sequence of moves the same way with the same call.
 
-```
+```haskell
 moves = reverse $ snd $ head $ filter (solved.fst) $ concat 
       $ iterate (concatMap kids) seed
 ```
@@ -133,7 +133,7 @@ $(\pm 1, \pm 1, +2)$, etc. Tiles don't come bundled with normal vectors
 describing their face orientation, so there's nothing to it here but to
 hard-code this logic.
 
-```
+```haskell
 toTile :: [Int] -> Obj
 toTile [x,y,z] = p2t' [fromIntegral x, fromIntegral y, fromIntegral z]
   where p2t' [ x, y, 2] = Face [ [x+a, y+b,  n] | (a,b) <- rg ]
@@ -162,7 +162,7 @@ sequence of cubes in various staged of solved-ness.
 If we write `toImage <cube> <viewpoint>` to return an `Image px` of the cube
 (zipped with our custom `kolors` color-sequence), 
 
-```
+```haskell
 toImage :: [Obj] -> (Float, Float) -> Image PixelRGBA8
 toImage cs v = render 500 500 40 $ world `seenFrom` v
   where world = map (second solid) $ zip cs kolors
@@ -172,14 +172,14 @@ Then we can write an `animate` function. In this case, because we want to do our
 styling  in `toImage`, we only need an array of `[Obj]`s as our input. `animate`
 accepts a series of cubes, a series of viewpoints, and a series of filenames:
 
-```
+```haskell
 animate :: [[Obj]] -> [(Float,Float)] -> [String] -> IO ()
 animate cs vs fs = mapM_ (\(c,v,f) -> writePng f $ toImage c v) $ zip3 cs vs fs
 ```
 
 This is great. Let's call something  like:
 
-```
+```haskell
 main = do
   let frames    = map (map toTile) $ reverse $ scanr twist solvedCube moves
   let views     = repeat isometric
@@ -210,7 +210,7 @@ We want `tween` to take not a beginning- and end-state cube, but instead a
 beginning-state cube and a `Side` to turn (and a number of frames across which
 to turn it.
 
-```
+```haskell
 tween :: Int -> Side -> Cube -> [[Obj]]
 tween num side cube = map (`swivel` cube) angles
   where (cardinality, axis) = s2CA side
@@ -230,7 +230,7 @@ series of cubes with more and  more of the desired twist angle applied to it.
 
 Now our `frames` looks like:
 
-```
+```haskell
 let frames r = concatMap (uncurry $ tween r) 
              $ zip (reverse moves) (reverse $ scanr twist solvedCube moves)
 ```
@@ -240,7 +240,7 @@ occur.
 
 If we write something like
 
-```
+```haskell
 main = do
    let frames    = concatMap (uncurry $ tween 20)
                  $ zip (reverse moves) (reverse $ scanr twist solvedCube moves)
@@ -259,14 +259,14 @@ Just for fun, let's create a series of `views` which, knowing the length of the
 frameset, does a complete yaw rotation. (Also we're retuning `n=3` here for a
 more exploded view.)
 
-```
+```haskell
 mkViews :: Int -> [(Float,Float)]
 mkViews n = zip ps ys
   where ys  = take n [0, (360 / fromIntegral n).. ]
         ps  = [35,35..]
 ```
 
-```
+```haskell
 main = do
   ...
   let views = mkViews (length frames)

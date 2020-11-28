@@ -67,7 +67,7 @@ that row and column.
 I'll present the code annotated below, or in its [entirety in the attached
 gist](https://gist.github.com/ambuc/ac4ed787e1b9bb3eba08bb02c9b25c49#file-crossword-hs).
 
-```
+```haskell
 import qualified Control.Monad   as N (forM)
 import qualified Data.Maybe      as B (isJust, isNothing, catMaybes)
 import qualified Data.Char       as C (isAsciiLower)
@@ -264,7 +264,7 @@ intermediate versions).
 
 Run normally, this script is fairly fast:
 
-```
+```bash
 j@mes $ ghc -O2 words.hs
 [1 of 1] Compiling Main             ( words.hs, words.o )
 Linking words ...
@@ -280,7 +280,7 @@ sys	0m0.303s
 But it was not always so. During development I made extensive use of the
 built-in GHC profiler:
 
-```
+```bash
 j@mes $ ghc -prof -fprof-auto -rtsopts -O2 words.hs
 [1 of 1] Compiling Main             ( words.hs, words.o )
 Linking words ...
@@ -296,7 +296,7 @@ sys	0m0.470s
 This writes out to `words.prof` and looks something like: (see
 [the full words.prof profiler output on Gist.](https://gist.github.com/ambuc/ac4ed787e1b9bb3eba08bb02c9b25c49#file-crossword-prof))
 
-```
+```bash
   Sun May 28 00:13 2017 Time and Allocation Profiling Report  (Final)
 
      words +RTS -p -RTS
@@ -368,7 +368,7 @@ There are 10 such palindromic 4x4s; eight of them rely on the quartet
 
 By running
 
-```
+```haskell
 main = Control.Monad.forM grids 
      $ \g -> appendFile "grids.txt" $ gridPrint g ++ "\n"
 ```
@@ -377,7 +377,7 @@ We can write a list of all grids to a file `grids.txt` and perform some
 rudimentary Bash-level analysis on what sorts of words appear in the rows most
 commonly:
 
-```
+```bash
 j@mes $ cat grids.txt | sort | uniq -c | sort -h | tail
   14642 west
   15424 oboe
@@ -396,7 +396,7 @@ full-fledged English -- let's look at letter frequencies and see how different
 it is for four-letter words, and which letters are more likely to appear in
 crosswords.
 
-```
+```bash
 j@mes $ awk -vFS="" '{for(i=1;i<=NF;i++)w[$i]++}END{for(i in w) print w[i],i}' grids.txt | sort -hr
   1673174 e
   1428194 a

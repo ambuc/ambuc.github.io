@@ -60,7 +60,7 @@ Haskell makes it easy to create abstract data types and start playing with them.
 
 We can represent our values `Val` as unrounded ratios of long ints, or
 `Integer`s. This means we never lose precision to rounding / near-zero numbers.
-```
+```haskell
 type Val = Ratio Integer
 ```
 
@@ -68,7 +68,7 @@ As we discovered before, there are two things we can do to `Val`s:
  - take a _function_ of one of them: $y = f(x)$
  - perform an _operation_ on two of them: $y = f(x_1, x_2)$.
 
-```
+```haskell
 data Fn = Id | Fact                     deriving (Bounded, Enum)
 data Op = Plus | Sub | Mult | Div | Exp deriving (Bounded, Enum)
 ```
@@ -83,14 +83,14 @@ Finally we need an _expression_ type `Expr`, which can be either:
 3. an expression `E2` of 2 arguments, which takes an operation `Op` and a tuple
    of two expressions to operate on.
 
-```
+```haskell
 data Expr = V Val | E1 Fn Expr | E2 Op (Expr,Expr)
 ```
 
 Let's even derive custom `Show` instances so we can pretty-print them, for
 debugging purposes.
 
-```
+```haskell
 instance Show Op where
   show Plus = "+"
   show Sub  = "-"
@@ -120,7 +120,7 @@ or dividing by zero). To accomplish this in an elegant way we make use of monad
 stuff like `=<<`, `<$>`, and `<*>`, which is worth exploring in some detail in a
 moment.
 
-```
+```haskell
 eval :: Expr -> Maybe Val
 eval (V a)           = Just a
 eval (E1 f e)        = calc1 f =<< eval e
@@ -168,7 +168,7 @@ Finally, we avoid some computation by noticing that $a^1 = a$ and $0^b = 0$.
 
 OK, let's try evaluating the above expression!
 
-```
+```haskell
 input                                                 output
 > eval $ E2 Sub (E2 Plus (E1 Fact (V 1), V 2), V 3)   Just (0 % 1)
 > eval $ E2 Sub (E2 Plus (E1 Fact (V 1), V 2), V 4)   Just ((-1) % 1)
@@ -194,7 +194,7 @@ Imagine a function like `calc1 :: Fn -> ? -> ?`. How should we write this?
 Writing it like `calc1 :: Fn -> Maybe Val -> Maybe  Val` essentially requires us
 to write two cases:
 
-```
+```haskell
 calc1 :: Fn -> Maybe Val -> Maybe Val
 calc1 _ Nothing     = Nothing
 calc1 Id   (Just a) = Just a
@@ -203,7 +203,7 @@ calc1 Fact (Just a) = if (canFactorial a) then Just (factorial a) else Nothing
 
 I'm not sure that will carry over well to `calc2`:
 
-```
+```haskell
 calc2 :: Fn -> (Maybe Val, Maybe Val) -> Maybe Val
 calc2 _    (Nothing, _      ) = Nothing
 calc2 _    (_,       Nothing) = Nothing                                      
@@ -219,7 +219,7 @@ invalid expressions in the first place.
 Writing it like `calc1 :: Fn -> Val -> Maybe Val` assumes a valid expression, so
 we can write:
 
-```
+```haskell
 calc1 :: Fn -> Val -> Maybe Val
 calc1 Id a   = Just a
 calc1 Fact a = if (canFactorial a) then Just (factorial a) else Nothing
@@ -231,14 +231,14 @@ calc2 Minus ...
 
 This is much better. So if our type signatures look like
 
-```
+```haskell
 calc1 :: Fn -> Val -> Maybe Val
 calc2 :: Fn -> (Val, Val) -> Maybe Val
 ```
 
 then what does `eval` look like? It would need to do something like
 
-```
+```haskell
 eval :: Expr -> Maybe Val
 eval (V a)    = Just a
 eval (E1 f e) = calc1 f (???)
@@ -246,7 +246,7 @@ eval (E1 f e) = calc1 f (???)
 
 And here's where our trouble begins. Remember that we want to evaluate `e`
 before passing it into `calc1`. So we'd have to check if it was valid first.
-```
+```haskell
 eval (E1 f e) = if (isJust $ eval e) 
                   then (calc1 f (fromJust $ eval e)) 
                   else Nothing
@@ -268,7 +268,7 @@ Quick functor recap:
 Note also that `<$>` is an infix synonym for `fmap`. Confused? See the
 following examples:
 
-```
+```haskell
 > map (+1) [1,2]                       [2,3]
 > fmap (+1) (Just 1)                   Just 2
 > (+1) <$> Just 1                      Just 2
@@ -282,19 +282,19 @@ through unscathed.
 ### `fmap`, really quick
 
 So remember the above problem:
-```
+```haskell
 > calc1 Fact (4%1)                     Just (24%1) 
 > calc1 Fact Nothing                   <error>
 ```
 OK, that's expected. Let's try using `<$>`
-```
+```haskell
 > calc1 Fact <$> Just (4%1)            Just (Just (24%1))
 > calc1 Fact <$> Nothing               Nothing
 ```
 So, good news and bad news. We can unwrap `Just a` and apply the function to the
 interior, but we pass it back re-wrapped, since that's what `<$>` does. Sadly,
 that's also what `calc1` does. Here's a clue:
-```
+```haskell
 > :type (<$>)                          (<$>) :: Functor f => (a -> b) -> f a -> f b
 ```
 This makes sense: `<$>` expects a function like `(a -> b)` which doesn't have an
@@ -306,14 +306,14 @@ At this point I searched [Hoogle](https://www.haskell.org/hoogle/?hoogle=) for
 `(a -> f b) -> f a -> f b` and [got, of
 course](https://www.haskell.org/hoogle/?hoogle=%28a+-%3E+f+b%29+-%3E+f+a+-%3E+f+b)...
 the Monad.
-```
+```haskell
 > :type (=<<)                          (=<<) :: Monad m => (a -> m b) -> m a -> m b
 > :type (>>=)                          (>>=) :: Monad m => m a -> (a -> m b) -> m b
 ```
 There's lots more to the monad, but for now we can use it as a way to take a
 value in context, apply a context-aware function,  and return some output in
 context.
-```
+```haskell
 > calc1 Fact =<< Just (4%1)            Just (24%1)
 > calc1 Fact =<< Nothing               Nothing
 ```
@@ -321,14 +321,14 @@ What about `calc2`? It needs to take a tuple of `Expr`s, and neither of them can
 be `Nothing`. Turns out we can use the fmap infix `<$>` and their friend the
 sequential application infix `<*>`. Here's a set of three trials:
 
-```
+```haskell
 (+) <$> Just 1  <*> Just 2             Just 3
 (+) <$> Just 1  <*> Nothing            Nothing
 (+) <$> Nothing <*> Just 2             Nothing
 ```
 So finally we can simply write `calc2 o =<< (,) <$> eval e1 <*> eval e2`. Thus, 
 
-```
+```haskell
 eval :: Expr -> Maybe Val
 eval (V a)           = Just a
 eval (E1 f e)        = calc1 f =<< eval e
@@ -361,14 +361,14 @@ possible functions _at_ each function. There are only two functions, and one is
 
 We implement the partition algorithm as:
 
-```
+```haskell
 mkPart :: [a] -> [([a],[a])]
 mkPart xs = tail $ init $ zip (inits xs) (tails xs)
 ```
 
 such that
 
-```
+```haskell
 > mkPartitions [1,2,3]                 [([1],[2,3]),([1,2],[3])]
 ```
 
@@ -381,7 +381,7 @@ as described above. Note:
  - `valuesFrom 1` will just be `[1, 1!] = [1,1]`
  - `valuesFrom 3` will just be `[3, 3!] = [3,6]`
 
-```
+```haskell
 valuesFrom :: [Val] -> [Val]
 valuesFrom [x] = mapMaybe eval [ E1 f (V x) | f <- functions ]
 valuesFrom xs  = mapMaybe eval [ E1 f $ E2 o (V va, V vb)
@@ -440,7 +440,7 @@ where `prevMap` is the `mkMap` of a smaller subset, and `thisMap` is the set of
 the values of the expressions generated in `exprsFrom`, which uses `valsFrom`
 the partitioned right- and left-available values. Check it out:
 
-```
+```haskell
 valuesFrom :: [Val] -> S.Set Val
 valuesFrom range = M.findWithDefault S.empty range 
                  $ mkMap (length range)
@@ -480,7 +480,7 @@ We can get a set of all possible numbers from a range `xs` with `valuesFrom xs`.
 This returns a set we can filter for just positive integers; then we want to
 turn that into a list and find its first gap; where
 
-```
+```haskell
 -- > firstGap [1,2,3,5,6] = 4
 firstGap :: (Num a, Eq a) => [a] -> a
 firstGap ls  = 1 + ls !! (head . findIndices (/=1) . gaps) ls
@@ -490,7 +490,7 @@ firstGap ls  = 1 + ls !! (head . findIndices (/=1) . gaps) ls
 ```
 
 Finally, we can define 
-```
+```haskell
 lnpi :: [Val] -> Integer
 lnpi = numerator . firstGap 
      . S.toList . S.filter (>0) 
@@ -498,7 +498,7 @@ lnpi = numerator . firstGap
 ```
 
 So, let's try it!
-```
+```haskell
 > lnpi [1..5]                          159
 ```
 
@@ -512,7 +512,7 @@ gist](https://gist.github.com/ambuc/731f2d9b789a5e4e32bdafbd60bf7ff8).
 
 Finally, the runtime...
 
-```
+```bash
 j@mes $ ghc -O2 lnpi.hs && time ./lnpi
 [1 of 1] Compiling Main             ( lnpi.hs, lnpi.o )
 Linking lnpi ...
@@ -541,9 +541,7 @@ answers, runtimes, and some comments on performance.
 
 This was the original problem. The solution `01.hs` was trivial:
 
-```
-
-```
+```bash
 $ ghc -O2 operationsLibrary.hs 01.hs && time ./01
 159
 0m0.333s
@@ -553,11 +551,12 @@ $ ghc -O2 operationsLibrary.hs 01.hs && time ./01
 **Find the least nonconstructable integer from any length five, strictly
 increasing sublist of `[0..9]`**: 
 
-```
+```haskell
 main = print $ first (map numerator) 
- $ minimumBy (compare `on` snd) $ map (id &&& lnpi) $ sets [0..9] 5 ```
-
+ $ minimumBy (compare `on` snd) $ map (id &&& lnpi) $ sets [0..9] 5
 ```
+
+```bash
 $ ghc -O2 operationsLibrary.hs 02.hs && time  ./02
 ([0,2,6,8,9],2)
 0m39.127s
@@ -577,7 +576,7 @@ library for a bit, and ended up using `pseq` and `par` to parallelize this
 independent computation of `lnpi([])` across four cores, for a slightly
 better runtime:
 
-```
+```haskell
 main = print 
  $ first (map numerator) 
  $ a `par` b `par` c `par` d `pseq` reduceFunc [a,b,c,d]
@@ -586,9 +585,10 @@ where [a,b,c,d]  = map (reduceFunc . map mapFunc)
     reduceFunc = minimumBy (compare `on` snd)
     mapFunc    = id &&& lnpi
     segmentInto xs n = map (\x -> take y $ drop (y*x) xs) [0..pred n]
-      where y = succ $ div (length xs) n ```
-
+      where y = succ $ div (length xs) n
 ```
+
+```bash
 $ ghc -j -O2 -threaded -rtsopts operationsLibrary.hs 02b.hs --make -fforce-recomp && time ./02b +RTS -N4
 ([0,2,6,8,9],2)
 0m23.407s
@@ -603,12 +603,13 @@ at all. We can use `map (f &&& g)` which takes an input `x` and returns a
 tuple `(f x, g x)`. We use list function `elem` to see that `1` isn't a
 possible value, and print the (empty) list.
 
-```
+```haskell
 main = print
  $ filter (not.snd)
- $ map ( id &&& elem 1 . valuesFrom ) $ sets [0..9] 5 ```
-
+ $ map ( id &&& elem 1 . valuesFrom ) $ sets [0..9] 5
 ```
+
+```bash
 $ ghc -O2 operationsLibrary.hs 03.hs && time ./03
 []
 0m36.4s
@@ -619,7 +620,7 @@ list of `expressionsFrom` and evaluating one-by-one to see if they are `Just
 (1%1)`; we skip the process of mapping `id`s and the cost of holding all the
 values in memory instead of printing an empty list lazily.
 
-```
+```haskell
 main = print 
  $ map (map numerator) 
  $ filter (isNothing . find1) 
@@ -628,7 +629,7 @@ where find1 xs = if null ls then Nothing else Just (head ls)
       where ls = filter (\e -> eval e == Just (1%1)) $ expressionsFrom xs
 ```
 
-```
+```bash
 $ ghc -O2 operationsLibrary.hs 03b.hs && time ./03b
 []
 0m7.087s
@@ -642,7 +643,7 @@ extract a lot of shared abstractions. Here is the code for them both, all in
 one place. This looks different from the form of `valuesFrom` above, but it has
 the same performance and interface.
 
-```
+```haskell
 makeMap :: Ord a => [a] -> ((M.Map [a] b, [a]) ->  b) -> M.Map [a] b
 makeMap range insertFn = mkMap (length range)
   where mkMap 0   = M.empty
@@ -687,13 +688,13 @@ expressionsFrom range = M.findWithDefault [] range $ makeMap range exprsFrom
 By using `expressionsFrom` we can find the first expression that evaluates
 to $1$, and avoid evaluating the entire possible tree.
 
-```
+```haskell
 main = mapM_ print $ map (map numerator &&& find1) $ sets [0..9] 5
 where find1 xs = if null ls then Nothing else Just (head ls)
       where ls = filter (\e -> eval e == Just (1%1)) $ expressionsFrom xs 
 ```
 
-```
+```bash
 $ ghc -O2 operationsLibrary.hs 03c.hs && time ./03c
 ([0,1,2,3,4],Just (0+(1+((2-3!)+4))))
 ([0,1,2,3,5],Just (0+(1+(2+(3-5)))))

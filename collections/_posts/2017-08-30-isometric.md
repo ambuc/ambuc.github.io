@@ -42,7 +42,7 @@ works for any 3d point $ \begin{bmatrix} a_x & a_y & a_z \end{bmatrix}^\intercal
 $ and results in 2d coordinates $ \begin{bmatrix} b_x & b_y & 0
 \end{bmatrix}^\intercal $.
 
-```
+```haskell
 metric :: (Float, Float) -> Matrix Float
 metric (p, w) = m1 * m2
   where m1 = fromList 3 3 [1, 0, 0, 0, 1, 0, 0, 0, 0]
@@ -58,7 +58,7 @@ isometric viewing angle.
 
 # Describing the World
 
-```
+```haskell
 data Obj  = Cord [Float] | Edge [[Float]] | Face [[Float]] deriving (Eq, Show)
 type Style = ([Primitive] -> Drawing PixelRGBA8 ())
 type World = [(Obj, Style)]
@@ -80,7 +80,7 @@ the builtin `withTexture (uniformTexture <color>) . fill` for a solid fill, or
 CapRound)` for a stroke (used for a line, polyline, or point). In practice it
 would be nice to provide synonyms in the form of `solid k` and `mark k n`.
 
-```
+```haskell
 solid :: Geometry geom => PixelRGBA8 -> geom -> Drawing PixelRGBA8 ()
 solid k = withTexture (uniformTexture k) . fill
 
@@ -93,14 +93,14 @@ mark k n = withTexture (uniformTexture k)
 
 Let's define a convenient type synonym `View` for our pitch/yaw tuple:
 
-```
+```haskell
 type View  = (Float,Float)
 ```
 
 and write a `proj v <obj>` function which can take a coordinate and project it
 into the plane.
 
-```
+```haskell
 proj :: (Float,Float) -> Obj -> V2 Float
 proj v (Cord [x,y,z]) = (\[x,y] -> V2 x y) $ take 2 $ toList 
                       $ metric v * Data.Matrix.transpose (fromList 1 3 [y,-z,x])
@@ -110,7 +110,7 @@ Great. Now we can plot a coordinate by simply projecting it into the plane. We
 should be able to plot a line or polyline by projecting each of its coordinates,
 and a face (or polygon) the same way.
 
-```
+```haskell
 drawFrom :: (Obj, [Primitive] -> t) -> (Float, Float) -> t
 (Cord coord, sty) `drawFrom` v = sty $ circle (proj v $ Cord coord) 0.5
 (Edge pts  , sty) `drawFrom` v = sty $ polyline $ map (proj v . Cord) pts
@@ -123,7 +123,7 @@ Very cool.  Let's construct a sample `world` and try writing it to a `.png`.
 
 Here's our calibration world:
 
-```
+```haskell
 calibWorld :: World
 calibWorld = [ ( Edge [[0,0,0], [15, 0, 0]] , mark (PixelRGBA8 255 100 100 255) 1)
              , ( Edge [[0,0,0], [ 0,15, 0]] , mark (PixelRGBA8 100 255 100 255) 2)
@@ -137,7 +137,7 @@ them, and then `sequence_ []` the list; we can write that as `mapM_` instead,
 which maps a monad  over a list of inputs, discarding the intermediate results
 along the way.
 
-```
+```haskell
 seenFrom :: World -> (Float,Float) -> Drawing PixelRGBA8 ()
 world `seenFrom` v = mapM_ (`drawFrom` v) world
 ```
@@ -148,7 +148,7 @@ Rasterific's `writePng`.
 
 We'll need to supply `render` with a width/height/scale
 
-```
+```haskell
 render :: Int -> Int -> Float -> Drawing PixelRGBA8 () -> Image PixelRGBA8
 render x y s d = renderDrawing x y (PixelRGBA8 255 255 255 255)
              $ withTransformation ( translate (V2 (fromIntegral x / 2)
@@ -160,7 +160,7 @@ render x y s d = renderDrawing x y (PixelRGBA8 255 255 255 255)
 Great. Let's write this `Drawing px ()` out to an `Image px ()` and eventually
 to a file `IO ()`.
 
-```
+```haskell
 main = writePng "canvas.png" $ render 500 500 12 $ calibWorld `seenFrom` (35,45)
 ```
 
@@ -169,7 +169,7 @@ main = writePng "canvas.png" $ render 500 500 12 $ calibWorld `seenFrom` (35,45)
 That's super! Let's try something more complicated: define `myWorld` to be a
 bunch of intersecting squares along the x-y and y-z planes:
 
-```
+```haskell
 myWorld :: World
 myWorld = [ ( Face [[0,0,0], [0, 10,0], [ 10, 10,0], [ 10,0,0] ] , solid $ PixelRGBA8 255 100 0 255)
           , ( Face [[0,0,0], [0,-10,0], [ 10,-10,0], [ 10,0,0] ] , solid $ PixelRGBA8 255 120 0 255)
@@ -184,7 +184,7 @@ myWorld = [ ( Face [[0,0,0], [0, 10,0], [ 10, 10,0], [ 10,0,0] ] , solid $ Pixel
 
 And render it as before:
 
-```
+```haskell
 main = writePng "canvas.png" $ render 500 500 12
       $ (calibWorld++myWorld) `seenFrom` (35,45)
 ```
@@ -204,7 +204,7 @@ the origin to the position of the camera, and ranking the objects by the [scalar
 projection](https://en.wikipedia.org/wiki/Scalar_projection) of each object's
 centroid-vector onto the camera-vector.
 
-```
+```haskell
 scalarProject u v = dot v (unit u)
   where dot a b = sum $ zipWith (*) a b
         unit n  = map (/ norm n) n
@@ -228,7 +228,7 @@ closeness (p,w) [x, y, z] = scalarProject (toBaseline p w) [x,y,z]
 
 Now, instead of just ``mapM_ (`drawFrom` v) world`` we can write:
 
-```
+```haskell
 seenFrom :: World -> (Float,Float) -> Drawing PixelRGBA8 ()
 world `seenFrom` v = mapM_ (`drawFrom` v)
                    $ sortBy (comparing $ closeness v . centroid . fst) world 
@@ -257,7 +257,7 @@ our world. Again, `mapM_` lets us map our `writePng` function over a list of
 3-tuples containing the pitch, yaw, and frame number. We can write them out to
 `/tmp/canvas*.png`...
 
-```
+```haskell
 pitches = ( map (\x -> 20 * (sin (x * pi / 12) + 1.5)) [0,1..] )
 yaws    = [0,5..355]
 main = do
@@ -283,7 +283,7 @@ having to write the frames out to a file and assembling them with `convert`.
 It's a lot slower, though. I'll present  it here just out of interest, but in
 practice  I found it anywhere from 8x-10x slower.
 
-```
+```haskell
 import Codec.Picture
 import Codec.Picture.Gif
 import Codec.Picture.Types
