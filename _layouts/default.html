@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="bg-light">
+<html>
   <head>
     {% include meta.html %}
     <title> jbuckland.com </title>
@@ -26,18 +26,12 @@
           href="{{ site.baseurl }}/feed.xml" />
 
   </head>
-  <body class="bg-light">
-    <div class="container">
+  <body>
+    <div class="container-fluid">
       <div class="row">
-        <div class="col my-2">
-          {% include linkseries.html data=site.data.nav %}
-        </div>
-        <div class="w-100"></div>
         <div class="col">
+          {% include linkseries.html data=site.data.nav %}
           {{content}}
-        </div>
-        <div class="w-100"></div>
-        <div class="col my-2">
           {% include linkseries.html data=site.data.bottom-links %}
         </div>
       </div>
