@@ -1,5 +1,3 @@
-#nav > a:hover { color: #ddd !important; }
-
 article > h1, article > h2, article > h3, article > h4, article > h5, article > h6 {
   margin-top: 2em;
   margin-bottom: 1em;
@@ -59,3 +57,12 @@ code {
 .mi_valign { position: relative; top: 0.3em; }
 .mi_halign { margin-right: 0.5em; margin-left: 0.5em; }
 .mi_ralign { margin-right: 0.5em; }
+
+@media (prefers-color-scheme: dark) {
+  html { background-color: #121212; }
+  body { background-color: #121212; }
+  .card { background-color: #121212; }
+  .card-body { background-color: #121212; }
+  .text-body { color: #888 !important; }
+  code { color: #888 !important; }
+}
