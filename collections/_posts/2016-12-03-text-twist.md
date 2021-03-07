@@ -1,6 +1,6 @@
 ---
 title: Writing a TextTwist Implementation
-icon: gamepad
+icon: sports_esports
 
 layout: post
 ---

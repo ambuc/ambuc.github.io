@@ -1,20 +1,20 @@
 <blockquote>
 {% if include.url %}
-<i class="fa fa-fw fas fa-link"></i>
+<span class="material-icons mi mi_valign mi_halign">link</span>
 <a href="{{include.url}}">
   {{include.url}}
 </a>
 <br/>
 {% endif %}
 {% if include.github %}
-<i class="fa fa-fw fas fa-code-branch"></i>
+<span class="material-icons mi mi_valign mi_halign">code</span>
 <a href="{{include.github}}">
   {{include.github}}
 </a>
 <br/>
 {% endif %}
 {% if include.paper_url and include.paper_title %}
-<i class="fa fa-fw fas fa-file-alt"></i>
+<span class="material-icons mi mi_valign mi_halign">history_edu</span>
 <a href="{{include.paper_url}}">
   {{include.paper_title}}
 </a>

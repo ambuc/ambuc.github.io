@@ -1,6 +1,6 @@
 ---
 title: Building a Siteswap Visualizer in d3.js
-icon: sitemap
+icon: sports_handball
 
 layout: post
 ---

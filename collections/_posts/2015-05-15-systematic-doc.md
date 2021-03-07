@@ -1,6 +1,6 @@
 ---
 title: Energy Optimization of an HVAC System via Numerical Modeling
-icon: leaf
+icon: eco
 
 layout: post
 ---

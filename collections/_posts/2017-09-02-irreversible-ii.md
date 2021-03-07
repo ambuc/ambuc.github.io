@@ -1,6 +1,6 @@
 ---
 title: Puzzle Pong - Irreversible Cube II
-icon: sync-alt
+icon: extension_off
 
 layout: post
 ---

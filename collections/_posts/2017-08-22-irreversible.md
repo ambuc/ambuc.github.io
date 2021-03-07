@@ -1,6 +1,6 @@
 ---
 title: Puzzle Pong - Irreversible Cube I
-icon: cube
+icon: extension
 
 layout: post
 ---

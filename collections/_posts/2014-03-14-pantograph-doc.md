@@ -1,6 +1,6 @@
 ---
 title: Partial Mechanical Design of a Pantograph
-icon: drafting-compass
+icon: precision_manufacturing
 
 layout: post
 ---

@@ -1,6 +1,6 @@
 ---
 title: Anki flash cards with audio
-icon: language
+icon: play_lesson
 
 layout: post
 ---

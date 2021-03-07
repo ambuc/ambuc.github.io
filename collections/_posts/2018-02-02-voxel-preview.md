@@ -1,6 +1,6 @@
 ---
 title: OSC-Responsive 3D Graphics in Rust
-icon: draw-polygon
+icon: view_in_ar
 
 layout: post
 ---

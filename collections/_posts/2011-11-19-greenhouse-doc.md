@@ -1,6 +1,6 @@
 ---
 title: Comprehensive Design and Thermodynamic Analysis of a Greenhouse
-icon: seedling
+icon: eco
 
 layout: post
 ---

@@ -1,6 +1,6 @@
 ---
 title: Writing a Solitaire TUI with Lenses and Brick
-icon: crown
+icon: style
 
 layout: post
 ---

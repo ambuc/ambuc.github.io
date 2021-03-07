@@ -1,6 +1,6 @@
 ---
 title: Design and Characteristics of a Solar Field
-icon: solar-panel
+icon: wb_sunny
 
 layout: post
 ---

@@ -1,9 +1,9 @@
 - url: /
   displayname: Home
-  icon: fas fa-home
+  icon: home
 - url: /blog.html
   displayname: Blog
-  icon: fas fa-shapes
+  icon: category
 - url: /assets/pdfs/resume.pdf
   displayname: Resume
-  icon: fas fa-file-contract
+  icon: description

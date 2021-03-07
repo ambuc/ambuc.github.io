@@ -1,6 +1,6 @@
 ---
 title: Generating Fractals with Lindenmayer Systems
-icon: infinity
+icon: all_inclusive
 
 layout: post
 ---

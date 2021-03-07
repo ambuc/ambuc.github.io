@@ -1,6 +1,6 @@
 ---
 title: A Walkthrough of the Advection-Differencing Scheme
-icon: calculator
+icon: directions_walk
 
 layout: post
 ---

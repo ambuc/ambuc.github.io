@@ -1,6 +1,6 @@
 ---
 title: Design and Manufacture of an Dodecahedral Planetarium Made of Laser-Cut Acrylic
-icon: dice-d20
+icon: content_cut
 
 layout: post
 ---

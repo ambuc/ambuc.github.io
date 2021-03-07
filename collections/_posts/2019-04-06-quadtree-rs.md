@@ -1,6 +1,6 @@
 ---
 title: Writing a Quadtree library for Rust
-icon: tree
+icon: account_tree
 
 layout: post
 ---

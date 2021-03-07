@@ -1,6 +1,6 @@
 ---
 title: Scraping Wikipedia to Build a Historical Trivia Game
-icon: landmark
+icon: history_edu
 
 layout: post
 ---

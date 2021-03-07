@@ -1,6 +1,6 @@
 ---
 title: A Pleco-to-Anki flash card creator
-icon: fish
+icon: style
 
 layout: post
 ---

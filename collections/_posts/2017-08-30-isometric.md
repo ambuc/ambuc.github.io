@@ -1,6 +1,6 @@
 ---
 title: Cornea, an Isometric 3D Graphing Module for Haskell
-icon: cubes
+icon: visibility
 
 layout: post
 ---

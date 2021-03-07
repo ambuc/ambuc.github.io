@@ -9,7 +9,7 @@ layout: default
     <a href="{{post.url}}" class="text-reset">
       <div>
         <span class="text-muted">{{post.date | date: "%F"}}</span>
-        <i class="fa fa-fw fa-{{post.icon}} mx-2"></i>{{ post.title }}
+        <span class="material-icons mi mi_valign mi_halign">{{post.icon}}</span>{{post.title}}
       </div>
     </a>
     <br/>

@@ -1,6 +1,6 @@
 ---
 title: Cultural and Ecological Analysis of Mining in Norrbotten, Sweden 
-icon: gem
+icon: construction
 
 layout: post
 ---

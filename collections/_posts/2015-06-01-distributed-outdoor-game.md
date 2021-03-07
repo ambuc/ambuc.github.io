@@ -1,6 +1,6 @@
 ---
 title: Design and Operation of a Crowd-Run Distributed Outdoor Game
-icon: running
+icon: person_search
 
 layout: post
 ---

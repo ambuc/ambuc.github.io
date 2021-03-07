@@ -1,6 +1,6 @@
 ---
 title: Puzzle Pong - Least Nonconstructable Positive Integer
-icon: sort-numeric-up
+icon: calculate
 
 layout: post
 ---

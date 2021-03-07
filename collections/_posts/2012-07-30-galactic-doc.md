@@ -1,6 +1,6 @@
 ---
 title: Simulating Galactic Chemical Evolution in Python
-icon: meteor
+icon: biotech
 
 layout: post
 ---

@@ -1,6 +1,6 @@
 ---
 title: Puzzle Pong - Generating All Possible 4x4 Crosswords
-icon: th
+icon: grid_4x4
 
 layout: post
 ---

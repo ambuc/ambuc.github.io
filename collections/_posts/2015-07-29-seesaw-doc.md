@@ -1,6 +1,6 @@
 ---
 title: Building a Zoomable JSON Visualizer
-icon: search-plus
+icon: zoom_out_map
 
 layout: post
 ---
