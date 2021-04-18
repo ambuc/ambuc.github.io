@@ -1,0 +1,356 @@
+<!--
+    TODO(ambuc): Reveal solutions
+-->
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+    <!-- lodash -->
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"
+        integrity="sha256-qXBd/EfAdjOA2FGrGAG+b3YBn2tn5A6bhz+LSgYD96k=" crossorigin="anonymous"></script>
+
+    <!-- animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <!-- noto cjk sc -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <!-- must set rel="preload", or you get flashing -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100&display=swap" rel="stylesheet">
+
+    <style>
+        #gameboard .cell {
+            font-size: 4em;
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 100;
+        }
+    </style>
+
+    <title>Lion Wall</title>
+</head>
+
+<body class="container-fluid bg-dark">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
+    <div class="container-fluid py-5">
+        <div class="row">
+            <h1 class="text-muted text-center">
+                <span>Lion Wall</span>
+                <br />
+                <a class="btn btn-dark btn-sm text-muted" data-bs-toggle="collapse" href="#instructions">
+                    Instructions
+                </a>
+            </h1>
+            <div class="collapse" id="instructions">
+                <div class="card text-white bg-dark border-secondary mb-5"
+                    style="max-width: 30rem; margin-left: auto; margin-right: auto;">
+                    <div class="card-body">
+                        <p> This game is the "Connecting Wall" from <a
+                                href="https://en.wikipedia.org/wiki/Only_Connect">Only
+                                Connect</a>, a British television quiz show.</p>
+                        <p>The wall consists of sixteen clues, consisting of four groups of four connected items. The
+                            implementation below uses Chinese characters with common subcomponents. The wall includes
+                            red
+                            herrings and more connections than actually exist, such that some cards appear to fit into
+                            more
+                            than
+                            one category.</p>
+                        <p>You can click or tap a card to select it. If you're at a keyboard, you may find it faster to
+                            use
+                            the
+                            keys, like so:
+                        <div class="row">
+                            <div class="col-12 col-sm-8 offset-sm-4 col-md-6 offset-md-3">
+                                <table class="table table-dark text-light table-sm">
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>2</td>
+                                            <td>3</td>
+                                            <td>4</td>
+                                        </tr>
+                                        <tr>
+                                            <td>q</td>
+                                            <td>w</td>
+                                            <td>e</td>
+                                            <td>r</td>
+                                        </tr>
+                                        <tr>
+                                            <td>a</td>
+                                            <td>s</td>
+                                            <td>d</td>
+                                            <td>f</td>
+                                        </tr>
+                                        <tr>
+                                            <td>z</td>
+                                            <td>x</td>
+                                            <td>c</td>
+                                            <td>v</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        </p>
+                        <p>If you have selected four cards which form a valid group, they will fade out and reappear at
+                            the top of the board as a highlighted, solved group.</p>
+                        <p>Once you have found all four groups, reload the page for a new game.</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-secondary">
+                        <a href="#instructions" class="btn btn-dark btn-sm text-white"
+                            data-bs-toggle="collapse">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="gameboard" style="max-width: 500px; margin-left: auto; margin-right: auto;">
+            <div class="col-3 text-center"> <span class="cell badge animate__animated p-2 my-2"> 0 </span>
+            </div>
+            <div class="col-3 text-center"> <span class="cell badge animate__animated p-2 my-2"> 0 </span>
+            </div>
+            <div class="col-3 text-center"> <span class="cell badge animate__animated p-2 my-2"> 0 </span>
+            </div>
+            <div class="col-3 text-center"> <span class="cell badge animate__animated p-2 my-2"> 0 </span>
+            </div>
+            <div class="col-3 text-center"> <span class="cell badge animate__animated p-2 my-2"> 0 </span>
+            </div>
+            <div class="col-3 text-center"> <span class="cell badge animate__animated p-2 my-2"> 0 </span>
+            </div>
+            <div class="col-3 text-center"> <span class="cell badge animate__animated p-2 my-2"> 0 </span>
+            </div>
+            <div class="col-3 text-center"> <span class="cell badge animate__animated p-2 my-2"> 0 </span>
+            </div>
+            <div class="col-3 text-center"> <span class="cell badge animate__animated p-2 my-2"> 0 </span>
+            </div>
+            <div class="col-3 text-center"> <span class="cell badge animate__animated p-2 my-2"> 0 </span>
+            </div>
+            <div class="col-3 text-center"> <span class="cell badge animate__animated p-2 my-2"> 0 </span>
+            </div>
+            <div class="col-3 text-center"> <span class="cell badge animate__animated p-2 my-2"> 0 </span>
+            </div>
+            <div class="col-3 text-center"> <span class="cell badge animate__animated p-2 my-2"> 0 </span>
+            </div>
+            <div class="col-3 text-center"> <span class="cell badge animate__animated p-2 my-2"> 0 </span>
+            </div>
+            <div class="col-3 text-center"> <span class="cell badge animate__animated p-2 my-2"> 0 </span>
+            </div>
+            <div class="col-3 text-center"> <span class="cell badge animate__animated p-2 my-2"> 0 </span>
+            </div>
+            <div class="col-12 text-center visually-hidden" id="reloadRow">
+                <a href="" class="btn btn-dark btn-lg my-2 text-light" style="font-size:3em;"> ⟳ </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var semaphore = 0
+
+        function ensureSemaphoreZero() {
+            return new Promise(function (resolve, reject) {
+                (function waitForSemaphoreZero() {
+                    if (semaphore == 0) return resolve();
+                    setTimeout(waitForSemaphoreZero, 10);
+                })();
+            });
+        }
+
+        const sleep = (milliseconds) => {
+            semaphore++
+            return new Promise(resolve => {
+                setTimeout(resolve, milliseconds)
+            }).then(() => {
+                semaphore--
+            })
+        }
+
+        const isSelectedClass = "bg-light"
+        const defaultButtonClass = "defaultClass"
+        const possiblePuzzles = ["媆奸娃娅旱晆晋曔悊恚恶憼蜇蝡虷蟼", "虸杍仔汓柀佊波頗碹佦沰碩煊烛炑煩", "趺踁跆踈殌殆殐肂鿑冶凁冿砡砆硜硉", "磵磣柘宕毿枆宒覒孢李字覎苞蕳蔘萈", "杸吺没竐古汁辛籵娪汝妾娄敔枚呚敉", "扲擉抱抳躅跑跜踷痥疱痆瘏裞衿襡褚", "肥胅胀脹帙帐帳帩彁张張弰鿔钯铁销", "髢髶髫鬀刵刟剃剈盱眧睇睊弙弛弭弲", "綨緆絈綈锡铂锑错这迫递逪刘剘剔剒", "帖帩帷帗捎推拔操膲脽胈臊趭趈趙趮", "厪圧厞厗芏菲莘著尾屝屖屠覒覲垷覩", "覒軞竓氊鿂鴗鸇鴝拓拉擅拘岩峴軕岣", "狽貼賢閴蛅蜸閩浊砬竪閚泣碸猦颭渢", "鬀鬙鬞髴熷燶炥炡瘏癑疿症署罤罾罡", "叔叙权难狳狇猚獢炶炑焳燆敁敊敍敽", "洋样鴹羝榾鶻骶骱邝隝阺阶廆溾槐魀", "忒吢悆悲嗎駼騑駱独狳猅狢蜼隿售雒", "床庄庉麻灶炖焚烺澶沌淋浪羶样垟羪", "諱談誜諥痰痠瘇瘍毘畯畽畼吡喡啖啺", "瘋堸颯颺圼音暘蚎淗泣湯浊龾疲坡蚾", "焇熛烓烊鳔鲑鲜鲵觖觟觧觬訣誚謤誽", "粅粶咪粗趢唗趄超鑡嚙齟齠釗刎剥刟", "笯簞篬筒戰戧戙聀咪嗆哃咠粥弩彈弭", "股殾砓竐堵坧垃圾雱雼雴雭钫钥锗钑", "廥矿廖庤鿬疁畤畽跑蹘跱踵袍襘袥褈", "蹁蹸跬跮瞵眭眰盹窑窐窒窀缻甂甐瓲", "禆社祄祏里畍鿬細骭骱磆縎靬鞞靯緙", "誀聎聠耵庣庰庁店芇帡帄帖莧誢覜覘", "彼徇徤徧駨騝騗驂牯犍犏犙怙怶恂慘", "窠窒岤空洷溄江沚食仚仝企踉踝跮趾", "奞售崔碓軎輋硨軞竏岦砬竓粁类咪粍", "壔坫圻壀迠近避進鍺釿鐴錐煮燾点燞", "垟堤埞圿碮碇砎碻絊綻紒縞翉翔翨翯", "鉺鈢鵭釷枋鴋堃防浿鵙垻郥沚耻杫阯", "讲诮诃访艄舸舫艂钤钶钫锋汵汫消浲", "罘罾署罷熷煑熋煶蠕蝫螚蝭儒伓僧偍", "礶礀硑柘鷳鵧樢鴣屑屏杘居娋孉嫺姑", "袑衧袥袼骬磆骼榾寰宕客宋彋弨弙杛", "醉梄酐酚枚攼攽敳碮矸砏磑崼崪杣嵦", "瓨瓫甑瓧汾潧汁汌誷譄計訓網紅紛紃", "帷猚倠售獁傌嗎榪閈們問椚皯帔狓柀", "抴揲揋掜鲽鳂鲵鲱狜猥猊猅居屜屧屝", "眭睼眵瞕遈迻遧逕瘕痑瘴痙徦徍徥徑", "芖釱杕夻鉝亲咅位孲李吇仔閸菛鍆們", "庢床庋廉槐鬾魐媿峮岐嵰巕宭室宋安", "髰髭髹鬃鴜鵂鶎鷗鍭銝錝鏂喉呭呰嘔", "鵼樢鷚鷯楓飂飉煈審寥寮灾羳羫样烊", "獚狇狡獥樂皎皦岶窐窔竅岤觟觵桷崅", "羍佯羳羥伙燔烴烙蹊蹯踁路雞奞倠雒", "釠鈾鋑顉岫峻崸杣貱皴頗柀屓凥届杘", "髏骲骹骯怉恔忼悗鰈鮫魧鮸鞢鞻鞄鞔", "暌昭昳曉袑袟襓衱槷柣橈极驇騤駋馺", "璣琑琣璔焇焙熷燐洼涪潧潾硅磯硝磷", "黒煮炰焦锗铇锥钞拼抱推抄鮩鯉鯺魦", "酻醀醦酝稚穇秐穗栒槮枟橞珣琈琟璤", "蜝螗蝶蚱煻煠炸烳譕諜詐誧鷡鶀鶶鵏", "颲颽楓偑覬梘俔靚皊柏伯皘冷冽凒凊", "蔈莦著薛屑屠屖杘确觰觪桷碸飄颵楓", "奅戻釱圶肩鈅肚楕覱鋧垷梘暫昴昈杲", "趈趍趇唗鉹鉝鉛鍺砓竐嗀殾袥袩袳褚", "秼秓秆稞頍頇顆顃餁飦餜餤袵袾衼裧", "觝触觚埆浊泒汢江屄攨竈空屓貾蛽貢", "籼粹粙粜捽抽拙扛筄笛笜笁窕岤窣空", "驃螞駿駧痋痠痌疝耿焌烔灿聭魒螝嵬", "趻蹺踖蹎橈棤槙朾厜厝厧厅諈訡譊訂", "窭空窄岤讧诈讪证炅昨旵昰炇数攻政", "詳訂誠訲钉铖钟铺昷盛盅盙旷庠庁庯", "巿鿖灭亍佮倐仃佊痘疢疔疲頭幁頜頗", "駪駖騩傌聆聭佴耹雡魋倠雂謬詵詅訡", "茆葴芵菁减决凊冼詅訣請詵玲珋瑊珗", "螯浊閩蜍淮閵雓魋梬閑梌槐聘聱洱聭", "键镑铻锷谤语谔诅齮齬齶齟徛徤徬徂", "孲孹斈孡嬖妏始娅愈忞怠恶瘉瘂癖痖", "紿綳縑絈硼磏砶硝嵬魐魄魈軕軩輣輎", "餛飩餕餇忳悛恫憹痄痠痌癑炸焜炖燶", "蚊蜫蛌繭窤窊茓穻彃弧芎弙滭汶混汙", "詯誗讓話鬁鬤髺髶饎饟餂餌憙息悡恥", "訶訪誺証矈睞眐睢鳱鶆鴊鵻閈閜閍閵", "咪嘽唻嘵鄲郲隢陘頥顂顤頸弫粥彈弳", "奞奜夼奝騑馴騆騟紪紃綢緰疵痽痱瘉", "圖园囫圄岏岉峿岢犓物牾牱鄒鄙邧阿", "毼毠毱毟妿婅妙妾粰粷粆粒桴楬架亲", "寭宁宇寥酊酑醪醝髆骬髎髊縛繐糽縒", "赥欨欣欹齣齗齮嚙捔折掎扣触赨蚼虽", "牴牡牱犃坧砢碚碱璮珂琣瑊羶羝垟羬", "毲蚝毼毴独猲猅獛襨褐裶襆轛輟蛼轐", "楕膏塍朎咩垟羚羺薜芏苓薷孹李享孺", "扐撽抄担儌仯但佦觻觘觛确皪劰皦砶", "仳僮仙休勭屴朸艻稚崔椎萑秏毞氃芼", "垻賿賡屓鹨鹒鸤茑鶏鶊鳲蔦颫堸飂葻", "蜡螵蝫蛅瘭瘏痁疱爢煮点炰劘剒剽刨", "吗哇喃唟罣罱罢署諯諵詓諸篅笃筀箸", "魏聭魈魒眲睄瞟瞍颹颵飃颼諱諉誀謏", "跆踃踁蹕弰弳彃杛焛烴熚炑闏颱颵楓", "睖瞘相眰驅榪駤驓居杘屋層估倰傴僧", "這遤迸迢媽姘妱媰鷥絣紹縐鵻讎騅雛", "篻篁答箶餭餄餬餡鹓鸽鹕鹐埦墂堭埳", "糇糃籺銤碭矻鉐砲齟齕鑡齙飷餱餳飽", "穿窝窧窡娲婥娺婪罝罩罬罧苴芽莴菻", "岔杣岻峈榾骶骼磆褄袛袼袥霋雰雬雼", "砙瓵瓲旊鲐鲀鲂鳃钬钝钫锶煈碸颱颸"]
+        const defaultTimeout = 300
+
+        var globalSolutions = []
+
+        const group1 = "btn-success"
+        const group2 = "btn-danger"
+        const group3 = "btn-warning"
+        const group4 = "btn-info"
+
+        var unusedGroups = [group1, group2, group3, group4]
+        function nextGroup() { return unusedGroups.pop() }
+
+        function markSelected(e) { e.classList.add(isSelectedClass); e.classList.add("text-dark") }
+        function markDeselected(e) { e.classList.remove(isSelectedClass); e.classList.remove("text-dark") }
+        function isSelected(e) { return e.classList.contains(isSelectedClass) }
+        function isSolved(e) {
+            return e.classList.contains(group1) || e.classList.contains(group2) || e.classList.contains(group3) || e.classList.contains(group4)
+        }
+        function whichSelected() { return document.querySelectorAll(".".concat(isSelectedClass)) }
+        function howManySelected() { return whichSelected().length }
+        function whichUnsolved() { return document.querySelectorAll("#gameboard .defaultClass") }
+        function howManyUnsolved() { return whichUnsolved().length }
+
+        function guess() {
+            var xs = whichSelected()
+            var g = []
+            for (var i = 0; i < xs.length; i++) {
+                g.push(xs[i].textContent)
+            }
+            g.sort()
+            return g
+        }
+
+        function orderNodes() {
+            var i = 0
+            for (child of document.querySelectorAll("#gameboard .cell")) {
+                child.id = i
+                i++
+            }
+        }
+
+        function solveIfThreeQuartersSolved() {
+            if (howManyUnsolved() != 4) {
+                return
+            }
+            for (node of whichUnsolved()) {
+                node.click()
+            }
+            sleep(1.2 * defaultTimeout).then(() => {
+                document.getElementById("reloadRow").classList.remove("visually-hidden")
+            })
+        }
+
+        function reorderOnSuccess() {
+            ensureSemaphoreZero().then(() => {
+                const next_group = nextGroup()
+                const nodes = whichSelected()
+                for (var i = nodes.length - 1; i >= 0; i--) {
+                    for (node of whichSelected()) {
+                        node.classList.add("animate__flipOutX")
+                    }
+                }
+                sleep(defaultTimeout).then(() => {
+                    for (node of whichSelected()) {
+                        node.classList.remove("animate__flipOutX")
+                        node.classList.remove(defaultButtonClass)
+                        node.classList.add(next_group)
+                        node.classList.add("animate__flipInX")
+                        var surrCol = node.parentNode
+                        surrCol.parentNode.prepend(surrCol)
+                    }
+                    sleep(0.5 * defaultTimeout).then(() => {
+                        for (node of whichSelected()) {
+                            node.classList.remove("animate__flipInX")
+                            markDeselected(node)
+                        }
+                        orderNodes()
+                        solveIfThreeQuartersSolved()
+                    })
+                })
+            })
+        }
+
+        function shakeOnFailure() {
+            for (node of whichSelected()) {
+                node.classList.add("animate__headShake")
+            }
+            sleep(defaultTimeout).then(() => {
+                for (node of whichSelected()) {
+                    node.classList.remove("animate__headShake")
+                    markDeselected(node)
+                }
+            })
+        }
+
+        function onClickCallback() {
+            ensureSemaphoreZero().then(() => {
+                e = document.getElementById(this.id)
+                if (howManySelected() == 4 && !isSelected(e)) { return }
+                if (isSolved(e)) { return }
+                if (isSelected(e)) { markDeselected(e) } else { markSelected(e) }
+                if (howManySelected() != 4) { return }
+                const currGuess = guess()
+                if (_.findIndex(globalSolutions, (o) => { return _.isEqual(o, currGuess) }) == -1) {
+                    shakeOnFailure()
+                    return
+                }
+                reorderOnSuccess()
+                e.blur()
+            });
+        }
+
+        // https://codeburst.io/throttling-and-debouncing-in-javascript-646d076d0a44
+        function throttled(delay, fn) {
+            let lastCall = 0;
+            return function (...args) {
+                const now = (new Date).getTime();
+                if (now - lastCall < delay) { return; }
+                lastCall = now;
+                return fn(...args);
+            }
+        }
+
+        function keylistener(e) {
+            if (semaphore != 0) { return } // drop inputs during animation
+            switch (e.code) {
+                case "Digit1": document.getElementById("0").click(); break;
+                case "Digit2": document.getElementById("1").click(); break;
+                case "Digit3": document.getElementById("2").click(); break;
+                case "Digit4": document.getElementById("3").click(); break;
+                case "KeyQ": document.getElementById("4").click(); break;
+                case "KeyW": document.getElementById("5").click(); break;
+                case "KeyE": document.getElementById("6").click(); break;
+                case "KeyR": document.getElementById("7").click(); break;
+                case "KeyA": document.getElementById("8").click(); break;
+                case "KeyS": document.getElementById("9").click(); break;
+                case "KeyD": document.getElementById("10").click(); break;
+                case "KeyF": document.getElementById("11").click(); break;
+                case "KeyZ": document.getElementById("12").click(); break;
+                case "KeyX": document.getElementById("13").click(); break;
+                case "KeyC": document.getElementById("14").click(); break;
+                case "KeyV": document.getElementById("15").click(); break;
+                default: break;
+            }
+        }
+
+
+        function main() {
+            // Per animate.css, faster animations.
+            document.documentElement.style.setProperty('--animate-duration', '.5s');
+
+            var puzzle = _.sample(possiblePuzzles)
+            var [solution1, solution2, solution3, solution4] = _.chunk(puzzle, 4)
+            solution1.sort()
+            solution2.sort()
+            solution3.sort()
+            solution4.sort()
+            globalSolutions = [solution1, solution2, solution3, solution4]
+
+            var puzzle_shuffled = _.shuffle(puzzle)
+
+            orderNodes()
+            for (var i = 0; i < 16; i++) {
+                document.getElementById(i).innerHTML = puzzle_shuffled[i]
+            }
+
+            for (node of document.querySelectorAll("#gameboard .cell")) {
+                node.onclick = onClickCallback
+                node.classList.add(defaultButtonClass)
+            }
+
+            document.addEventListener('keypress', throttled(50, keylistener))
+        }
+        main()
+
+    </script>
+
+</body>
+
+</html>
