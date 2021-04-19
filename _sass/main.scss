@@ -53,10 +53,12 @@ code {
   font-size: inherit;
 }
 
-.mi { font-size: 2em; }
-.mi_valign { position: relative; top: 0.3em; }
-.mi_halign { margin-right: 0.5em; margin-left: 0.5em; }
-.mi_ralign { margin-right: 0.5em; }
+// Namespace collision! `mi` refers to a material icon, but also to some
+// highlighter subclass.
+.material-icons.mi { font-size: 2em; }
+.material-icons.mi_valign { position: relative; top: 0.3em; }
+.material-icons.mi_halign { margin-right: 0.5em; margin-left: 0.5em; }
+.material-icons.mi_ralign { margin-right: 0.5em; }
 
 @media (prefers-color-scheme: dark) {
   html { background-color: #121212; }
