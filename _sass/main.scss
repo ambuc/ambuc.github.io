@@ -68,3 +68,10 @@ code {
   .text-body { color: #888 !important; }
   code { color: #888 !important; }
 }
+
+// https://stackoverflow.com/questions/22950812/gist-how-to-set-the-height-and-width-of-an-embedded-gist
+.gist .blob-wrapper.data {
+   max-height:200px;
+   overflow:auto;
+}
+
