@@ -13,11 +13,6 @@ at Urbana-Champaign][3] and Sustainability Engineering and Technology at
 [4]: https://www.kth.se/
 [5]: http://sweden.jbuckland.com
 
-I grew up in New York City, where I went to [Hunter College High
-School][6]. 
-
-[6]: http://www.hchs.hunter.cuny.edu/
-
 In the past, I have seen employment as:
 
   - an infrastructure engineer at [Peak6 Investments](http://www.peak6.com) in
