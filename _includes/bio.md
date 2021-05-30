@@ -28,3 +28,5 @@ In the past, I have seen employment as:
 [10]: http://www.amnh.org/our-research/hayden-planetarium)
 
 For more, see my [Resume](/assets/pdf/resume.pdf).
+
+You can also see my [dotfiles](/dotfiles).
