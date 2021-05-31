@@ -19,6 +19,7 @@ diff --ignore-all-space ~/.vimrc (curl --silent https://gist.githubusercontent.c
 diff --ignore-all-space ~/.tmux.conf (curl --silent https://gist.githubusercontent.com/ambuc/aacc53d8eb7455d9c0bdcc0d0a2000ce/raw/.tmux.conf | psub)
 # compare ~/.config/fish/config.fish
 diff --ignore-all-space ~/.config/fish/config.fish (curl --silent https://gist.githubusercontent.com/ambuc/afd8fedff4ef7bb7080cb01e1c71ca9a/raw/config.fish | psub)
+# compare ~/.gitconfig
 diff --ignore-all-space ~/.gitconfig (curl --silent https://gist.githubusercontent.com/ambuc/0d6d4a0f559fa9a45e080de4043d36ad/raw/.gitconfig | psub)
 ```
 
