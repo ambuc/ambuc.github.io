@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+    <!-- lodash -->
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"
+        integrity="sha256-qXBd/EfAdjOA2FGrGAG+b3YBn2tn5A6bhz+LSgYD96k=" crossorigin="anonymous"></script>
+
+    <!-- animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <!-- noto cjk sc -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <!-- must set rel="preload", or you get flashing -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100&display=swap" rel="stylesheet">
+
+    <style>
+        #gameboard .cell {
+            font-size: 4em;
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 100;
+        }
+    </style>
+
+    <title>Dobl</title>
+</head>
+
+<body class="container-fluid bg-dark">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
+    <div class="container-fluid py-5">
+        <div class="row">
+            <h1 class="text-muted text-center">
+                <span>Dobl</span>
+                <br />
+                <a class="btn btn-dark btn-sm text-muted" data-bs-toggle="collapse" href="#instructions">
+                    Instructions
+                </a>
+            </h1>
+            <div class="collapse" id="instructions">
+                <div class="card text-white bg-dark border-secondary mb-5"
+                    style="max-width: 30rem; margin-left: auto; margin-right: auto;">
+                    <div class="card-body">
+                      <p> TODO </p>
+                    </div>
+                    <div class="card-footer bg-transparent border-secondary">
+                        <a href="#instructions" class="btn btn-dark btn-sm text-white"
+                            data-bs-toggle="collapse">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="gameboard" style="max-width: 1000px; margin-left: auto; margin-right: auto;">
+            <div class="col-12 text-center" id="card_1"> 
+              <!--...-->
+            </div>
+            <div class="col-12 text-center" id="card_2">
+              <!--...-->
+            </div>
+            <div class="col-12 text-center visually-hidden" id="reloadRow">
+                <a href="" class="btn btn-dark btn-lg my-2 text-light" style="font-size:3em;"> ⟳ </a>
+            </div>
+        </div>
+    </div>
+    <script src="dobl.js"></script>
+</body>
+</html>
