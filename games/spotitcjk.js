@@ -229,36 +229,157 @@ var all_cards = [
   ],
 ];
 
-function main() {
-  // Per animate.css, faster animations.
-  document.documentElement.style.setProperty('--animate-duration', '.5s');
+// global mutable state
+const defaultTimeout = 150;
+var gameOver = false;
+var semaphore = 0;
+var breakdown = {};
 
-  card_1 = _.sample(all_cards);
+function ensureSemaphoreZero() {
+  return new Promise(function(resolve, reject) {
+    (function waitForSemaphoreZero() {
+      if (semaphore == 0)
+        return resolve();
+      setTimeout(waitForSemaphoreZero, 10);
+    })();
+  });
+}
+
+const sleep = (milliseconds) => {
+  semaphore++;
+  return new Promise(resolve => { setTimeout(resolve, milliseconds); })
+      .then(() => { semaphore--; })
+};
+
+function whichSelected() { return document.querySelectorAll(".selected"); }
+
+function forfeitCallback() {
+  ensureSemaphoreZero().then(() => {
+    // If the game is over, no more clicks.
+    if (gameOver) {
+      return;
+    }
+    console.log(breakdown);
+    for (card_1_symbol of document.getElementById("card_1").children) {
+      for (card_2_symbol of document.getElementById("card_2").children) {
+        var text_1 = card_1_symbol.textContent;
+        var text_2 = card_2_symbol.textContent;
+        var components_1 = breakdown[text_1];
+        var components_2 = breakdown[text_2];
+        var intersection = _.intersection(components_1, components_2);
+        if (intersection.length == 1) {
+          card_1_symbol.click();
+          card_2_symbol.click();
+          return;
+        }
+      }
+    }
+    console.log("NO MATCH?");
+  });
+}
+
+function onClickCallback() {
+  ensureSemaphoreZero().then(() => {
+    // If the game is over, no more clicks.
+    if (gameOver) {
+      return;
+    }
+
+    // If already selected, allow us to deselect.
+    if (_.includes(this.classList, "selected")) {
+      this.classList.toggle("selected");
+      return;
+    }
+
+    // If another symbol in this card is selected, don't act.
+    if (_.includes(
+            _.map(whichSelected(), function(e) { return e.parentElement.id; }),
+            this.parentElement.id)) {
+      return;
+    }
+
+    // Else, allow us to select a new symbol.
+    this.classList.toggle("selected");
+
+    // If not two symbols are selected, don't act.
+    if (whichSelected().length != 2) {
+      return;
+    }
+
+    var selected = whichSelected();
+    selected = _.map(selected, function(e) { return e.textContent[0]; });
+    selected = _.map(selected, function(e) { return breakdown[e]; });
+    var intersection = _.intersection(...selected);
+
+    if (intersection.length == 0) {
+      var es = whichSelected();
+      _.forEach(es, function(e) { e.classList.add("wrong"); });
+      sleep(1 * defaultTimeout).then(() => {
+        _.forEach(es, function(e) { e.classList.add("animate__headShake"); });
+        sleep(2 * defaultTimeout).then(() => {
+          _.forEach(es, function(e) {
+            e.classList.remove("animate__headShake");
+            e.classList.remove("wrong");
+          });
+          _.forEach(es, function(e) { e.classList.toggle("selected"); });
+        });
+      });
+      return;
+    }
+
+    else if (intersection.length == 1) {
+      var es = whichSelected();
+      sleep(1 * defaultTimeout).then(() => {
+        _.forEach(es, function(e) { e.classList.add("animate__tada"); });
+        sleep(4 * defaultTimeout).then(() => {
+          _.forEach(es, function(e) { e.classList.remove("animate__tada"); });
+
+          // unveil reveal row
+          revealRow = document.getElementById("revealRow");
+          revealCard = document.getElementById("revealCard");
+          revealCard.textContent = intersection[0];
+          revealRow.classList.remove("invisible");
+          revealCard.classList.remove("invisible");
+          gameOver = true;
+        });
+      });
+    }
+  });
+}
+
+function main() {
+  var card_1 = _.sample(all_cards);
   all_cards = _.without(all_cards, card_1);
 
-  card_2 = _.sample(all_cards);
+  var card_2 = _.sample(all_cards);
   all_cards = _.without(all_cards, card_2);
-  card_2_div = document.getElementById("card_2");
 
   var cardsList = [
     {"num" : 1, "id" : "card_1", "data" : card_1, "color" : "info"},
     {"num" : 2, "id" : "card_2", "data" : card_2, "color" : "warning"},
   ];
+
   for (const card of cardsList) {
     card_div = document.getElementById(card['id']);
     for (const i in card['data']) {
       var symbol_and_bits = card['data'][i];
-      console.log(symbol_and_bits);
       var symbol = symbol_and_bits[0];
       var bits = symbol_and_bits[1];
-      var symbol_span = document.createElement("span");
-      symbol_span.textContent = symbol;
-      symbol_span.classList.add(
-          ...["cell", "badge", "rounded-pill", "text-".concat(card['color']),
-              "bg-dark", "bg-gradient", "fs-2", "m-1"]);
+      breakdown[symbol] = bits;
+
+      var symbol_span = document.createElement("div");
+      symbol_span.textContent = symbol; // .concat(bits);
+      symbol_span.classList.add(...["text-black", "bg-".concat(card['color']),
+                                    "cell", "animate__animated", "m-2", "p-2"]);
       card_div.append(symbol_span);
     }
   }
+
+  for (node of document.querySelectorAll("#gameboard .cell")) {
+    node.onclick = onClickCallback;
+  }
+
+  document.getElementById("forfeit").onclick = forfeitCallback;
 }
 
-main()
+main();

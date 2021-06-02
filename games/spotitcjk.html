@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class>
 
 <head>
     <!-- Required meta tags -->
@@ -23,14 +23,32 @@
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100&display=swap" rel="stylesheet">
 
     <style>
+        // make unselectable https://stackoverflow.com/questions/2310734/how-to-make-html-text-unselectable
+        .unselectable {
+          -webkit-touch-callout: none;
+          -webkit-user-select: none;
+          -khtml-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+
         #gameboard .cell {
+          display: inline-block;
             font-size: 4em;
             font-family: 'Noto Sans SC', sans-serif;
             font-weight: 100;
+            border-radius: 5px;
+            border: 5px solid black;
         }
+        #gameboard .cell.selected { 
+            border: 5px solid white;
+        }
+        #gameboard .cell.correct { border: 5px solid lawngreen !important; }
+        #gameboard .cell.wrong { border: 5px solid red !important; }
     </style>
 
-    <title>Dobl</title>
+    <title>SpotItCJK</title>
 </head>
 
 <body class="container-fluid bg-dark">
@@ -40,7 +58,7 @@
     <div class="container-fluid py-5">
         <div class="row">
             <h1 class="text-muted text-center">
-                <span>Dobl</span>
+                <span>SpotItCJK</span>
                 <br />
                 <a class="btn btn-dark btn-sm text-muted" data-bs-toggle="collapse" href="#instructions">
                     Instructions
@@ -50,7 +68,14 @@
                 <div class="card text-white bg-dark border-secondary mb-5"
                     style="max-width: 30rem; margin-left: auto; margin-right: auto;">
                     <div class="card-body">
-                      <p> TODO </p>
+                      <p> This game is a lot like 
+                      <a href="https://en.wikipedia.org/wiki/Dobble">Dobble</a>,
+                      except with subcomponents of CJK characters. There will
+                      always be exactly one pair of symbols (one symbol in blue
+                      from the left-hand card, one symbol in yellow from the
+                      right-hand card) such that the two symbols share a 
+                      subcomponent.</p>
+                      <p> Example: 薄 and 淩 share the subcomponent 氵.  </p>
                     </div>
                     <div class="card-footer bg-transparent border-secondary">
                         <a href="#instructions" class="btn btn-dark btn-sm text-white"
@@ -59,18 +84,19 @@
                 </div>
             </div>
         </div>
-        <div class="row" id="gameboard" style="max-width: 1000px; margin-left: auto; margin-right: auto;">
-            <div class="col-12 text-center" id="card_1"> 
-              <!--...-->
-            </div>
-            <div class="col-12 text-center" id="card_2">
-              <!--...-->
-            </div>
-            <div class="col-12 text-center visually-hidden" id="reloadRow">
-                <a href="" class="btn btn-dark btn-lg my-2 text-light" style="font-size:3em;"> ⟳ </a>
+        <div class="row justify-content-center" id="gameboard">
+            <div class="col-4 text-center"> <span id="card_1"> </span> </div>
+            <div class="col-4 text-center invisible" id="revealRow"> 
+              <div class="text-black cell m-2 p-2 bg-success" id="revealCard"> </div>
+              <br/>
+              <a href="" class="btn btn-dark btn-lg my-2 text-light" style="font-size:3em;"> ⟳ </a>
+            </div> 
+            <div class="col-4 text-center"> <span id="card_2"> </span> </div>
+            <div class="col-12 text-center"> 
+                <div class="bg-dark text-muted" id="forfeit">forfeit</div> 
             </div>
         </div>
     </div>
-    <script src="dobl.js"></script>
+    <script src="spotitcjk.js"></script>
 </body>
 </html>
