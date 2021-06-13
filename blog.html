@@ -6,12 +6,12 @@ layout: default
 <div class="card border-0 text-body">
   <div class="card-body">
     {% for post in site.posts %}
-    <a href="{{post.url}}" class="text-reset">
       <div>
-        <span class="text-muted">{{post.date | date: "%F"}}</span>
-        <span class="material-icons mi mi_valign mi_halign">{{post.icon}}</span>{{post.title}}
+        <span class="material-icons mi mi_valign">{{post.icon}}</span> &nbsp;
+        <span class="text-muted">{{post.date | date: "%F"}}</span> &nbsp;
+        <br class="d-sm-none"/>
+        <a href="{{post.url}}" class="text-reset"> {{post.title}} </a>
       </div>
-    </a>
     <br/>
     {% endfor %}
   </div>
