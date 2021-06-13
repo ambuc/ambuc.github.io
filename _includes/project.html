@@ -1,23 +1,21 @@
-<blockquote>
-{% if include.url %}
-<span class="material-icons mi mi_valign mi_halign">link</span>
-<a href="{{include.url}}">
-  {{include.url}}
-</a>
 <br/>
+<dl class="row">
+{% if include.url %}
+    <dt class="col-sm-3">Link</dt>
+    <dd class="col-sm-9">
+        <a href="{{include.url}}"> {{include.url}} </a>
+    </dd>
 {% endif %}
 {% if include.github %}
-<span class="material-icons mi mi_valign mi_halign">code</span>
-<a href="{{include.github}}">
-  {{include.github}}
-</a>
-<br/>
+    <dt class="col-sm-3">GitHub</dt>
+    <dd class="col-sm-9">
+        <a href="{{include.github}}"> {{include.github}} </a>
+    </dd>
 {% endif %}
 {% if include.paper_url and include.paper_title %}
-<span class="material-icons mi mi_valign mi_halign">history_edu</span>
-<a href="{{include.paper_url}}">
-  {{include.paper_title}}
-</a>
-<br/>
+<dt class="col-sm-3">Paper</dt>
+    <dd class="col-sm-9">
+        <a href="{{include.paper_url}}"> {{include.paper_title}} </a>
+    </dd>
 {% endif %}
-</blockquote>
+</dl>
